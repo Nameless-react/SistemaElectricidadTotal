@@ -13,6 +13,8 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/components/navbar.js",
     "./node_modules/@nextui-org/theme/dist/components/dropdown.js",
     "./node_modules/@nextui-org/theme/dist/components/avatar.js",
+    "./node_modules/@nextui-org/theme/dist/components/table.js",
+    "./node_modules/@nextui-org/theme/dist/components/input.js",
 
   ],
   theme: {
@@ -24,5 +26,5 @@ module.exports = {
     },
   },
   darkMode: 'class',
-  plugins: [nextui()],
+  plugins: [nextui({ darkMode: 'class' })],
 }
