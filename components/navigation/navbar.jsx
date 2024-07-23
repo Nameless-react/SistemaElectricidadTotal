@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBolt, faArrowDown, faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { faBolt, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
 
@@ -73,7 +73,7 @@ export default function NavbarApp() {
                         </Link>
                     </NavbarItem>
                     <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
-                        <Link color="foreground  cursor-pointer" href="#">
+                        <Link color="foreground  cursor-pointer" href="/citas">
                             Portal de Clientes
                         </Link>
                     </NavbarItem>
