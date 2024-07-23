@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBolt, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
+import Image from "next/image";
 
 export default function NavbarApp() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -60,8 +61,8 @@ export default function NavbarApp() {
 
             <NavbarContent className="sm:flex pr-3 text-2xl" justify="start">
                 <NavbarBrand className="text-xl font-semibold  py-2 px-2 ">
-                    <p className="font-bold text-inherit text-2xl">Electricidad Total</p>
-                    <FontAwesomeIcon icon={faBolt} className="text-main-orange text-2xl ml-1" />
+                    <p className="font-bold text-inherit text-xl">Electricidad Total</p>
+                    <Image width={64} height={64} className="inline bg-main-color" src="/logo-empresa.png" alt="logo"/>
                 </NavbarBrand>
             </NavbarContent>
 
@@ -75,11 +76,6 @@ export default function NavbarApp() {
                     <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
                         <Link color="foreground  cursor-pointer" href="/citas">
                             Portal de Clientes
-                        </Link>
-                    </NavbarItem>
-                    <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
-                        <Link href="#" aria-current="page">
-                            Nosotros
                         </Link>
                     </NavbarItem>
                     <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
@@ -137,7 +133,7 @@ export default function NavbarApp() {
                                     className="bg-blue-600 text-white font-semibold rounded-xl "
                                 >
                                     Gestion de Inventarios
-                                    <FontAwesomeIcon icon={faCaretDown}
+                                      <FontAwesomeIcon icon={faCaretDown}
                                     className={`ml-1 transition-transform duration-200 ${isInvDropdownOpen ? 'rotate-180' : ''}`} />
 
 
