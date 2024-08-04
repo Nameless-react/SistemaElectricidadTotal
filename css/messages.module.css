@@ -1,0 +1,48 @@
+.messageContainer {
+    max-width: 60%;
+    width: max-content;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: .2rem;
+    margin: 0 auto;
+    margin-top: 4rem;
+}
+
+.message {
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    background-color: #27272a;
+    font-size: .9rem;
+    width: 100%;
+}
+
+.messageInfo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: .6rem;
+    width: 100%;
+    padding: .5rem
+}
+
+.messageInfo img {
+    border-radius: 50%;
+    width: 12%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    max-width: 50px;
+}
+
+
+.messageInfo p:nth-child(3)  {
+    font-weight: lighter;
+    font-size: .86rem;
+    color: #ffe7e7
+}
+
+
+.messageInfo p:nth-child(2) {
+    margin-right: auto;
+}

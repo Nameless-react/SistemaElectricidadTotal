@@ -83,6 +83,11 @@ export default function NavbarApp() {
                             Contacto
                         </Link>
                     </NavbarItem>
+                    <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
+                        <Link color="foreground" href="/agendar-cita">
+                            Citas
+                        </Link>
+                    </NavbarItem>
                     <NavbarItem className="flex self-center ml-2">
                         <Dropdown
 
@@ -148,7 +153,7 @@ export default function NavbarApp() {
 
                                 }}
                                 aria-label="Static Actions">
-                                <DropdownItem className="transition duration-200 ease-in-out" key="equipos"> Equipos</DropdownItem>
+                                <DropdownItem className="transition duration-200 ease-in-out" key="equipos" href="/gestion-inventario/equipos"> Equipos</DropdownItem>
                                 <DropdownItem className="transition duration-200 ease-in-out" key="materiales"> Materiales</DropdownItem>
 
                             </DropdownMenu>

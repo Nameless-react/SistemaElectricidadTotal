@@ -1,8 +1,15 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Inter, Montserrat } from "next/font/google";
+import "/css/globals.css";
 import Providers from "./providers";
 import NavbarApp from "../../components/navigation/navbar";
 const inter = Inter({ subsets: ["latin"] });
+
+const montserrat = Montserrat({
+  weight: ['100', '200', '500', '600', '800', '900'],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-montserrat"
+})
 
 export const metadata = {
   title: "Electricidad Total",
@@ -12,7 +19,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="bg-main-color text-white">
-      <body className={inter.className + "" }>
+      <body className={montserrat.className + "" }>
         <Providers>
 
              <NavbarApp/>

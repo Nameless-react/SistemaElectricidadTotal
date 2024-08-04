@@ -1,5 +1,4 @@
 const { nextui } = require('@nextui-org/theme');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -22,6 +21,10 @@ module.exports = {
       colors: {
         'main-color': '#0E1116',
         'main-orange': '#F5A524',
+        'danger': '#FF0000'
+      },
+      fontFamily: {
+        montserrat: ['var(--font-montserrat)']
       }
     },
   },
