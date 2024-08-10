@@ -2,7 +2,7 @@ import styles from "/css/messages.module.css";
 import Image from "next/image";
 
 
-export default function Message({ message, author }) {
+export default function Message({ message, author, actualUser, image }) {
     const now = new Date();
     const time = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     const dd = String(now.getDate()).padStart(2, '0');
@@ -13,7 +13,7 @@ export default function Message({ message, author }) {
     return (
         <div className={styles.messageContainer}>
             <div className={styles.messageInfo}>
-                <Image width={200} height={200} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcyI9Cvp53aaP9XeRn-ZKbJDH2QaWC72O26A&s"/>
+                <Image width={200} height={200} src={image}/>
                 <p>{author}</p>
                 <p>{today} {time}</p>
             </div>

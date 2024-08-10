@@ -19,7 +19,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'main-color': '#0E1116',
+        'main-color': '#111827',
         'main-orange': '#F5A524',
         'danger': '#FF0000'
       },
