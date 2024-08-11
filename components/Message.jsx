@@ -13,7 +13,7 @@ export default function Message({ message, author, actualUser, image }) {
     return (
         <div className={styles.messageContainer}>
             <div className={styles.messageInfo}>
-                <Image width={200} height={200} src={image}/>
+                <Image width={200} height={200} src={image} alt="image" />
                 <p>{author}</p>
                 <p>{today} {time}</p>
             </div>
