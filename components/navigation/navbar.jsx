@@ -48,9 +48,7 @@ export default function NavbarApp() {
     return (
         <Navbar
 
-
             maxWidth="full"
-
             className="bg-main-color border-1 border-b-1 shadow-md border-black border-t-0 border-x-0  border-white border-opacity-10"
             isMenuOpen={isMenuOpen}
             onMenuOpenChange={setIsMenuOpen}
@@ -59,10 +57,10 @@ export default function NavbarApp() {
                 <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
             </NavbarContent>
 
-            <NavbarContent className="sm:flex pr-3 text-2xl" justify="start">
+            <NavbarContent className="sm:flex pr-3  text-2xl" justify="start">
                 <NavbarBrand className="text-xl font-semibold  py-2 px-2 ">
-                    <p className="font-bold text-inherit text-xl">Electricidad Total</p>
-                    <Image width={64} height={64} className="inline bg-main-color" src="/logo-empresa.png" alt="logo"/>
+                 
+                    <Image width={64} height={64} className="inline  bg-main-color" src="/logo2.png" alt="logo"/>
                 </NavbarBrand>
             </NavbarContent>
 
@@ -74,7 +72,7 @@ export default function NavbarApp() {
                         </Link>
                     </NavbarItem>
                     <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
-                        <Link color="foreground  cursor-pointer" href="/citas">
+                        <Link color="foreground  cursor-pointer" href="/portal-clientes">
                             Portal de Clientes
                         </Link>
                     </NavbarItem>
