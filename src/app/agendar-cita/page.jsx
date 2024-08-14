@@ -5,8 +5,6 @@ import { Input, Textarea } from "@nextui-org/input"
 import { Button } from "@nextui-org/button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons"; 
-import Message from "/components/Message";
-import SendMessage from "/components/SendMessage";
 
 export default function Appointments() {
    
