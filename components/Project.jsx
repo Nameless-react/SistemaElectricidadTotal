@@ -21,11 +21,11 @@ export default function Project({ status, name, description, progressValue, empl
         <div className={styles.project}>
             <div className={styles.optionsProject}>
                 <div className={`${styles.status} ${styles[statusClass]}`}>
-                    <FontAwesomeIcon size="xl"  className="text-2xl" icon={statusIcon}/>
+                    <FontAwesomeIcon className="text-2xl" icon={statusIcon}/>
                     <p>{status}</p>
                 </div>
                 <Link href="#">
-                    <FontAwesomeIcon size="xl"  className="text-2xl" icon={faArrowRight}/>
+                    <FontAwesomeIcon className="text-2xl" icon={faArrowRight}/>
                 </Link>
             </div>
             <h2>{name}</h2>
