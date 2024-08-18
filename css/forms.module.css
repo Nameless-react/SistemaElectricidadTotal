@@ -1,0 +1,142 @@
+.container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    width: 2000px;
+    height: 2000px;
+    border-radius: 50%;
+    background: linear-gradient(318deg, rgba(186,179,246,1) 9%, rgba(45,86,157,1) 33%, rgba(22,41,75,1) 47%, rgba(17,24,39,1) 64%); 
+    top: -10%;
+    right: 48%;
+    transform: translateY(-50%);
+    z-index: 6;
+    transition: 1.8s ease-in-out;
+}
+
+.formsContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.signInForm, .signUpForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    transition: all 0.2s 0.7s;
+}
+
+.signInForm button, .signUpForm button {
+    margin-top: 4rem;
+}
+
+
+.panelsContainer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    z-index: 7;
+}
+
+.leftPanel {
+    padding: 14rem 17% 2rem 4%;;
+    pointer-events: all;
+}
+
+.rightPanel {
+    padding: 14rem 4% 2rem 17%;
+    pointer-events: none;
+}
+
+.panel .content h3 {
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.rightPanel .content {
+    transform: translate(800px);
+}
+
+
+.signInSignUp {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    display: grid;
+    grid-template-columns: 1fr;
+    z-index: 5;
+    transition: 1s 0.7s ease-in-out;
+}
+
+.signInForm {
+    z-index: 2;
+}
+
+.signUpForm {
+    z-index: 1;
+    opacity: 0;
+}
+
+/* Animations */
+
+.container.sign-up-mode:before {
+    transform: translate(100%, -50%);
+    right: 52%;
+}
+  
+.container.sign-up-mode .left-panel .content {
+    transform: translateX(-800px);
+}
+  
+.container.sign-up-mode .signin-signup {
+    left: 25%;
+}
+
+.container.sign-up-mode form.sign-up-form {
+    opacity: 1;
+    z-index: 2;
+}
+
+.container.sign-up-mode form.sign-in-form {
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.sign-up-mode .right-panel .content {
+    transform: translateX(0%);
+}
+
+.container.sign-up-mode .left-panel {
+    pointer-events: none;
+}
+  
+.container.sign-up-mode .right-panel {
+    pointer-events: all;
+}
+  

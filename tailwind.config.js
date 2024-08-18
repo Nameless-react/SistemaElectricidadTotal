@@ -22,7 +22,8 @@ module.exports = {
       colors: {
         'main-color': '#111827',
         'main-orange': '#F5A524',
-        'danger': '#FF0000'
+        'danger': '#FF0000',
+        'gray-blue': '#23272F'
       },
       fontFamily: {
         montserrat: ['var(--font-montserrat)']

@@ -2,19 +2,19 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/navbar";
 import { Button, } from "@nextui-org/button";
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBolt, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
 import Image from "next/image";
 
 export default function NavbarApp() {
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const [isMobileScreen, setIsMobileScreen] = React.useState(false);
-    const [isInvDropdownOpen, setIsInvDropdownOpen] = React.useState(false);
-    const [isAdmDropdownOpen, setIsAdmDropdownOpen] = React.useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMobileScreen, setIsMobileScreen] = useState(false);
+    const [isInvDropdownOpen, setIsInvDropdownOpen] = useState(false);
+    const [isAdmDropdownOpen, setIsAdmDropdownOpen] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -49,7 +49,7 @@ export default function NavbarApp() {
         <Navbar
 
             maxWidth="full"
-            className="bg-main-color border-1 border-b-1 shadow-md border-black border-t-0 border-x-0  border-white border-opacity-10"
+            className="bg-main-color border-1 border-b-1 shadow-md border-t-0 border-x-0  border-white border-opacity-10"
             isMenuOpen={isMenuOpen}
             onMenuOpenChange={setIsMenuOpen}
         >

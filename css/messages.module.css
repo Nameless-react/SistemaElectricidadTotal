@@ -1,3 +1,13 @@
+/* Containers styles */
+.chats {
+    width: 100%;
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6rem;
+}
+
 .conversationsContainer {
     background-color: #111827;
     height: 100vh;
@@ -21,17 +31,31 @@
     font-weight: bold;
 }
 
-.chats {
-    width: 100%;
-    position: relative;
-    min-height: 90vh;
+.messagesContainer {
+    width: 62%;
     display: flex;
-    justify-content: flex-end;
-    gap: 6rem;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin-left: auto;
+    margin-bottom: 7rem;
+    margin-right: 14%;
+}
+/* ************************************************ */
+
+/* Message styles */
+.messageContainer {
+    max-width: 60%;
+    width: max-content;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
 }
 
-
-.messageContainer {
+.messageContainerActualUser {
+    align-self: flex-end;
     max-width: 60%;
     width: max-content;
     display: flex;
@@ -45,6 +69,10 @@
     border-radius: 20px;
     background-color: #23272F;
     width: 100%;
+}
+
+.messageContainerActualUser .message {
+    background-color: #C78824;
 }
 
 .message p {
@@ -69,37 +97,43 @@
     width: 40px;
 }
 
-
 .messageInfo p:nth-child(3)  {
     font-weight: lighter;
-    font-size: .86rem;
+    font-size: .8rem;
     color: #ffe7e7
 }
-
 
 .messageInfo p:nth-child(2) {
     margin-right: auto;
 }
 
 
-.messagesContainer {
-    width: 75%;
+.messageInfoActualUser {
     display: flex;
-    gap: 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    margin-left: .8rem;
-    margin-bottom: 7rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: .6rem;
+    width: 100%;
+    padding: .4rem
 }
 
+.messageInfoActualUser p {
+    font-weight: lighter;
+    font-size: .8rem;
+    color: #ffe7e7;
+}
+/* ************************************************ */
+
+
+
+/* Send Message styles */
 .wrapperSendMessages {
     background-color:  #111827;
-    width: 60%;
+    width: 70%;
     margin: 0 auto;
     min-height: 70px;
     position: fixed;
-    right: 18%;
+    right: 8%;
     bottom: 0;
 }
 
@@ -128,8 +162,11 @@
 .containerSendMessages button {
     font-size: 2.3rem;
 }
+/* ************************************************ */
 
 
+
+/* Chats aside styles */
 .chat {
     width: 95%;
     display: flex;
@@ -172,10 +209,11 @@
     font-size: .8rem;
     font-weight: lighter;
 }
+/* ************************************************ */
 
 
 @media screen and (max-width: 1000px) {
-    .messageContainer {
+    .messageContainer, .messageContainerActualUser {
         max-width: 90%;
     }
 
@@ -183,4 +221,5 @@
         width: 72%;
         right: 5%;
     }
+     
 }

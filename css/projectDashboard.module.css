@@ -1,0 +1,140 @@
+.container {
+    width: 95%;
+    margin: 4rem auto;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(300px, 1fr));
+    grid-template-rows: repeat(3, minmax(400px, auto));
+}
+
+.tasksContainer, .overviewGraphs, .overviewProject > div, .projectFiles, .employees {
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    background-color: #182237;
+    border-radius: 30px;
+}
+
+.tasksContainer {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.2rem 2rem;
+    grid-column: span 2;
+    grid-row: 2;
+}
+
+.tasksContainer h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    justify-self: flex-start;
+}
+
+.overviewProject {
+    display: grid;
+    gap: 2em;
+    grid-template-rows: repeat(3, minmax(100px, auto));
+    grid-column: 1;
+    padding: 1rem 1.5rem;
+    font-size: 1.2rem;
+}
+
+.overviewProject > div {
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.overviewProject > div h3 {
+    color: #A1AFC570;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.overviewProject > div p {
+    font-weight: bold;
+}
+
+.overviewProject > div:nth-child(2) p, .overviewProject > div:nth-child(2) svg {
+    color: #f00;
+}
+
+.overviewProject > div:not(:nth-child(2)) {
+    color: #16e972;
+}
+
+.overviewProject > div svg {
+    font-size: 2rem;
+}
+
+.overviewProject > div div:nth-child(2) {
+    background-color: #1f2c47;
+    border-radius: 0 20px 20px 0;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.overviewProject > div > div {
+    padding: 1em 1.5em;
+}
+
+.overviewGraphs {
+    grid-column: 2;
+}
+
+.projectFiles {
+    grid-column: 3;
+    grid-row: span 3;
+}
+
+.employees {
+    grid-column: span 2;
+    grid-row: 3;
+}
+
+.tasks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.2rem;
+    flex-direction: column;
+    overflow: auto;
+    width: 100%;
+    padding: 1em 0;
+}
+
+.task {
+    display: grid;
+    padding: 1em 1.2em;
+    width: 100%;
+    background-color: #1f2c47;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    border-radius: 20px;
+    transition: transform .5s ease;
+    cursor: pointer;
+}
+
+.task h3 {
+    font-size: 1rem;
+}
+
+.task p {
+    font-weight: lighter;
+    color: #eee;
+    font-size: .9rem;
+}
+
+
+.task:hover {
+    transform: translateY(-10%);
+    background-color: #243760;
+}
