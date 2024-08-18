@@ -8,9 +8,9 @@ config.autoAddCss = false; /* eslint-disable import/first */
 import { Inter, Montserrat } from "next/font/google";
 import "/css/globals.css";
 import Providers from "./providers";
-import NavbarApp from "../../components/navigation/navbar";
+import NavbarApp from "../../components/navigation/Navbar";
 const inter = Inter({ subsets: ["latin"] });
-import Footer from "../../components/navigation/footer";
+import Footer from "../../components/navigation/Footer";
 const montserrat = Montserrat({
   weight: ['100', '200', '500', '600', '800', '900'],
   style: ["normal", "italic"],
@@ -32,9 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className="bg-gray-900 text-white">
       <body className={montserrat.className + "" }>
         <Providers>
-
              <NavbarApp/>
-     
           <div className="">
              {children}
           </div>
