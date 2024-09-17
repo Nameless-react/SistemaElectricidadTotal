@@ -7,7 +7,10 @@ export default function Providers({ children }) {
     const router = useRouter();
     return (
         <NextUIProvider>
-            {children}
+            <main className="dark text-foreground">
+
+                {children}
+            </main>
         </NextUIProvider>
     );
 }

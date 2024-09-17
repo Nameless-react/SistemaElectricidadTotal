@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faBell } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
 import Image from "next/image";
@@ -33,7 +33,6 @@ export default function NavbarApp() {
         "Home",
         "Portal para Clientes",
         "Nosotros",
-        "Contacto",
 
     ];
 
@@ -59,26 +58,22 @@ export default function NavbarApp() {
 
             <NavbarContent className="sm:flex pr-3  text-2xl" justify="start">
                 <NavbarBrand className="text-xl font-semibold  py-2 px-2 ">
-                 
-                    <Image width={64} height={64} className="inline  bg-main-color" src="/logo2.png" alt="logo"/>
+                    <Link color="foreground" href="/">
+                        <Image width={64} height={64} className="inline  bg-main-color" src="/logo2.png" alt="logo" />
+                    </Link>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex flex-grow justify-center ">
                 <div className="flex  gap-1">
                     <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
-                        <Link color="foreground  cursor-pointer" href="#">
+                        <Link color="foreground  cursor-pointer" href="/">
                             Home
                         </Link>
                     </NavbarItem>
                     <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
                         <Link color="foreground  cursor-pointer" href="/portal-clientes">
                             Portal de Clientes
-                        </Link>
-                    </NavbarItem>
-                    <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
-                        <Link color="foreground" href="#">
-                            Contacto
                         </Link>
                     </NavbarItem>
                     <NavbarItem className="text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange   transition duration-300 ease-in-out">
@@ -131,13 +126,13 @@ export default function NavbarApp() {
 
                             >
                                 <Button
-                                
+
                                     variant="flat"
                                     className="bg-blue-600 text-white font-semibold rounded-xl "
                                 >
                                     Gestion de Inventarios
-                                      <FontAwesomeIcon icon={faCaretDown}
-                                    className={`ml-1 transition-transform duration-200 ${isInvDropdownOpen ? 'rotate-180' : ''}`} />
+                                    <FontAwesomeIcon icon={faCaretDown}
+                                        className={`ml-1 transition-transform duration-200 ${isInvDropdownOpen ? 'rotate-180' : ''}`} />
 
 
                                 </Button>
@@ -152,7 +147,7 @@ export default function NavbarApp() {
                                 }}
                                 aria-label="Static Actions">
                                 <DropdownItem className="transition duration-200 ease-in-out" key="equipos" href="/gestion-inventario/equipos"> Equipos</DropdownItem>
-                                <DropdownItem className="transition duration-200 ease-in-out" key="materiales"> Materiales</DropdownItem>
+                                <DropdownItem className="transition duration-200 ease-in-out" key="materiales" href="/gestion-inventario/materiales"> Materiales</DropdownItem>
 
                             </DropdownMenu>
                         </Dropdown>
@@ -185,20 +180,17 @@ export default function NavbarApp() {
                                     }}
                                 >
                                     <DropdownItem key="profile" className="h-14 gap-2">
-                                        <p className="font-semibold">Signed in as</p>
+                                        <p className="font-semibold">Bienvenido</p>
                                         <p className="font-semibold">zoey@example.com</p>
                                     </DropdownItem>
                                     <DropdownItem key="settings">
-                                        My Settings
+                                        Mi Perfil
                                     </DropdownItem>
-                                    <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                                    <DropdownItem key="analytics">
-                                        Analytics
-                                    </DropdownItem>
-                                    <DropdownItem key="system">System</DropdownItem>
-                                    <DropdownItem key="configurations">Configurations</DropdownItem>
-                                    <DropdownItem key="help_and_feedback">
-                                        Help & Feedback
+                                    <DropdownItem key="projects" href="/portal-clientes/mis-proyectos">Mis Proyectos</DropdownItem>
+                                    <DropdownItem key="chats" href="/chat">Mis Chats</DropdownItem>
+                                    <DropdownItem key="config" href="/ajustes">Ajustes</DropdownItem>
+                                    <DropdownItem key="support" href="/portal-clientes/soporte">
+                                        Soporte
                                     </DropdownItem>
                                     <DropdownItem key="logout" color="danger">
                                         Log Out
@@ -206,11 +198,19 @@ export default function NavbarApp() {
                                 </DropdownMenu>
                             </Dropdown>
                         </NavbarItem>
+                        <NavbarItem className="mr-4">
+                                <div className="relative">
+                                    <FontAwesomeIcon href="/portal-clientes/perfil/notificaciones" icon={faBell}  height={20} width={20} className="text-lg ml-2 " />
+                                    <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 transition duration-300 ease-in-out text-white px-1.5 mt-1  rounded-full shadow-md hover:shadow-lg flex items-center justify-center">
+                                        <p className="text-xs font-semibold">3</p>
+                                    </div>
+                                </div>
+                        </NavbarItem>
                         <NavbarItem className="hidden lg:flex">
-                            <Link href="#">Login</Link>
+                            <Link href="/login">Login</Link>
                         </NavbarItem>
                         <NavbarItem>
-                            <Button as={Link} color="warning" href="#" variant="flat">
+                            <Button as={Link} color="warning" href="/login" variant="flat">
                                 Sign Up
                             </Button>
                         </NavbarItem>
@@ -305,9 +305,9 @@ export default function NavbarApp() {
 
                             }}
                             aria-label="Static Actions">
-                            <DropdownItem className="transition duration-200 ease-in-out" key="equipos">Gestion de Proyectos</DropdownItem>
-                            <DropdownItem className="transition duration-200 ease-in-out" key="finanzas">Gestion Financiera</DropdownItem>
-                            <DropdownItem className="transition duration-200 ease-in-out" key="reportes">Reportes y Analisis</DropdownItem>
+                            <DropdownItem className="transition duration-200 ease-in-out" href="/proyectos" key="equipos"><Link href="/proyectos">Gestion de Proyectos</Link></DropdownItem>
+                            <DropdownItem className="transition duration-200 ease-in-out" key="finanzas"><Link href="/finanzas">Gestion de Finanzas</Link></DropdownItem>
+                            <DropdownItem className="transition duration-200 ease-in-out" href="/reportes" key="reportes"><Link href="/reportes">Gestion de Reportes</Link></DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </NavbarMenuItem>
@@ -339,8 +339,8 @@ export default function NavbarApp() {
 
                             }}
                             aria-label="Static Actions">
-                            <DropdownItem className="transition duration-200 ease-in-out" key="equipos"> Equipos</DropdownItem>
-                            <DropdownItem className="transition duration-200 ease-in-out" key="materiales"> Materiales</DropdownItem>
+                            <DropdownItem href="/gestion-inventario/equipos" className="transition duration-200 ease-in-out" key="equipos"> Equipos</DropdownItem>
+                            <DropdownItem href="/gestion-inventario/materiales" className="transition duration-200 ease-in-out" key="materiales"> Materiales</DropdownItem>
 
                         </DropdownMenu>
                     </Dropdown>

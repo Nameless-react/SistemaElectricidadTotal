@@ -14,6 +14,7 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/components/avatar.js",
     "./node_modules/@nextui-org/theme/dist/components/table.js",
     "./node_modules/@nextui-org/theme/dist/components/input.js",
+    "./node_modules/@nextui-org/theme/dist/components/date-picker.js",
 
   ],
   theme: {

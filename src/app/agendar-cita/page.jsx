@@ -9,10 +9,19 @@ import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 export default function Appointments() {
    
     return (
-        <form action="" className="flex justify-center gap-10 items-center flex-col w-5/6 mx-auto mt-28 bg-neutral-950 py-12 px-8 mb-1">
+        <form action="" className="flex justify-center gap-10 items-center flex-col w-1/2  mx-auto mt-28 rounded-2xl bg-opacity-40 py-12 px-8 mb-1"
+            style={{
+                backgroundColor: '#182237'
+            }}
+        >
             <h1 className="text-5xl font-bold">Reservar Cita</h1>
             <div className="w-2/3">
-                <Input isClearable type="email" label="Correo" className="dark w-full"/>
+                <Input 
+                classNames={{
+                    base: "",
+                    input: "",
+                }}
+                isClearable type="email" label="Correo" className="dark w-full"/>
             </div>
             <DateAppointment />
             <div className="w-2/3">
