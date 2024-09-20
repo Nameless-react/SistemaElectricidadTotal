@@ -7,6 +7,7 @@ class Tools extends Model {
 }
 
 Tools.init({
+    
     id_tools:{
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -29,7 +30,7 @@ Tools.init({
         unique: true
     },
 
-    is_active:{
+    status:{
         type: DataTypes.BOOLEAN,
         allowNull: false
     },

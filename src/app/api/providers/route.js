@@ -12,7 +12,7 @@ export async function GET(req) {
         }
 
         return NextResponse.json(providers, { status: 200 });
-        
+
     } catch (error) {
         console.error('Error while getting providers:', error);
         return NextResponse.json({ message: 'Error while getting providers' }, { status: 500 });
