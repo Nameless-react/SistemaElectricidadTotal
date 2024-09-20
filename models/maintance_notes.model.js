@@ -1,6 +1,6 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelze from '../config/databaseConnection';
-
+import Tools from './tools.model';
 
 class MaintenanceNotes extends Model {
 
@@ -35,5 +35,7 @@ MaintenanceNotes.init({
     tableName: 'maintenance_notes',
     timestamps: false
 });
+
+MaintenanceNotes.belongsTo(Tools, { foreignKey: "id_tools", as: "tools" });
 
 export default MaintenanceNotes
