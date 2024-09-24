@@ -5,7 +5,12 @@ export default async function ManageToolServerSide() {
     
     const providerController = new ProviderController();
     const categoryController = new CategoryController();
+
+    let tool = null;
+    
     try {
+     
+
         const providers = await providerController.getProviders();
         if (!providers) {
             console.error("Providers not found");
@@ -18,9 +23,6 @@ export default async function ManageToolServerSide() {
             console.error("Categories not found");
             return <p>No se encontraron categorías</p>;
         }
-
-    
-
         return(
             <ManageTool providers={providers} categories={categories} />
         )

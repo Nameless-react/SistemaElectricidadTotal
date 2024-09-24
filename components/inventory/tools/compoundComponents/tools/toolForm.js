@@ -1,29 +1,30 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Input, Textarea } from "@nextui-org/input";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
 import { Button } from "@nextui-org/button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCamera, faCaretDown, faCaretUp, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { useToolsForm } from "../context/toolsFormContext";
 import { Checkbox } from '@nextui-org/checkbox';
-
-import Image from 'next/image';
 import { UploadImage } from '../../../../images/formImages';
-
+import { FormErrorsClient, FormErrorsServer } from '../../../../errors/form_errors/formErrors';
 export const ToolForm = ({ className = "", children }) => {
-    const { handleSubmitCreate, formData, setErrors, setServerError, isChecked, setIsChecked } = useToolsForm();
+    const { handleSubmit, formData, setErrors, setServerError, isChecked, setIsChecked, id } = useToolsForm();
 
     return (
         <div className={className}>
-            <form onSubmit={(e) => handleSubmitCreate(e, formData, setErrors, setServerError, isChecked)}>
+            <form
+                onSubmit={id
+                    ? (e) => handleSubmit(e, formData, setErrors, setServerError, isChecked, `${process.env.NEXT_PUBLIC_URL_TOOLS_UPDATE}?id=${id}`)
+                    : (e) => handleSubmit(e, formData, setErrors, setServerError, isChecked, process.env.NEXT_PUBLIC_URL_TOOLS_CREATE)
+                }>
                 {children}
             </form>
         </div>
     )
 }
-
 export const ToolName = ({ className = "" }) => {
-    const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
+    const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
 
     return (
         <div className={className}>
@@ -39,16 +40,15 @@ export const ToolName = ({ className = "" }) => {
                 size="md"
                 placeholder="Nombre del equipo"
             />
-            {errors.name && errors.name._errors.map((error, index) => (
-                <p key={index} className=" text-sm text-red-600 ml-2 mt-2">{error}</p>
-            ))}
+            <FormErrorsClient errors={errors} errorName={"name"} />
+            <FormErrorsServer serverError={serverError} errorName={"name"} />
 
         </div>
     )
 }
 
 export const ToolModel = ({ className = "" }) => {
-    const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
+    const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     return (
         <div className={className}>
             <Input
@@ -63,15 +63,16 @@ export const ToolModel = ({ className = "" }) => {
                 size="md"
                 placeholder="Modelo"
             />
-            {errors.model && errors.model._errors.map((error, index) => (
-                <p key={index} className=" text-sm text-red-600 ml-2 mt-2">{error}</p>
-            ))}
+
+            <FormErrorsClient errors={errors} errorName={"model"} />
+            <FormErrorsServer serverError={serverError} errorName={"model"} />
+
         </div>
     );
 }
 
 export const ToolDescription = ({ className = "" }) => {
-    const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
+    const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     return (
         <div className={className}>
             <Textarea
@@ -81,18 +82,15 @@ export const ToolDescription = ({ className = "" }) => {
                 labelPlacement="inside"
                 className="dark"
                 placeholder="Descripción" />
-            <div>
-                {errors.description && errors.description._errors.map((error, index) => (
-                    <p key={index} className=" text-sm text-red-600 ml-2 mt-2 mb-2">{error}</p>
-                ))}
 
-            </div>
+            <FormErrorsClient errors={errors} errorName={"description"} />
+            <FormErrorsServer serverError={serverError} errorName={"description"} />
         </div>
     )
 }
 
 export const ToolCost = ({ className = "" }) => {
-    const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
+    const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     return (
         <div className={className}>
             <Input
@@ -108,16 +106,15 @@ export const ToolCost = ({ className = "" }) => {
                 size="md"
                 placeholder="Costo"
             />
-            {errors.cost && errors.cost._errors.map((error, index) => (
-                <p key={index} className=" text-sm text-red-600 ml-2 mt-2">{error}</p>
-            ))}
+            <FormErrorsClient errors={errors} errorName={"cost"} />
+            <FormErrorsServer serverError={serverError} errorName={"cost"} />
         </div>
 
     )
 }
 
 export const ToolDate = ({ className = "" }) => {
-    const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
+    const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     return (
         <div className={className}>
             <Input
@@ -132,16 +129,19 @@ export const ToolDate = ({ className = "" }) => {
                 color="default "
                 size="md"
             />
-            {errors.date && errors.date._errors.map((error, index) => (
-                <p key={index} className=" text-sm text-red-600 ml-2 mt-2">{error}</p>
-            ))}
+
+            <FormErrorsClient errors={errors} errorName={"date"} />
+            <FormErrorsServer serverError={serverError} errorName={"date"} />
         </div>
 
     )
 }
 
 export const ToolSerial = ({ className = "" }) => {
-    const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
+    const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
+    React.useEffect(() => {
+        console.log(serverError)
+    }, [serverError])
     return (
         <div className={className}>
             <Input
@@ -156,48 +156,51 @@ export const ToolSerial = ({ className = "" }) => {
                 size="md"
                 placeholder="Serial"
             />
-            {errors.serial && errors.serial._errors.map((error, index) => (
-                <p key={index} className=" text-sm text-red-600 ml-2 mt-2">{error}</p>
-            ))}
+            <FormErrorsClient errors={errors} errorName={"serial"} />
+            <FormErrorsServer serverError={serverError} errorName={"serial"} />
+            {serverError.error && serverError.error.serial_error && (
+                <p className="text-red-600 text-sm mt-1">
+                    {serverError.error.serial_error.message}
+                </p>
+            )}
         </div>
     )
 }
 
 export const ToolImage = ({ }) => {
-    const { formData, setFormData, imagePreview, setImagePreview, handleImageChange, handleImageRemove } = useToolsForm();
-    return (
-        <UploadImage
-            className='flex flex-col items-center'
-            formData={formData}
-            setFormData={setFormData}
-            imagePreview={imagePreview}
-            setImagePreview={setImagePreview}
-            handleImageChange={handleImageChange}
-            handleImageRemove={handleImageRemove}
-        />
-    )
-}
+    const { formData, setFormData, imagePreview, setImagePreview, handleImageChange, handleImageRemove, errors, setErrors, serverError } = useToolsForm();
 
-export const SubmitButton = ({ className = "" }) => {
     return (
-        <div className={className}>
-            <Button
-                type="submit"
-                className=" self-end bg-green-700 hover:bg-green-800 transition duration-300 ease-in-out text-white font-bold py-2 px-8 w-full rounded-xl "
-            >
-                Guardar
-            </Button>
+        <div>
+            <UploadImage
+                className='flex flex-col items-center'
+                formData={formData}
+                setFormData={setFormData}
+                imagePreview={imagePreview}
+                setErrors={setErrors}
+                errors={errors}
+                setImagePreview={setImagePreview}
+                handleImageChange={handleImageChange}
+                handleImageRemove={handleImageRemove}
+            />
+            <div className='flex flex-col items-center'>
+                <FormErrorsClient errors={errors} errorName={"image"} />
+                <FormErrorsServer serverError={serverError} errorName={"image"} />
+            </div>
         </div>
     )
 }
 
 export const ToolStatusDropdown = ({ className = "" }) => {
-    const { formData, setFormData, handleDropdownChange, errors, setErrors } = useToolsForm();
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Estado"]));
+    const { formData, setFormData, handleDropdownChange, errors, setErrors, serverError } = useToolsForm();
+    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Seleccionar"]));
     const [isStateDropdownOpen, setIsStateDropdownOpen] = React.useState(false);
     React.useEffect(() => {
-        console.log("formData actualizado:", formData);
-    })
+        if (formData.status) {
+            setSelectedKeys(new Set([formData.status]));
+        }
+    }, [formData]);
+
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
         [selectedKeys]
@@ -238,26 +241,31 @@ export const ToolStatusDropdown = ({ className = "" }) => {
                     selectedKeys={selectedKeys}
                     onSelectionChange={(keys) => handleDropdownChange(keys, setSelectedKeys, setFormData, "status", errors, setErrors)}
                 >
-                    <DropdownItem key="Estado" >Estado</DropdownItem>
+                    <DropdownItem key="Seleccionar"  >Seleccionar</DropdownItem>
                     <DropdownItem key="Disponible">Disponible</DropdownItem>
                     <DropdownItem key="No disponible">No Disponible</DropdownItem>
                     <DropdownItem key="En reparacion">En Reparación</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
             <div>
-                {errors.status && errors.status._errors.map((error, index) => (
-                    <p key={index} className=" text-sm text-red-600 ml-2 mt-2 mb-2">{error}</p>
-                ))}
+                <FormErrorsClient errors={errors} errorName={"status"} />
+                <FormErrorsServer serverError={serverError} errorName={"status"} />
             </div>
         </div>
     );
 };
 
 export const ToolsCategoryDropdown = ({ className = "" }) => {
-    const { formData, setFormData, handleDropdownChange, errors, setErrors } = useToolsForm();
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Categoría"]));
+    const { formData, setFormData, handleDropdownChange, errors, setErrors, serverError } = useToolsForm();
+    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Seleccionar"]));
     const [isStateDropdownOpen, setIsStateDropdownOpen] = React.useState(false);
     const { categories } = useToolsForm();
+
+    React.useEffect(() => {
+        if (formData.category) {
+            setSelectedKeys(new Set([formData.category]));
+        }
+    }, [formData]);
 
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -266,6 +274,7 @@ export const ToolsCategoryDropdown = ({ className = "" }) => {
     const handleStateOpenChange = (isStateDropdownOpen) => {
         setIsStateDropdownOpen(isStateDropdownOpen);
     };
+
 
     return (
         <div className={className}>
@@ -297,26 +306,33 @@ export const ToolsCategoryDropdown = ({ className = "" }) => {
                     selectedKeys={selectedKeys}
                     onSelectionChange={(keys) => handleDropdownChange(keys, setSelectedKeys, setFormData, "category", errors, setErrors)}
                 >
-                    <DropdownItem key="category">Categoría</DropdownItem>
+                    <DropdownItem key="Seleccionar" value={""}>Seleccionar</DropdownItem>
                     {categories.map((category) => (
                         <DropdownItem key={category.name}>{category.name}</DropdownItem>
                     ))}
                 </DropdownMenu>
             </Dropdown>
             <div>
-                {errors.category && errors.category._errors.map((error, index) => (
-                    <p key={index} className=" text-sm text-red-600 ml-2 mt-2 mb-2">{error}</p>
-                ))}
+                <FormErrorsClient errors={errors} errorName={"category"} />
+                <FormErrorsServer serverError={serverError} errorName={"category"} />
             </div>
         </div>
     )
 }
 
 export const ToolsProviderDropdown = ({ className = "" }) => {
-    const { formData, setFormData, handleDropdownChange, errors, setErrors } = useToolsForm();
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Proveedorador"]));
+    const { formData, setFormData, handleDropdownChange, errors, setErrors, serverError } = useToolsForm();
+    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Seleccionar"]));
     const [isStateDropdownOpen, setIsStateDropdownOpen] = React.useState(false);
     const { providers } = useToolsForm();
+
+    React.useEffect(() => {
+        console.log(formData)
+        if (formData.provider) {
+
+            setSelectedKeys(new Set([formData.provider]));
+        }
+    }, [formData]);
 
     const selectedValue = React.useMemo(
         () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
@@ -356,16 +372,15 @@ export const ToolsProviderDropdown = ({ className = "" }) => {
                     selectedKeys={selectedKeys}
                     onSelectionChange={(keys) => handleDropdownChange(keys, setSelectedKeys, setFormData, "provider", errors, setErrors)}
                 >
-                    <DropdownItem key="provider">Proveedorador</DropdownItem>
+                    <DropdownItem key="Seleccionar" value="">Seleccionar</DropdownItem>
                     {providers.map((provider) => (
                         <DropdownItem key={provider.name}>{provider.name}</DropdownItem>
                     ))}
                 </DropdownMenu>
             </Dropdown>
             <div>
-                {errors.provider && errors.provider._errors.map((error, index) => (
-                    <p key={index} className=" text-sm text-red-600 ml-2 mt-2 mb-2">{error}</p>
-                ))}
+                <FormErrorsClient errors={errors} errorName={"provider"} />
+                <FormErrorsServer serverError={serverError} errorName={"provider"} />
             </div>
         </div>
     )
@@ -420,18 +435,25 @@ export const ToolsMaintenanceNotesCheckbox = ({ className = "" }) => {
                                 className="w-full rounded-lg p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
                                 placeholder="Escriba una nota de mantenimiento"
                             />
-                            <div>
-                                {errors.notes && errors.notes._errors.map((error, index) => (
-                                    <p key={index} className="text-sm text-red-600 ml-2 mt-2 mb-2">
-                                        {error}
-                                    </p>
-                                ))}
-                            </div>
+                            {errors.notes && (
+                                <>
+                                    {errors.notes._errors.includes("Required") ? (
+                                        <p className="text-sm text-red-600 ml-2 mt-2">La nota de mantenimiento es requerida</p>
+                                    ) : (
+                                        errors.notes._errors.map((error, index) => (
+                                            <p key={index} className="text-sm text-red-600 ml-2 mt-2">{error}</p>
+                                        ))
+                                    )}
+                                </>
+                            )}
                         </div>
-
-                        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-5 items-center mt-5 sm:mt-8">
-                            <ToolStartMaintenanceDate className="w-full sm:w-1/2" />
-                            <ToolExpectedRecoveryDate className="w-full sm:w-1/2" />
+                        <div className="flex flex-col sm:flex-row justify-between items-stretch gap-4 mb-5 mt-5 sm:mt-8 max-w-4xl mx-auto">
+                            <div className="flex-1 min-w-0">
+                                <ToolStartMaintenanceDate className="h-full" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <ToolExpectedRecoveryDate className="h-full" />
+                            </div>
                         </div>
                     </div>
                 </>
@@ -458,11 +480,17 @@ export const ToolExpectedRecoveryDate = ({ className = "" }) => {
                 color="default "
                 size="md"
             />
-            {
-                errors.recoveryDate && errors.recoveryDate._errors.map((error, index) => (
-                    <p key={index} className=" text-sm text-red-600 ml-2 mt-2 mb-2">{error}</p>
-                ))
-            }
+            {errors.recoveryDate && (
+                <>
+                    {errors.recoveryDate._errors.includes("Invalid date") ? (
+                        <p className="text-sm text-red-600 ml-2 mt-2">La fecha de recuperación es requerida</p>
+                    ) : (
+                        errors.recoveryDate._errors.map((error, index) => (
+                            <p key={index} className="text-sm text-red-600 ml-2 mt-2">{error}</p>
+                        ))
+                    )}
+                </>
+            )}
         </div>
     )
 }
@@ -483,11 +511,18 @@ export const ToolStartMaintenanceDate = ({ className = "" }) => {
                 color="default "
                 size="md"
             />
-            {
-                errors.startMaintenanceDate && errors.startMaintenanceDate._errors.map((error, index) => (
-                    <p key={index} className=" text-sm text-red-600 ml-2 mt-2 mb-2">{error}</p>
-                ))
-            }
+            {errors.startMaintenanceDate && (
+                <>
+                    {errors.startMaintenanceDate._errors.includes("Invalid date") ? (
+                        <p className="text-sm text-red-600 ml-2 mt-2">La fecha de inicio de mantenimiento es requerida</p>
+                    ) : (
+                        errors.startMaintenanceDate._errors.map((error, index) => (
+                            <p key={index} className="text-sm text-red-600 ml-2 mt-2">{error}</p>
+                        ))
+                    )}
+                </>
+            )}
+
         </div>
     )
 }

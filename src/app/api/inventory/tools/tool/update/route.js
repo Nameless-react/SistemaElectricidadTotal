@@ -22,11 +22,31 @@ const toolsRepository = new ToolsRepository(Tools, sequelze);
 const toolService = new ToolService(toolsRepository);
 const toolController = new ToolController(imageService, validationToolsService, categoryService, providerService, toolService, validationMaintenanceNotesService, maintenanceNotesService);
 
+export async function GET(request) {
+    
+    try {
+        const url = new URL(request.url);
+        const id = url.searchParams.get('id');
+        if (!id) {
+            return NextResponse.json({ error: 'ID no proporcionado' }, { status: 400 });
+        }
+
+        const tool = await toolController.getToolById(id);
+        if (!tool) {
+            return NextResponse.json({ error: 'Herramienta no encontrada' }, { status: 404 });
+        }
+
+        return NextResponse.json({ tool });
+    } catch (error) {
+        console.error('Error processing the request:', error);
+        return NextResponse.json({ error: "Error processing the request" }, { status: 500 });
+    }
+}
+
 export async function POST(request) {
     try {
-
-       const result = await toolController.saveTool(request, NextResponse);
-
+        
+        const result = await toolController.updateTool(request, NextResponse);
         return result
         
     } catch (error) {

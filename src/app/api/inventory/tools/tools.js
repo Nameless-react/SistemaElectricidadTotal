@@ -1,6 +1,7 @@
 
-import Equipos from "../../../../../components/inventory/tools/toolsTable";
-import { NextResponse } from "next/server";
+import ToolsTable from "../../../../../components/inventory/tools/toolsTable";
+import { NextRequest, NextResponse } from "next/server";
+
 import { writeFile } from "fs/promises";
 import path from "path";
 import { z } from "zod";
@@ -31,8 +32,8 @@ const toolController = new ToolController(imageService,validationToolsService, c
 export default async function ToolsServerSideComponent() {
     try {
         
-        const tools = await toolController.getTools();
-
+        const tools = await toolController.getTools(NextRequest,NextResponse);
+    
         if (!Array.isArray(tools)) {
             console.error('Data is not an array:', tools);
             return <p>Error al cargar los datos.</p>;
@@ -41,8 +42,9 @@ export default async function ToolsServerSideComponent() {
         if (tools.length === 0) {
             return <p>No se encontraron herramientas.</p>;
         }
-    
-        return <Equipos tools={tools} />;
+        
+        
+        return <ToolsTable tools={tools} />;
 
     } catch (error) {
         if (error instanceof Error) {
