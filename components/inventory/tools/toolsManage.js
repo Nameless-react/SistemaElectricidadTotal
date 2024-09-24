@@ -1,8 +1,12 @@
 "use client"
 import React from 'react'
 import { ToolFormProvider } from "./compoundComponents/context/toolsFormContext";
-import { ToolForm, ToolName, ToolModel, ToolDescription, ToolsCategoryDropdown, ToolsProviderDropdown, ToolStatusDropdown, ToolSerial, ToolCost, ToolDate, SubmitButton, ToolsMaintenanceNotesCheckbox, ToolImage } from './compoundComponents/tools/toolForm';
+import { ToolForm, ToolName, ToolModel, ToolDescription, ToolsCategoryDropdown, ToolsProviderDropdown, ToolStatusDropdown, ToolSerial, ToolCost, ToolDate, ToolsMaintenanceNotesCheckbox, ToolImage } from './compoundComponents/tools/toolForm';
+import { SubmitButton } from '../../buttons/form/submitButton';
+import { useSearchParams } from 'next/navigation';
 export default function ManageTool({ categories, providers }) {
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
 
     return (
         <div className="flex-grow sm:mx-auto sm:max-w-7xl pt-5 px-2 sm:px-6 mb-10">
@@ -52,7 +56,7 @@ export default function ManageTool({ categories, providers }) {
 
                     {/* Botón de envío */}
                     <div className="flex justify-center w-full">
-                        <SubmitButton className="mt-10 w-full" />
+                        <SubmitButton id={id} title={id ? 'Actualizar Equipo' : 'Agregar Equipo'} className="mt-10 w-full sm:w-1/2" />
                     </div>
                 </ToolForm>
             </ToolFormProvider>

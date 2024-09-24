@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faEdit, faTrash, faSearch, faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { Input } from "@nextui-org/input";
 
-export default function Equipos({ tools }) {
+export default function ToolsTable({ tools }) {
     return (
         <div className='flex-grow mx-auto max-w-7xl pt-16 px-6'>
             <h1 className="text-3xl text-center mb-8 font-semibold mt-10 text-white">Gestión de equipos</h1>
@@ -46,7 +46,7 @@ export default function Equipos({ tools }) {
                             <TableCell>
                                 <div className="flex w-full gap-2">
                                     <div className="bg-blue-700 hover:bg-blue-800 transition duration-300 ease-in-out text-white font-bold py-1 px-2 rounded-lg">
-                                        <Link className="text-xl" href={"#"}>
+                                        <Link className="text-xl" href={"/gestion-inventario/equipos/gestionar?id=" + tool.id}>
                                             <FontAwesomeIcon icon={faEdit} />
                                         </Link>
                                     </div>
