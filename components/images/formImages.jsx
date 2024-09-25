@@ -27,7 +27,7 @@ import { Suspense } from 'react';
         setImagePreview={setImagePreview}
     />
 */
-export const UploadImage = ({ className = "" ,handleImageChange, handleImageRemove, formData, setFormData, imagePreview, setImagePreview}) => {
+export const UploadImage = ({ className = "" ,handleImageChange, handleImageRemove, formData, setFormData, imagePreview, setImagePreview, setErrors = "", errors = ""}) => {
     return (
         <div className={className}>
             <label className="text-white mt-5">Agrega una imagen(opcional)</label>
@@ -42,7 +42,7 @@ export const UploadImage = ({ className = "" ,handleImageChange, handleImageRemo
                     id="image"
                     hidden
                     className="hidden"
-                    onChange={(e) => handleImageChange(e, formData, setFormData, setImagePreview)}
+                    onChange={(e) => handleImageChange(e, formData, setFormData, setImagePreview, setErrors, errors)}
                 />
             </label>
             {
