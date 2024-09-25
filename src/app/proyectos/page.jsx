@@ -1,6 +1,6 @@
 'use client'
 import styles from "/css/projects.module.css";
-import Project from "/components/project";
+import Project from "/components/project/project";
 
 export default function Projects() {
     return (

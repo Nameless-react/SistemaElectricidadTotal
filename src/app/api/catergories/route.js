@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import CategoryController from "../../../../controllers/category.controller";
 
 const categoryController = new CategoryController();

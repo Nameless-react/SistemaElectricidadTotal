@@ -5,7 +5,7 @@ import { writeFile } from "fs/promises";
 import path from "path";
 import { z } from "zod";
 import { ToolsRepository,CategoryRepository,ProviderRepository,MaintenanceNotesRepository } from "../../../../../repositories";
-import {MaintenanceNotesService,CategoryService,ProviderService,ImageService, ToolService,ValidationMaintenanceNotesService, ValidationToolsService} from "../../../../../Services";
+import {MaintenanceNotesService,CategoryService,ProviderService,ImageService, ToolService,ValidationMaintenanceNotesService, ValidationToolsService} from "../../../../../services";
 import {ToolController} from "../../../../../controllers";
 import sequelze from "../../../../../config/databaseConnection";
 import { Category, Provider, Tools, MaintenanceNotes } from "../../../../../models";
