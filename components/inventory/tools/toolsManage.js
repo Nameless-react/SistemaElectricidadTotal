@@ -4,17 +4,15 @@ import { ToolFormProvider } from "./compoundComponents/context/toolsFormContext"
 import { ToolForm, ToolName, ToolModel, ToolDescription, ToolsCategoryDropdown, ToolsProviderDropdown, ToolStatusDropdown, ToolSerial, ToolCost, ToolDate, ToolsMaintenanceNotesCheckbox, ToolImage } from './compoundComponents/tools/toolForm';
 import { SubmitButton } from '../../buttons/form/submitButton';
 import { useSearchParams } from 'next/navigation';
-export default function ManageTool({ categories, providers }) {
-    const searchParams = useSearchParams();
-    const id = searchParams.get('id');
-
+export default function ManageTool({ categories, providers,id ,tool}) {
+   
     return (
         <div className="flex-grow sm:mx-auto sm:max-w-7xl pt-5 px-2 sm:px-6 mb-10">
             <h1 className="text-3xl text-center mb-8 font-semibold mt-10 text-white">
                 Agregar Equipo
             </h1>
 
-            <ToolFormProvider categories={categories} providers={providers}>
+            <ToolFormProvider categories={categories} providers={providers} tool={tool}>
                 <ToolForm className="flex flex-col justify-center items-center bg-gray-800 bg-opacity-20 w-full sm:w-1/2 rounded-xl sm:mx-auto py-10 px-8">
                     {/* Primera fila: Nombre y Modelo */}
                     <div className="flex flex-col sm:flex-row justify-center mb-5 sm:gap-4 space-y-5 sm:space-y-0 w-full">

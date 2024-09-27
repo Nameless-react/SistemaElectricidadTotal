@@ -64,13 +64,10 @@ export const handleImageRemove = (formData, setFormData, setImagePreview) => {
     setImagePreview(null);
 }
 
-export const handleSubmit = async (e, formData, setErrors, setServerError, isChecked, urlFetch) => {
+export const handleSubmit = async (e, id = null, formData, setErrors, setServerError, isChecked = false, urlFetch, urlRedirect, router) => {
     e.preventDefault();
-    setErrors([]);
-    setServerError([]);
 
     const { success: formSuccess, error: formErrors } = validateFormTools(formData);
-    console.log(formSuccess, formErrors);
 
     if (!formSuccess) {
         setErrors(formErrors);
@@ -78,33 +75,30 @@ export const handleSubmit = async (e, formData, setErrors, setServerError, isChe
     }
 
     if (isChecked) {
-
         const { success: maintenanceSuccess, error: maintenanceErrors } = validateFormToolsMaintenance(formData);
         if (!maintenanceSuccess) {
             setErrors(maintenanceErrors);
             return;
         }
     }
-
+    
     const formToSend = new FormData();
     for (const key in formData) {
         formToSend.append(key, formData[key]);
     }
-   
     try {
-
         const response = await fetch(urlFetch, {
             method: 'POST',
             body: formToSend
         });
 
         if (response.ok) {
-         
+
             setErrors([]);
             const data = await response.json();
-          
+            router.push(`${urlRedirect}${id ? `?updateSuccess=true` : '?createSuccess=true'}`);
         } else {
-            
+
             const error = await response.json();
             console.error(error);
             setServerError(error);
