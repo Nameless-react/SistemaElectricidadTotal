@@ -1,13 +1,4 @@
-import { NextResponse } from "next/server";
-import apiErrorWrapper from "/errors/apiErrorWrapper";
+import appointmentController from "/controllers/appointment.controller";
 
-
-export const GET = apiErrorWrapper(async function(req) {
-
-    console.log(req)
-    return NextResponse.json({ message: 'Hello from Next.js!' }, { status: 200 })
-})
-
-export const POST = apiErrorWrapper(async function(req) {
-
-})
+export const GET = (req, res) => appointmentController.getAppointments(req, res);
+export const POST = (req, res) => appointmentController.saveAppointment(req, res);

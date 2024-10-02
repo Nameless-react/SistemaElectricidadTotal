@@ -4,9 +4,19 @@ import { getLocalTimeZone, today, Time } from "@internationalized/date";
 import { I18nProvider } from "@react-aria/i18n";
 
 
-export default function DateAppointment() {
+export default function DateAppointment({ appointmentDate, appointmentTime, setDateTime }) {
     // Lógica para quitar fechas y horas ocupadas y validaciones
     
+    const handleChangeDate = (value) => setDateTime(prevValues => ({
+        ...prevValues,
+        appointmentDate: value
+    }))
+
+    const handleChangeTime = (value) => setDateTime(prevValues => ({
+        ...prevValues,
+        appointmentTime: value
+    }))
+
 
     return (
         <div className="w-2/3 flex justify-center gap-4 items-center">
@@ -26,6 +36,9 @@ export default function DateAppointment() {
                             calendar: "dark",
                             popoverContent: "dark",
                         }}
+                        onChange={handleChangeDate}
+                        name="appointmentDate"
+                        value={appointmentDate}
                     />
                 </I18nProvider>
             </div>
@@ -40,6 +53,9 @@ export default function DateAppointment() {
                     classNames={{
                         segment: "hover:bg-slate-600 active:bg-slate-600 focus:bg-slate-600"
                     }}
+                    onChange={handleChangeTime}
+                    name="appoitmentTime"
+                    value={appointmentTime}
                 />
             </div>
         </div>
