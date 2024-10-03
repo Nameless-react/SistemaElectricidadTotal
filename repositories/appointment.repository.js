@@ -33,6 +33,7 @@ export default class AppointmentRepository {
     }
 
     async getAppointment(id) {
+        console.log(id)
         const result = await this.appointmentModel.findByPk(id);
         return result ? result.dataValues : null;
     }
@@ -41,13 +42,13 @@ export default class AppointmentRepository {
         return await this.appointmentModel.findAll();
     }
 
-    async getAppointment(appointment) {
-        return await this.appointmentModel.findOne({
-            where: {
-                ...appointment
-            }
-        });
-    }
+    // async getAppointment(appointment) {
+    //     return await this.appointmentModel.findOne({
+    //         where: {
+    //             ...appointment
+    //         }
+    //     });
+    // }
 
     async updateAppointment({ idAppointment, ...newAppointmentData }) {
         await this.appointmentModel.update(newAppointmentData, {

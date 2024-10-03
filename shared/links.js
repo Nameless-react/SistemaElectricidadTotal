@@ -13,7 +13,7 @@ export default [
     },
     {
       label: 'Citas',
-      url: '/agendar-cita',
+      url: '/citas',
       className: 'text-xl font-semibold w-full cursor full py-2 px-2 rounded-md hover:text-main-orange transition duration-300 ease-in-out',
       linkClassName: 'foreground'
     }

@@ -41,7 +41,7 @@ Appointment.init({
         allowNull: false,
         validate: {
             addressLength(value) {
-                if (value.length < 5) throw new Error("La dirección es demasiado corta")
+                if (value.length < 5 && !this.isInOffice) throw new Error("La dirección es demasiado corta")
             }
         }
     },

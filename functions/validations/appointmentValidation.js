@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { parse, format, isAfter, isEqual } from "@formkit/tempo"
+import { format, isAfter, isEqual } from "@formkit/tempo"
 
 const appointmentValidations = z.object({
     idAppointment: z.number({
@@ -25,8 +25,6 @@ const appointmentValidations = z.object({
     address: z.string({
         invalid_type_error: "La dirección tiene que ser un texto",
         required_error: "La dirección es necesaria para agendar una cita"
-    }).min(5, {
-        message: "La dirección tiene que ser mayor a 5 palabras"
     }),
     appointmentDate: z.string({
         invalid_type_error: "La fecha de la cita tiene que ser valida",
@@ -47,5 +45,22 @@ const appointmentValidations = z.object({
     }),
 })
 
-export const validateAppointment = (object) =>  appointmentValidations.omit({ idAppointment: true, assignEmployee: true }).safeParse(object);
-export const validatePartialAppointment = (object) =>  appointmentValidations.partial().safeParse(object);
+
+export const validateAppointment = (object) =>  (
+    appointmentValidations
+        .omit({ idAppointment: true, assignEmployee: true })
+        .refine(modelValidation => !(modelValidation.address.length < 5 && !modelValidation.isInOffice),
+        {
+            message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
+            path: ["address"]
+        })
+        .safeParse(object))
+export const validatePartialAppointment = (object) =>  (
+    appointmentValidations
+        .partial()
+        .refine(modelValidation => !(modelValidation.address.length < 5 && !modelValidation.isInOffice),
+        {
+            message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
+            path: ["address"]
+        })
+        .safeParse(object))

@@ -22,6 +22,7 @@ class AppointmentController {
     getAppointment = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
         const appointment = await this.appointmentService.getAppointment(parseInt(id));
+        console.log(appointment)
         return NextResponse.json(appointment, { status: 200 })
     })
 
@@ -56,8 +57,7 @@ class AppointmentController {
     appointmentConfirmation = apiErrorWrapper(async (req, params) => {
         const confirmToken = req.nextUrl.searchParams.get("token");
         const result = await this.appointmentService.appointmentConfirmation({ confirmToken });
-        console.log(result)
-        return NextResponse.redirect(new URL(`/agendar-cita/confirmacion-exitosa?error=${result}`, req.url));
+        return NextResponse.redirect(new URL(`/citas/confirmacion-exitosa`, req.url));
     })
 }
 

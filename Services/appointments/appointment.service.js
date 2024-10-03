@@ -3,6 +3,7 @@ import { ValidationFailureError, NotFoundError } from "/errors/errors";
 import { randomUUID } from "node:crypto";
 import VerificationAppointment from "/components/templateMails/VerificationAppointment";
 
+
 export default class AppointmentService {
     constructor(appointmentRepository, mailService, appointmentConfirmationRepository) {
         this.appointmentRepository = appointmentRepository;
@@ -22,8 +23,8 @@ export default class AppointmentService {
     
         this.mailService.sendEmail(validatedAppointment.data.email, "Confirmación de cita", 
             <VerificationAppointment 
-                appointmentDate={validatedAppointment.appointmentDate}
-                appointmentTime={validatedAppointment.appointmentTime}
+                appointmentDate={validatedAppointment.data.appointmentDate}
+                appointmentTime={validatedAppointment.data.appointmentTime}
                 token={token}
                 idAppointment={savedAppointment.idAppointment}
              />)

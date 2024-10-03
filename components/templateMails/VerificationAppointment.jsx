@@ -1,9 +1,9 @@
 import config from "/config/config";
 
 export default function VerificationAppointment({ appointmentDate, appointmentTime, token, idAppointment }) {
-    const confirmationUrl = `http://${config.host}:3000/api/citas/confirmar-cita?token=${token}`;
-    const cancellationUrl = `http://${config.host}:3000/api/citas/${idAppointment}`;
-
+    const confirmationUrl = `http://${config.host}:3000/api/citas/confirmar?token=${token}`;
+    const cancellationUrl = `http://${config.host}:3000/citas/cancelar/${idAppointment}`;
+    const editUrl = `http://${config.host}:3000/citas/editar/${idAppointment}`;
 
 
     return (
@@ -15,10 +15,8 @@ export default function VerificationAppointment({ appointmentDate, appointmentTi
             <p>
                 <a href={confirmationUrl}>Confirmar mi cita</a>
             </p>
-            <p>
-                <button onClick={handleCancelAppointment}>Cancelar mi cita</button>
-            </p>
-            <p>Si no puede asistir, le agradecemos que nos lo informe a la mayor brevedad posible respondiendo a este correo o contactándonos a través de nuestros canales de atención.</p>
+            <p>Si desea editar su cita lo puede hacer haciendo clic en el siguiente enlace: <a href={editUrl}>Editar mi cita</a></p>
+            <p>Si no puede asistir, le agradecemos que nos lo informe a la mayor brevedad posible, dando clic en el siguiente enlace:  <a href={cancellationUrl}>Cancelar mi cita</a></p>
             <p>Gracias por confiar en nosotros. Quedamos a su disposición para cualquier duda o consulta.</p>
             <p>Atentamente,</p>
             <p><strong>Equipo de Soporte</strong></p>
