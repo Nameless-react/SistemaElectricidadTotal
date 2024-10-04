@@ -2,11 +2,11 @@ import { Model, DataTypes, Optional } from 'sequelize';
 import sequelze from '../config/databaseConnection';
 import Category from './category.model';
 
-class Tools extends Model {
+class Tool extends Model {
 
 }
 
-Tools.init({
+Tool.init({
     
     id_tools:{
         type: DataTypes.INTEGER,
@@ -50,6 +50,6 @@ Tools.init({
     timestamps: false,
 });
 
-Tools.belongsTo(Category,{foreignKey: "id_category", as: "category"});
+Tool.belongsTo(Category,{foreignKey: "id_category", as: "category"});
 
-export default Tools
+export default Tool;

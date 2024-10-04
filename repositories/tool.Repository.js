@@ -1,5 +1,5 @@
 
-class ToolsRepository {
+class ToolRepository {
 
     constructor(tool, sequelize) {
         this.tool = tool;
@@ -100,6 +100,17 @@ class ToolsRepository {
             throw new Error("Error while updating tool")
         }
     }
+
+    async deleteTool(id) {
+
+        try {
+            const result = await this.tool.update({ status: "No Disponible" }, { where: { id_tools: id } });
+            return result;
+        } catch (error) {
+            console.error('Error processing the request:', error);
+            throw new Error("Error while deleting tool");
+        }
+    }
 }
 
-export default ToolsRepository;
+export default ToolRepository;

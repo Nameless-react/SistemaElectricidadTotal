@@ -5,7 +5,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
- 
+
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/components/button.js",
@@ -16,7 +16,8 @@ module.exports = {
     "./node_modules/@nextui-org/theme/dist/components/input.js",
     "./node_modules/@nextui-org/theme/dist/components/date-picker.js",
     "./node_modules/@nextui-org/theme/dist/components/checkbox.js",
-
+    "./node_modules/@nextui-org/theme/dist/components/modal.js",
+    "./node_modules/@nextui-org/theme/dist/components/pagination.js",
   ],
   theme: {
     extend: {

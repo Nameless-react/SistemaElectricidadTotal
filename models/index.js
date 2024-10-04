@@ -1,17 +1,18 @@
-import Tools from "./tools.model";
-import Materials from "./materials.model";
+import Tool from "./tool.model"; "./tool.model";
+import Material from "./material.model";
 import Provider from "./provider.model";
-import ToolsProvider from "./tools_provider.model";
-import MaterialsProvider from "./materials_provider.model";
+import ToolProvider from "./tools_provider.model";
+import MaterialProvider from "./material_provider.model";
 import MaintenanceNotes from "./maintance_notes.model";
 import Category from "./category.model";
 
+
 export {
-    Tools,
-    Materials,
+    Tool,
+    Material,
     Provider,
-    ToolsProvider,
-    MaterialsProvider,
+    ToolProvider,
+    MaterialProvider,
     MaintenanceNotes,
     Category
 }

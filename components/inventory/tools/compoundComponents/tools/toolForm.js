@@ -9,14 +9,14 @@ import { Checkbox } from '@nextui-org/checkbox';
 import { UploadImage } from '../../../../images/formImages';
 import { FormErrorsClient, FormErrorsServer } from '../../../../errors/form_errors/formErrors';
 export const ToolForm = ({ className = "", children }) => {
-    const { handleSubmit, formData, setErrors, setServerError, isChecked, setIsChecked, id } = useToolsForm();
+    const { handleSubmit, formData, setErrors, setServerError, isChecked, setIsChecked, id, router } = useToolsForm();
 
     return (
         <div className={className}>
             <form
                 onSubmit={id
-                    ? (e) => handleSubmit(e, formData, setErrors, setServerError, isChecked, `${process.env.NEXT_PUBLIC_URL_TOOLS_UPDATE}?id=${id}`)
-                    : (e) => handleSubmit(e, formData, setErrors, setServerError, isChecked, process.env.NEXT_PUBLIC_URL_TOOLS_CREATE)
+                    ? (e) => handleSubmit(e, id, formData, setErrors, setServerError, isChecked, `${process.env.NEXT_PUBLIC_URL_TOOLS_UPDATE}?id=${id}`, process.env.NEXT_PUBLIC_URL_TOOLS, router)
+                    : (e) => handleSubmit(e, id, formData, setErrors, setServerError, isChecked, process.env.NEXT_PUBLIC_URL_TOOLS_CREATE, process.env.NEXT_PUBLIC_URL_TOOLS, router)
                 }>
                 {children}
             </form>
@@ -63,7 +63,6 @@ export const ToolModel = ({ className = "" }) => {
                 size="md"
                 placeholder="Modelo"
             />
-
             <FormErrorsClient errors={errors} errorName={"model"} />
             <FormErrorsServer serverError={serverError} errorName={"model"} />
 

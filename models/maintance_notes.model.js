@@ -1,6 +1,6 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelze from '../config/databaseConnection';
-import Tools from './tools.model';
+import Tools from './tool.model';
 
 class MaintenanceNotes extends Model {
 

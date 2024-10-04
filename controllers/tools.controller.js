@@ -142,6 +142,27 @@ class ToolController {
         }
     }
 
+    deleteTool = async (req, res) => {
+        try {
+            const url = new URL(req.url);
+            const id = url.searchParams.get("id");
+            const validatedId = this.validateId(id);
+            const result = await this.toolService.delete(validatedId);
+
+
+            if (!result) {
+                console.error("Error while deleting tool");
+                return this.sendError(res, "Error while deleting tool", "delete_error", 500);
+            }
+
+            return res.json({ message: 'Tool deleted successfully' }, { status: 200 });
+
+        } catch (error) {
+            console.error(error);
+            return this.sendError(res, "Error processing the request", "internal_error", 500);
+        }
+    }
+
     prepareToolData(data, category, provider) {
         const { name, model, serial, status, image, description, date, cost } = data;
 
