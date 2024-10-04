@@ -1,10 +1,16 @@
 "use client";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faMapMarkerAlt, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import links from "../../shared/links";
 export default function Footer() {
+
+    const footerLinks = links.map((link, index) => (
+        <li key={index}><Link href={link.url}>{link.label}</Link></li>
+    ));
+
 
     const DateYear = new Date().getFullYear();
     return (
@@ -16,7 +22,7 @@ export default function Footer() {
                     <h2 className="text-3xl font-bold mb-4 border-b border-gray-600 pb-2">Contacto</h2>
                     <p className="flex items-center mb-3 text-lg">
                         <FontAwesomeIcon icon={faMapMarkerAlt} className="text-yellow-400 text-xl mr-3" />
-                        Atenas ALajuela Costa Rica
+                        Atenas Alajuela Costa Rica
                     </p>
                     <p className="flex items-center mb-3 text-lg">
                         <FontAwesomeIcon icon={faEnvelope} className="text-blue-400 text-xl mr-3" />
@@ -32,17 +38,14 @@ export default function Footer() {
                 <div className="mb-8 md:mb-0">
                     <h2 className="text-3xl font-bold mb-4 border-b border-gray-600 pb-2">Navegación</h2>
                     <ul className="space-y-2">
-                        <li><Link href="/" className="hover:underline hover:text-yellow-400 transition">Home</Link></li>
-                        <li><Link href="/portal-clientes" className="hover:underline hover:text-yellow-400 transition">Portal Clientes</Link></li>
-                        <li><Link href="/citas" className="hover:underline hover:text-yellow-400 transition">Citas</Link></li>
-                        <li><Link href="/contacto" className="hover:underline hover:text-yellow-400 transition">Contacto</Link></li>
+                       {footerLinks}
                     </ul>
                 </div>
 
 
-                <div className="flex flex-col items-center md:items-end">
+                <div className="flex flex-col items-center">
                     <h2 className="text-3xl font-bold mb-4 border-b border-gray-600 pb-2">Síguenos</h2>
-                    <div className="flex space-x-4">
+                    <div className="flex justify-center space-x-4">
                         <Link href="#" className="text-blue-600 hover:text-blue-700 transition">
                             <FontAwesomeIcon icon={faFacebookF} className="text-3xl" />
                         </Link>

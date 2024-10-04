@@ -5,7 +5,7 @@ import path from 'path';
 import { Category, MaintenanceNotes, Provider, Tools } from '../../../../../models';
 import sequelze from '../../../../../config/databaseConnection';
 import { ToolsRepository,CategoryRepository,MaintenanceNotesRepository,ProviderRepository } from '../../../../../repositories';
-import { ImageService,CategoryService,MaintenanceNotesService,ProviderService,ToolService,ValidationMaintenanceNotesService,ValidationToolsService } from '../../../../../Services';
+import { ImageService,CategoryService,MaintenanceNotesService,ProviderService,ToolService,ValidationMaintenanceNotesService,ValidationToolsService } from '../../../../../services';
 import { ToolController } from '../../../../../controllers';
 
 const toolsRepository = new ToolsRepository(Tools,sequelze);

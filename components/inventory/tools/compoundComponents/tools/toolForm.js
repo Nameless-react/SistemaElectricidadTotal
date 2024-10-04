@@ -63,7 +63,6 @@ export const ToolModel = ({ className = "" }) => {
                 size="md"
                 placeholder="Modelo"
             />
-
             <FormErrorsClient errors={errors} errorName={"model"} />
             <FormErrorsServer serverError={serverError} errorName={"model"} />
 

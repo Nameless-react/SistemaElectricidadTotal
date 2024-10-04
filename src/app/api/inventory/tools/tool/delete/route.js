@@ -4,8 +4,11 @@ export async function DELETE(request) {
 
     //const toolController = createToolController();
     try {
-        console.log(request);
-        return NextResponse.json({ message: "Tool deleted successfully" }, { status: 200 });
+
+        const toolController = createToolController();
+        const result = toolController.deleteTool(request, NextResponse);
+        return result;
+
     } catch (error) {
         console.error('Error processing the request:', error);
         return NextResponse.json({ error: "Error processing the request" }, { status: 500 });

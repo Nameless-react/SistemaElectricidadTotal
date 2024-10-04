@@ -1,13 +1,13 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelze from '../config/databaseConnection';
-import Materials from './materials.model';
+import Materials from './material.model';
 import Provider from './provider.model';
 
-class MaterialsProvider extends Model {
+class MaterialProvider extends Model {
 
 }
 
-MaterialsProvider.init({
+MaterialProvider.init({
     id_tools_provider: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -35,13 +35,13 @@ MaterialsProvider.init({
     }
 
 },
-{
-    sequelize: sequelze,
-    tableName: 'materials_provider',
-    timestamps: false
-});
+    {
+        sequelize: sequelze,
+        tableName: 'materials_provider',
+        timestamps: false
+    });
 
-MaterialsProvider.belongsTo(Materials,{foreignKey: "id_materials", as: "materials"});
-MaterialsProvider.belongsTo(Provider,{foreignKey: "id_provider", as: "provider"});
+MaterialProvider.belongsTo(Materials, { foreignKey: "id_materials", as: "materials" });
+MaterialProvider.belongsTo(Provider, { foreignKey: "id_provider", as: "provider" });
 
-export default MaterialsProvider;
+export default MaterialProvider;

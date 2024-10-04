@@ -1,5 +1,5 @@
 "use client";
-import ProjectDashboard from "/components/ProjectDashboard";
+import ProjectDashboard from "/components/project/ProjectDashboard";
 
 export default function Project({ params }) {
     return (

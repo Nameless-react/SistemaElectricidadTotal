@@ -1,8 +1,8 @@
 
 import ToolsTable from "../../../../../components/inventory/tools/toolsTable";
 import { NextRequest, NextResponse } from "next/server";
-import { createToolController } from "../../../../../controllers/factory";
 
+import { createToolController } from "../../../../../controllers/factory";
 
 
 /*Esta funcion es un server side component para las herramientas
