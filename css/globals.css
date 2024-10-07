@@ -36,7 +36,8 @@
     top: 0;
     left: 0;
 }
-.signInForm, .signUpForm {
+.signInForm,
+.signUpForm {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -45,9 +46,17 @@
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     transition: all 0.2s 0.7s;
-    padding: 5rem;
+    padding: 5rem; /* Padding por defecto */
 }
 
+@media (max-width: 640px) { /* Ajustar este valor según el breakpoint deseado */
+    .signInForm,
+    .signUpForm {
+        padding: 2rem;
+        gap: 0rem;
+
+    }
+}
 .signInForm button, .signUpForm button {
     margin-top: 4rem;
     border-radius: 20px;
@@ -66,15 +75,17 @@
     left: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    /* Agrega un gap entre los paneles si es necesario */
+    gap: 1rem; 
 }
 
 .panel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start; /* Cambia a flex-end en móviles */
     text-align: center;
-    z-index: 7;
+    z-index: 10;
     gap: 1rem;
 }
 
@@ -190,7 +201,7 @@
 @media (max-width: 870px) {
     .outer-container {
         min-height: 800px;
-        height: 100vh;
+        height: 150vh;
     }
     .signInSignUp {
         width: 100%;
@@ -256,7 +267,7 @@
   
     .outer-container.sign-up-mode:before {
       transform: translate(-50%, 100%);
-      bottom: 32%;
+      bottom: 30%;
       right: initial;
     }
   
@@ -299,7 +310,7 @@
     }
   
     .outer-container.sign-up-mode:before {
-      bottom: 28%;
+      bottom: 20%;
       left: 50%;
     }
   }

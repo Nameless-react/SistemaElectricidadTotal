@@ -3,10 +3,12 @@ import MaintenanceNotesRepository from "./maintenanceNotes.repository.js";
 import ProviderRepository from "./providers.repository.js";
 import ToolRepository from "./tool.Repository.js";
 import MaterialRepository from "./material.repository.js";
+import UserRepository from "./userRepository.js";
 export {
     CategoryRepository,
     MaintenanceNotesRepository,
     ProviderRepository,
     ToolRepository,
-    MaterialRepository
+    MaterialRepository,
+    UserRepository
 }

@@ -2,12 +2,14 @@
 import { writeFile } from "fs/promises";
 import path from "path";
 import { z } from "zod";
-import { ToolRepository, CategoryRepository, ProviderRepository, MaintenanceNotesRepository, MaterialRepository } from "../repositories";
-import { ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService } from "../Services";
-import { ToolController, MaterialController } from "../controllers";
+import { validateUser } from "../functions/validations/userValidation";
+import { ToolRepository, CategoryRepository, ProviderRepository, MaintenanceNotesRepository, MaterialRepository, UserRepository } from "../repositories";
+import { ValidationUserService ,ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService, UserService } from "../Services";
+import { SignUpController, ToolController, MaterialController } from "../controllers";
 import sequelze from "../config/databaseConnection";
 import { Category, Provider, Tool, MaintenanceNotes, Material } from "../models";
 import { validateMaterialsForm } from "../functions/validations/materialsValidtion";
+import User from "../models/user.model";
 
 
 export const createToolController = () => {
@@ -35,6 +37,14 @@ export const createMaterialController = () => {
     const materialService = new MaterialService(materialRepository);
     const validationMaterialService = new ValidationMaterialService(validateMaterialsForm);
     return new MaterialController(materialService, validationMaterialService, categoryService, providerService);
+}
+
+
+export const createSignUpController = () => {
+    const userRepository = new UserRepository(User, sequelze);
+    const userService = new UserService(userRepository);
+    const validationUserService = new ValidationUserService(validateUser);
+    return new SignUpController(userService, validationUserService);
 }
 
 
