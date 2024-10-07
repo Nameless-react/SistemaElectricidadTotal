@@ -7,6 +7,8 @@ import ValidationToolsService from "./tools/validations/validationTool.service";
 import ImageService from "./image.service";
 import MaterialService from "./materials/material.service";
 import ValidationMaterialService from "./materials/validations/validationMaterial.service";
+import UserService from "./users/user.service";
+import ValidationUserService from "./users/validations/validationUser.service";
 export {
     CategoryService,
     MaintenanceNotesService,
@@ -16,5 +18,7 @@ export {
     ValidationMaintenanceNotesService,
     ValidationToolsService,
     ValidationMaterialService,
-    ImageService
+    ImageService,
+    UserService,
+    ValidationUserService
 }

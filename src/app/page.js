@@ -8,6 +8,7 @@ import services from "/shared/services";
 import projects from "/shared/projects";
 import ContactForm from "/components/others/ContactForm";
 
+
 export default function Home() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const sectionsRef = useRef([]);
