@@ -23,17 +23,23 @@ export default class AppointmentService {
     
         this.mailService.sendEmail(validatedAppointment.data.email, "Confirmación de cita", 
             <VerificationAppointment 
-                appointmentDate={validatedAppointment.data.appointmentDate}
-                appointmentTime={validatedAppointment.data.appointmentTime}
+                appointmentDate={savedAppointment.appointmentDate}
+                appointmentTime={savedAppointment.appointmentTime}
                 token={token}
                 idAppointment={savedAppointment.idAppointment}
              />)
         return result;
     }
 
-    async getAppointment(id) {
-        const appointment = await this.appointmentRepository.getAppointment(id);
-        if (!appointment) throw new NotFoundError(`El recurso con id: ${id} no fue encontrado`)
+    async getAppointmentById(id) {
+        const appointment = await this.appointmentRepository.getAppointmentById(id);
+        if (!appointment) throw new NotFoundError(`la cita con el id: ${id} no fue encontrada`)
+        return appointment;
+    }
+
+    async getAppointment(appointmentFields) {
+        const appointment = await this.appointmentRepository.getAppointment(appointmentFields);
+        if (!appointment) throw new NotFoundError(`La cita no fue encontrada`)
         return appointment;
     }
 

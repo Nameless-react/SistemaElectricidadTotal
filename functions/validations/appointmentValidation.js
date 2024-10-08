@@ -1,7 +1,8 @@
 import { z } from "zod";
 import { format, isAfter, isEqual } from "@formkit/tempo"
+import { parseDate } from "@internationalized/date";
 
-const appointmentValidations = z.object({
+export const appointmentValidations = z.object({
     idAppointment: z.number({
         invalid_type_error: "El id de la cita tiene que ser un número"
     }).positive({
@@ -26,24 +27,33 @@ const appointmentValidations = z.object({
         invalid_type_error: "La dirección tiene que ser un texto",
         required_error: "La dirección es necesaria para agendar una cita"
     }),
-    appointmentDate: z.string({
-        invalid_type_error: "La fecha de la cita tiene que ser valida",
-        required_error: "El campo de la fecha es necesario"
-    }).date({
-        message: "La fecha no es valida"
-    }).refine(value => {
-        const currentDate = format(new Date(), "YYYY-MM-DD");
-        return (isAfter(value, currentDate) || isEqual(value, currentDate)); 
-    }, {
-        message: "La fecha tiene que ser de igual o posterior a la fecha actual"
-    }),
-    appointmentTime: z.string({
-        invalid_type_error: "La hora tiene que ser escrita en formato de texto hh:mm",
-        required_error: "El campo de la hora es necesario"
-    }).time({
-        message: "Hora invalida"
-    }),
+    appointmentDate: z.preprocess(
+        value => value.toString(),
+        z.string({
+            invalid_type_error: "La fecha de la cita tiene que ser valida",
+            required_error: "El campo de la fecha es necesario"
+        }).date({
+            message: "La fecha no es valida"
+        }).refine(value => {
+            const currentDate = format(new Date(), "YYYY-MM-DD");
+            return (isAfter(value, currentDate) || isEqual(value, currentDate)); 
+        }, {
+            message: "La fecha tiene que ser de igual o posterior a la fecha actual"
+        })
+    ),
+    appointmentTime: z.preprocess(
+        value => value.toString(),
+        z.string({
+            invalid_type_error: "La hora tiene que ser escrita en formato de texto hh:mm",
+            required_error: "El campo de la hora es necesario"
+        }).time({
+            message: "Hora invalida"
+        })
+    )
 })
+
+
+
 
 
 export const validateAppointment = (object) =>  (
@@ -54,7 +64,20 @@ export const validateAppointment = (object) =>  (
             message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
             path: ["address"]
         })
-        .safeParse(object))
+        .safeParse(object)
+    )
+
+
+export const validateAppointmentClientSide =  appointmentValidations
+        .omit({ idAppointment: true, assignEmployee: true })
+        .refine(modelValidation => !(modelValidation.address.length < 5 && !modelValidation.isInOffice),
+        {
+            message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
+            path: ["address"]
+        })
+
+
+
 export const validatePartialAppointment = (object) =>  (
     appointmentValidations
         .partial()
@@ -63,4 +86,5 @@ export const validatePartialAppointment = (object) =>  (
             message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
             path: ["address"]
         })
-        .safeParse(object))
+        .safeParse(object)
+    )

@@ -6,6 +6,7 @@ const apiErrorWrapper = (func) => {
     const knownErrors = [BadRequestError, NotFoundError, DatabaseDeletionError];
     const databaseKnownErrors = {
         "P0001": ConflictError,
+        "P0002": ValidationFailureError
 
     }
     return async (req, res) => {

@@ -1,3 +1,4 @@
+// Provisional page, it can be replaced with notifications
 export default function SuccessfullVerificationAppointment() {
     return (
         <>

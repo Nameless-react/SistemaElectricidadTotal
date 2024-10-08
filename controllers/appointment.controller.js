@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
 import AppointmentService from "/services/appointments/appointment.service";
-import AppointmentRepository from "/repositories/appointment.repository"
 import appointmentModel from "/models/appointment.model";
 import appointmentConfirmationModel from "/models/appointment_confirmation.model"
 import sequelize from "/config/databaseConnection";
 import MailService from "/services/appointments/mail.service";
-import AppointmentConfirmationRepository from "/repositories/appointmentConfirmations.repository";
+import { AppointmentConfirmationRepository, AppointmentRepository } from "/repositories/index";
+
+
 
 const mailService = new MailService(process.env.RESEND_API_KEY);
 const appointmentConfirmationRepository = new AppointmentConfirmationRepository(appointmentConfirmationModel, sequelize);
@@ -21,8 +22,7 @@ class AppointmentController {
 
     getAppointment = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        const appointment = await this.appointmentService.getAppointment(parseInt(id));
-        console.log(appointment)
+        const appointment = await this.appointmentService.getAppointmentById(parseInt(id));
         return NextResponse.json(appointment, { status: 200 })
     })
 
