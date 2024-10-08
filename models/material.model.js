@@ -2,12 +2,12 @@ import { Model, DataTypes, Optional } from 'sequelize';
 import sequelze from '../config/databaseConnection';
 import Category from './category.model';
 
-class Materials extends Model {
+class Material extends Model {
     
 }
 
-Materials.init({
-    id_material: {
+Material.init({
+    id_materials: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -45,6 +45,6 @@ Materials.init({
     timestamps: false
 });
 
-Materials.belongsTo(Category,{foreignKey: "id_category", as: "category"});
+Material.belongsTo(Category,{foreignKey: "id_category", as: "category"});
 
-export default Materials;
+export default Material;

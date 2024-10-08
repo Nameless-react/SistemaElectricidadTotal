@@ -23,6 +23,10 @@ class ToolService {
     async update(formData, id) {
         return await this.toolsRepository.updateTool(formData, id);
     }
+
+    async delete(id) {
+        return await this.toolsRepository.deleteTool(id);
+    }
 }
 
 export default ToolService;

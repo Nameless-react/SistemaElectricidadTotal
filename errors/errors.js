@@ -41,6 +41,7 @@ export class DatabaseDeletionError extends SQLError {
 }
 
 export class ConflictError extends SQLError {
+
     constructor(message = "Conflicto con el estado actual del recurso", details = null) {
         console.log(message)
         super(message, details);

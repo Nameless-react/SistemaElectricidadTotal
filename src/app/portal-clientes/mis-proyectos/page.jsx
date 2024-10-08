@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faProjectDiagram, faCog } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 export default function MyProjects() {
-    // Información de proyectos estática para demostración
+
     const projects = [
         { id: 1, name: 'Proyecto Alpha', progress: '50%' },
         { id: 2, name: 'Proyecto Beta', progress: '75%' },

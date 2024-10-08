@@ -1,11 +1,17 @@
-import CategoryRepository from "./category.repository";
-import MaintenanceNotesRepository from "./maintenanceNotes.repository";
-import ProviderRepository from "./providers.repository";
-import ToolsRepository from "./tools.Repository";
+import CategoryRepository from "./category.repository.js";
+import MaintenanceNotesRepository from "./maintenanceNotes.repository.js";
+import ProviderRepository from "./providers.repository.js";
+import ToolsRepository from "./tools.Repository.js";
 import AppointmentRepository from "./appointment.repository";
 import AppointmentConfirmationRepository from "./appointmentConfirmations.repository";
-
+import MaterialRepository from "./material.repository.js";
+import UserRepository from "./userRepository.js";
 export {
+    CategoryRepository,
+    MaintenanceNotesRepository,
+    ProviderRepository,
+    MaterialRepository,
+    UserRepository,
     CategoryRepository,
     MaintenanceNotesRepository,
     ProviderRepository,
