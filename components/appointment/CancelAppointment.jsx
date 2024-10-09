@@ -1,13 +1,42 @@
-import { Button } from "@nextui-org/button"
+"use client"
+import Link from "next/link";
+import styles from "/css/cancelAppointment.module.css"
+import { useState } from "react";
+import { cancelAppointmentAction } from "../../functions/fetches/appointments/appointmentActions";
+import { useRouter } from "next/navigation";
 
-export default function CancelAppointment(){
+export default function CancelAppointment({ appointment }) {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    
+
+    const handleCanceling = async () => {
+        setError(null)
+        setLoading(true)
+        try {
+            const response = await cancelAppointmentAction();
+
+            router.push("/");
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className="flex justify-content items-center gap-6 flex-col bg-neutral-950 py-12 px-8 w-5/6 mx-auto">
-            <h1 className="font-bold text-4xl">Cancelación de Cita</h1>
-            <h3>¿Desea cancelar su cita con número [insertar número] para el día [insertar fecha] a las [insertar la hora]?</h3>
-            <Button color="danger" className="font-bold text-2xl px-11 py-8 mt-10">
-                Cancelar
-            </Button>  
-        </div>
-    )
+        <div className={styles.cancelContainer}>
+            <h1>Cancelar cita</h1>
+            <h3>¿Desea cancelar su cita para el día {appointment.appointmentDate} a las {appointment.appointmentTime}?</h3>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div className={styles.buttonsCancel}>
+                <button onClick={handleCanceling} disabled={loading}>
+                    {loading ? "Cargando..." : "Confirmar"}
+                </button>
+                <Link href="/">Cancelar</Link>
+            </div>
+        </div>   
+    );
 }

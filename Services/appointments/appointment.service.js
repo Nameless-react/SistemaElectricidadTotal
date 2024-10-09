@@ -1,5 +1,5 @@
-import { validateAppointment, validatePartialAppointment } from "/functions/validations/appointmentValidation";
-import { ValidationFailureError, NotFoundError } from "/errors/errors";
+import { validateAppointment, validatePartialAppointment, validateCancelAppointment } from "/functions/validations/appointmentValidation";
+import { ValidationFailureError, NotFoundError, DeletionError } from "/errors/errors";
 import { randomUUID } from "node:crypto";
 import VerificationAppointment from "/components/templateMails/VerificationAppointment";
 
@@ -33,7 +33,7 @@ export default class AppointmentService {
 
     async getAppointmentById(id) {
         const appointment = await this.appointmentRepository.getAppointmentById(id);
-        if (!appointment) throw new NotFoundError(`la cita con el id: ${id} no fue encontrada`)
+        if (!appointment) throw new NotFoundError("La cita no fue encontrada")
         return appointment;
     }
 
@@ -48,14 +48,18 @@ export default class AppointmentService {
     }
 
     async cancelAppointment(id) {
-        const affectedRows = await this.appointmentRepository.cancelAppointment(id);
-        return affectedRows >= 1;
+        const validIdAppointment = validateCancelAppointment({ idAppointment: id });
+        if (validIdAppointment.error) throw new ValidationFailureError(validIdAppointment.error);
+
+        const deleted = await this.appointmentRepository.cancelAppointment(validIdAppointment.data.idAppointment);
+        if (!deleted) throw new DeletionError("No se pudo eliminar la cita");
     }
 
     async updateAppointment(appointment) {
         const validatedAppointment = validatePartialAppointment(appointment);
         if (validatedAppointment.error) throw new ValidationFailureError(validatedAppointment.error.message);
 
+        await this.getAppointmentById(validatedAppointment.data.idAppointment);
         return await this.appointmentRepository.updateAppointment(validatedAppointment.data);
     }
 

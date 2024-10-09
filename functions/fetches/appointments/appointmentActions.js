@@ -1,8 +1,5 @@
 "use server";
 import config from "/config/config";
-import { validateAppointment } from "../../validations/appointmentValidation";
-import convertedZodErrors from "/errors/convertedZodErrors";
-
 
 export const getAppointmentAction = async (id) => {
     const response = await fetch(`http://${config.host}:3000/api/appointments/${id}`);
@@ -12,48 +9,57 @@ export const getAppointmentAction = async (id) => {
 
 
 export const createAppointmentAction = async (appointment) => {
-    // const rawAppointment = {
-    //     email: formData.get("email"),
-    //     appointmentDate: formData.get("appointmentDate"),
-    //     appointmentTime: formData.get("appointmentTime"),
-    //     address: formData.get("address"),
-    //     isInOffice: formData.get("isInOffice") === "on"
-    // }
-    
-    const validatedAppointment = validateAppointment(appointment);
-    console.log(validateAppointment.data)
-    if (validatedAppointment.error) {
-        const errors = convertedZodErrors(validatedAppointment.error);
-        return { errors };
+    try {
+        const response = await fetch(`http://${config.host}:3000/api/appointments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(appointment)
+        });
+
+
+
+        const result = await response.json();
+        if (result.error) return {errors: result.error}
+
+        return { successMessage: "Cita agendada con éxito", data: {} }
+    } catch (e) {
+        return { errors: e }
     }
-
-    return { successMessage: "Todo salio bien", data: {} }
-
-    // const response = await fetch(`http://${config.host}:3000/api/appointments`, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(validatedAppointment.data)
-    // })
-    // return await response.json();
 }
 
-export const updateAppointmentAction = async (formData) => {
-    console.log(formData)
-    // const appointment = {
-    //     appointmentDate: formData.get("appointmentDate"),
-    //     appointmentTime: formData.get("appointmentTime"),
-    //     address: formData.get("address"),
-    //     isInOffice: formData.get("isInOffice") === "on"
-    // }
+export const updateAppointmentAction = async (appointment) => {
+    try {
+        const response = await fetch(`http://${config.host}:3000/api/appointments/${appointment.idAppoinment}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(appointment)
+        });
 
-    // const response = await fetch(`/api/appointments/${formData.id}`, {
-    //     method: "PATCH",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(appointment)
-    // })
-    // return await response.json();
+
+        const result = await response.json();
+        if (result.error) return {errors: result.error}
+
+        return { successMessage: "Cita editada con éxito", data: {} }
+    } catch (e) {
+        return { errors: e }
+    }
+}
+
+export const cancelAppointmentAction = async (appointment) => {
+    try {
+        const response = await fetch(`/api/appointments/${id}`, {
+            method: "DELETE"
+        });
+
+        // Use or create personalized error
+        if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+
+        const result = await response.json();
+    } catch (e) {
+        
+    }
 }

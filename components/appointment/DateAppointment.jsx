@@ -2,7 +2,7 @@
 import { DatePicker } from "@nextui-org/date-picker";
 import { TimeInput } from "@nextui-org/date-input"
 import { I18nProvider } from "@react-aria/i18n";
-import { getLocalTimeZone, today, Time, parseDate, parseTime } from "@internationalized/date";
+import { getLocalTimeZone, today, Time } from "@internationalized/date";
 import { Controller } from "react-hook-form";
 
 export default function DateAppointment({ errors, control }) {
@@ -28,7 +28,7 @@ export default function DateAppointment({ errors, control }) {
                                     calendar: "dark",
                                     popoverContent: "dark",
                                 }}
-                                onChange={e => onChange(parseDate(e))}
+                                onChange={onChange}
                                 onBlur={onBlur}
                                 defaultValue={value} 
                                 isInvalid={!!errors?.appointmentDate} 
@@ -53,7 +53,7 @@ export default function DateAppointment({ errors, control }) {
                             classNames={{
                                 segment: "hover:bg-slate-600 active:bg-slate-600 focus:bg-slate-600"
                             }}
-                            onChange={e => onChange(parseTime(e))}
+                            onChange={onChange}
                             onBlur={onBlur}
                             defaultValue={value} 
                             isInvalid={!!errors?.appointmentTime} 

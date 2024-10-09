@@ -1,7 +1,7 @@
 import CategoryRepository from "./category.repository.js";
 import MaintenanceNotesRepository from "./maintenanceNotes.repository.js";
 import ProviderRepository from "./providers.repository.js";
-import ToolsRepository from "./tools.Repository.js";
+import ToolRepository from "./tool.Repository.js";
 import AppointmentRepository from "./appointment.repository";
 import AppointmentConfirmationRepository from "./appointmentConfirmations.repository";
 import MaterialRepository from "./material.repository.js";
@@ -12,10 +12,7 @@ export {
     ProviderRepository,
     MaterialRepository,
     UserRepository,
-    CategoryRepository,
-    MaintenanceNotesRepository,
-    ProviderRepository,
-    ToolsRepository,
+    ToolRepository,
     AppointmentRepository,
     AppointmentConfirmationRepository
 }

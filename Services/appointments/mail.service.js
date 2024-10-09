@@ -6,7 +6,7 @@ export default class MailService {
  }
     async sendEmail(to, subject, template) {
         return await this.resend.emails.send({
-            from: 'ElectricidadTotal <onboarding@resend.dev>',
+            from: 'ElectricidadTotal <citas@electricidadtotal.com>',
             to,
             subject,
             react: template,
