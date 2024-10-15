@@ -1,14 +1,35 @@
+"use client"
 import styles from "/css/messages.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUp } from "@fortawesome/free-solid-svg-icons"; 
+import { useState } from "react";
 
-export default function SendMessage() {
+export default function SendMessage({ setMessages }) {
+    const [inputMessage, setInputMessage] = useState("");
+
+    const handleChange = (e) => setInputMessage(e.target.value)
+
+    const handleSendMessage = async (e) => {
+        e.preventDefault();
+        
+        
+        const data = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: inputMessage })
+        })
+        await data.json()
+        setInputMessage("")
+    }
+
     return (
         <div className={styles.wrapperSendMessages}>
-            <div className={styles.containerSendMessages}>
-                <input type="text" placeholder="Escriba un mensaje" />
+            <form onSubmit={handleSendMessage} className={styles.containerSendMessages}>
+                <input type="text" placeholder="Escriba un mensaje" value={inputMessage} onChange={handleChange}/>
                 <button><FontAwesomeIcon icon={faCircleUp} /></button>
-            </div>
+            </form>
         </div>
     )
 }

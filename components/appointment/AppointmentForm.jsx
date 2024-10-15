@@ -50,7 +50,6 @@ export default function AppointmentForm({ appointment }) {
         const { successMessage } = await response;
         if (successMessage) {
             console.log("Todo bien")
-            reset();
         }
     }
 

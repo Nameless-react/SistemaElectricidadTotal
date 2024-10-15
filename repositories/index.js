@@ -6,13 +6,20 @@ import AppointmentRepository from "./appointment.repository";
 import AppointmentConfirmationRepository from "./appointmentConfirmations.repository";
 import MaterialRepository from "./material.repository.js";
 import UserRepository from "./userRepository.js";
+import MessageRepository from "./message.repository.js";
+import ConversationRepository from "./conversation.repository.js";
+import ConversationParticipantsRepository from "./conversation_participants.js";
+
 export {
-    CategoryRepository,
-    MaintenanceNotesRepository,
-    ProviderRepository,
-    MaterialRepository,
-    UserRepository,
-    ToolRepository,
     AppointmentRepository,
-    AppointmentConfirmationRepository
+    AppointmentConfirmationRepository,
+    CategoryRepository,
+    ConversationRepository,
+    ConversationParticipantsRepository,
+    MessageRepository,
+    MaintenanceNotesRepository,
+    MaterialRepository,
+    ProviderRepository,
+    ToolRepository,
+    UserRepository,
 }

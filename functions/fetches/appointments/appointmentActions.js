@@ -31,7 +31,7 @@ export const createAppointmentAction = async (appointment) => {
 
 export const updateAppointmentAction = async (appointment) => {
     try {
-        const response = await fetch(`http://${config.host}:3000/api/appointments/${appointment.idAppoinment}`, {
+        const response = await fetch(`http://${config.host}:3000/api/appointments/${appointment.idAppointment}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -51,15 +51,14 @@ export const updateAppointmentAction = async (appointment) => {
 
 export const cancelAppointmentAction = async (appointment) => {
     try {
-        const response = await fetch(`/api/appointments/${id}`, {
+        const response = await fetch(`http://${config.host}:3000/api/appointments/${appointment.idAppointment}`, {
             method: "DELETE"
         });
 
-        // Use or create personalized error
-        if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 
         const result = await response.json();
+        return { successMessage: "Su cita ha sido cancelada con éxito", data: {} }
     } catch (e) {
-        
+        return { errors: e }
     }
 }

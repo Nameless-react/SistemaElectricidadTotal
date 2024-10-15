@@ -5,10 +5,10 @@ export const appointmentValidations = z.object({
     idAppointment: z.coerce.number({
         invalid_type_error: "El id de la cita tiene que ser un número"
     }).positive({
-        message: "El número tiene que ser mayor a 0"
+        message: "El número del id tiene que ser mayor a 0"
     }),
     email: z.string({
-        invalid_type_error: "El correo tiene que se un texto",
+        invalid_type_error: "El correo tiene que ser un texto",
         required_error: "El correo es necesario para agendar la cita"
     }).email({
         message: "Dirección de correo invalida"
@@ -16,7 +16,7 @@ export const appointmentValidations = z.object({
     assignEmployee: z.number({
         invalid_type_error: "El id del empleado asignado tiene que ser un número"
     }).positive({
-        message: "El id del empleado tien que ser un número positivo"
+        message: "El id del empleado tiene que ser un número positivo"
     }).or(z.null()),
     isInOffice: z.boolean({
         invalid_type_error: "El valor donde específica si es en las oficinas tiene que ser verdadero o falso",
@@ -98,6 +98,4 @@ export const validatePartialAppointment = (object) =>  (
     )
 
 
-export const validateCancelAppointment = (object) => {
-    return appointmentValidations.pick({ idAppointment: true }).safeParse(object);
-    }
+export const validateIdAppointment = (object) => appointmentValidations.pick({ idAppointment: true }).safeParse(object);

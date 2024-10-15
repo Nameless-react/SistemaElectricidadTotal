@@ -1,10 +1,10 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
+import User from './user.model';
+import Conversation from './conversation.model';
 
 class Message extends Model {}
 
-   
-    
 
 Message.init({
     idMessage: {
@@ -48,11 +48,21 @@ Message.init({
 
 
 
-export default Message;
+Message.belongsTo(User, {
+    foreignKey: {
+        name: "id_user_author",
+        allowNull: false,
+        as: "idUserAuthor"
+    }
+});
 
-// CONSTRAINT FK_ID_USERS_AUTHOR
-//           FOREIGN KEY (ID_USERS_AUTHOR)
-//           REFERENCES USERS(ID_USERS),
-//     CONSTRAINT FK_CONVERSATION
-//           FOREIGN KEY (ID_CONVERSATION)
-//           REFERENCES CONVERSATIONS(ID_CONVERSATION)
+
+Message.belongsTo(Conversation, {
+    foreignKey: {
+        name: "id_conversation",
+        allowNull: false,
+        as: "idConversation"
+    }
+});
+
+export default Message;

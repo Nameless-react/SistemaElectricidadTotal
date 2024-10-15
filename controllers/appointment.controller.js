@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
+import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
 import AppointmentService from "/services/appointments/appointment.service";
 import appointmentModel from "/models/appointment.model";
 import appointmentConfirmationModel from "/models/appointment_confirmation.model"
-import sequelize from "/config/databaseConnection";
 import MailService from "/services/appointments/mail.service";
 import { AppointmentConfirmationRepository, AppointmentRepository } from "/repositories/index";
 import config from "/config/config"

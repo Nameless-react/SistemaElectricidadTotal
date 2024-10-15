@@ -16,15 +16,15 @@ export default function CancelAppointment({ appointment }) {
         setError(null)
         setLoading(true)
         try {
-            const response = await cancelAppointmentAction();
-
-            router.push("/");
+            const response = await cancelAppointmentAction(appointment);
+            // const result = await response.json();
+            // router.push("/");
         } catch (err) {
             setError(err.message);
         } finally {
             setLoading(false);
         }
-    };
+    }
 
     return (
         <div className={styles.cancelContainer}>

@@ -1,4 +1,4 @@
-import { validateAppointment, validatePartialAppointment, validateCancelAppointment } from "/functions/validations/appointmentValidation";
+import { validateAppointment, validatePartialAppointment, validateIdAppointment } from "/functions/validations/appointmentValidation";
 import { ValidationFailureError, NotFoundError, DeletionError } from "/errors/errors";
 import { randomUUID } from "node:crypto";
 import VerificationAppointment from "/components/templateMails/VerificationAppointment";
@@ -21,7 +21,7 @@ export default class AppointmentService {
         const result = await this.appointmentRepository.saveAppointment({ ...validatedAppointment.data, token });
         const savedAppointment = await this.appointmentRepository.getAppointment(validatedAppointment.data)
     
-        this.mailService.sendEmail(validatedAppointment.data.email, "Confirmación de cita", 
+        this.mailService.sendEmail('ElectricidadTotal <no-reply-citas@electricidadtotal.com>', validatedAppointment.data.email, "Confirmación de cita", 
             <VerificationAppointment 
                 appointmentDate={savedAppointment.appointmentDate}
                 appointmentTime={savedAppointment.appointmentTime}
@@ -32,6 +32,10 @@ export default class AppointmentService {
     }
 
     async getAppointmentById(id) {
+        const validIdAppointment = validateIdAppointment({ idAppointment: id });
+        if (validIdAppointment.error) throw new ValidationFailureError(validIdAppointment.error);
+
+
         const appointment = await this.appointmentRepository.getAppointmentById(id);
         if (!appointment) throw new NotFoundError("La cita no fue encontrada")
         return appointment;
@@ -48,7 +52,7 @@ export default class AppointmentService {
     }
 
     async cancelAppointment(id) {
-        const validIdAppointment = validateCancelAppointment({ idAppointment: id });
+        const validIdAppointment = validateIdAppointment({ idAppointment: id });
         if (validIdAppointment.error) throw new ValidationFailureError(validIdAppointment.error);
 
         const deleted = await this.appointmentRepository.cancelAppointment(validIdAppointment.data.idAppointment);
