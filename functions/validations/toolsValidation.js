@@ -1,34 +1,36 @@
+import { image } from "@nextui-org/theme";
 import { z } from "zod";
 
 export const validateFormTools = (formData) => {
     // Crear una nueva estructura de datos con los valores convertidos
+    const urlPattern = /^https?:\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
     const parsedData = {
         ...formData,
-        cost: parseFloat(formData.cost),
+        cost: parseFloat(formData.cost) || 0,
         date: new Date(formData.date)
     };
+
+
 
     const validationSchema = z.object({
         name: z.string()
             .trim()
-            .nonempty("El nombre es requerido")
             .min(3, "El nombre debe tener al menos 3 caracteres")
-            .max(20, "El nombre debe tener como máximo 20 caracteres")
-            .regex(/^[a-zA-Z\s]+$/, { message: "El nombre solo puede contener letras y espacios" }),
+            .max(255, "El nombre debe tener como máximo 20 caracteres")
+            .regex(/^[a-zA-Z\s]+$/, { message: "El nombre solo puede contener letras y espacios" })
+            .refine((value) => value !== '', { message: "El nombre es requerido." }),
 
         model: z.string()
             .trim()
-            .nonempty("El modelo es requerido")
             .min(4, "El modelo debe tener al menos 4 caracteres")
             .max(255, "El modelo debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z0-9\s]+$/, { message: "El serial solo puede contener letras, números y espacios" }),
+            .regex(/^[a-zA-Z0-9\s]+$/, { message: "El modelo solo puede contener letras, números y espacios" }),
 
         description: z.string()
             .trim()
-            .nonempty("La descripción es requerida")
             .min(10, "La descripción debe tener al menos 10 caracteres")
             .max(255, "La descripción debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z0-9\s]+$/, { message: "El serial solo puede contener letras, números y espacios" }),
+            .regex(/^[a-zA-Z0-9\s]+$/, { message: "La descripción solo puede contener letras, números y espacios" }),
 
         cost: z.number()
             .nonnegative("El costo debe ser un valor positivo")
@@ -45,22 +47,33 @@ export const validateFormTools = (formData) => {
 
         serial: z.string()
             .trim()
-            .nonempty("El serial es requerido")
             .min(4, "El serial debe tener al menos 4 caracteres")
             .max(255, "El serial debe tener como máximo 255 caracteres")
             .regex(/^[a-zA-Z0-9\s]+$/, { message: "El serial solo puede contener letras, números y espacios" }),
 
-        status: z.string()
-            .nonempty("El estado es requerido"),
+        status: z.string().min(1, "El estado es requerido"),
 
-        category: z.string()
-            .nonempty("La categoría es requerida"),
+        category: z.string().min(1, "La categoría es requerida"),
 
-        provider: z.string()
-            .nonempty("El proveedor es requerido"),
+        provider: z.string().min(1, "El proveedor es requerido"),
+
+        image: z.custom((value) => {
+            if (value === null) return false;
+            if (value instanceof File) {
+                const validMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                return validMimeTypes.includes(value.type) && value.size > 0;
+            }
+            if (typeof value === 'string') {
+                return true;
+            }
+            return false;
+        }, {
+            message: "La imagen debe ser un archivo JPEG, PNG, GIF, o una cadena de texto.",
+        })
     });
 
     const result = validationSchema.safeParse(parsedData);
+
 
     if (result.success) {
         return {
@@ -87,7 +100,7 @@ export const validateFormToolsMaintenance = (formData) => {
             .nonempty("Las notas de mantenimiento son requeridas")
             .min(10, "Las notas de mantenimiento deben tener al menos 10 caracteres")
             .max(255, "Las notas de mantenimiento deben tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z0-9\s]+$/, { message: "El serial solo puede contener letras, números y espacios" }),
+            .regex(/^[a-zA-Z0-9\s]+$/, { message: "Las notas de mantenimiento solo pueden contener letras, números y espacios" }),
 
         recoveryDate: z.date()
             .refine((value) => !isNaN(value.getTime()), {
@@ -99,10 +112,10 @@ export const validateFormToolsMaintenance = (formData) => {
                 message: "La fecha de inicio de mantenimiento debe ser válida",
             }),
     })
-    .refine((data) => data.recoveryDate >= data.startMaintenanceDate, {
-        message: "La fecha de recuperación no puede ser anterior a la fecha de inicio de mantenimiento",
-        path: ['recoveryDate'],
-    });
+        .refine((data) => data.recoveryDate >= data.startMaintenanceDate, {
+            message: "La fecha de recuperación no puede ser anterior a la fecha de inicio de mantenimiento",
+            path: ['recoveryDate'],
+        });
 
     const result = validatonSchema.safeParse(parsedData);
 

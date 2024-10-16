@@ -1,51 +1,53 @@
-'use client'
-import styles from "/css/projects.module.css";
-import Project from "/components/project";
+'use client';
+import { useEffect, useState } from 'react';
+import styles from '/css/projects.module.css';
+import Project from '/components/project/project';
 
 export default function Projects() {
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // Fetch projects from the API when the component mounts
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const response = await fetch('/api/projects'); // Asegúrate de tener este endpoint configurado
+                const data = await response.json();
+
+                if (data.success) {
+                    setProjects(data.data); // Guarda los proyectos obtenidos en el estado
+                } else {
+                    console.error('Error al cargar los proyectos');
+                }
+            } catch (error) {
+                console.error('Error al hacer la petición a la API:', error);
+            } finally {
+                setLoading(false); // Detenemos el indicador de carga
+            }
+        };
+
+        fetchProjects();
+    }, []);
+
+    if (loading) {
+        return <div>Cargando proyectos...</div>; // Muestra un mensaje de carga
+    }
+
     return (
         <div className={styles.projectsContainer}>
-            <Project
-                status={"En progreso"}
-                name={"Instalación eléctrica"}
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam tempora, enim sed beatae ullam maxime doloribus deserunt dolorum voluptas obcaecati ducimus ipsam cumque et veritatis magni! Blanditiis, ullam? Tenetur, nam?"
-                progressValue={20}
-            />
-            <Project
-                status={"En progreso"}
-                name={"Instalación eléctrica"}
-                description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam tempora, enim sed beatae ullam maxime doloribus deserunt dolorum voluptas obcaecati ducimus ipsam cumque et veritatis magni! Blanditiis, ullam? Tenetur, nam?"
-                progressValue={20}
-            />
-
-            <Project
-                status={"Completado"}
-                name={"Desarrollo de software"}
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet."
-                progressValue={100}
-            />
-
-            <Project
-                status={"En espera"}
-                name={"Auditoría de sistemas"}
-                description="Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos."
-                progressValue={0}
-            />
-
-            <Project
-                status={"En progreso"}
-                name={"Rediseño de la página web"}
-                description="Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at dolor."
-                progressValue={50}
-            />
-
-            <Project
-                status={"Pendiente"}
-                name={"Implementación de seguridad"}
-                description="Maecenas mauris lacus, lacinia vel erat nec, varius luctus nisl. Ut id turpis eros. Vivamus at dui nunc. In hac habitasse platea dictumst."
-                progressValue={10}
-            />        
+            {projects.length === 0 ? (
+                <p>No hay proyectos disponibles.</p>
+            ) : (
+                projects.map((project) => (
+                    <Project
+                        key={project.ID_PROJECTS} 
+                        status={project.ID_STATUS} 
+                        name={project.NAME}
+                        description={project.DESCRIPTION}
+                        progressValue={project.PERCENTAGE}
+                    />
+                ))
+            )}
         </div>
-    )
+    );
 }
-

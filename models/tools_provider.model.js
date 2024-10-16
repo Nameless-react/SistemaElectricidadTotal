@@ -1,14 +1,14 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelze from '../config/databaseConnection';
-import Tools from './tools.model';
+import Tools from './tool.model';
 import Provider from './provider.model';
 
-class ToolsProvider extends Model {
+class ToolProvider extends Model {
 
 }
 
 
-ToolsProvider.init({
+ToolProvider.init({
     id_tools_provider: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -38,7 +38,7 @@ ToolsProvider.init({
     timestamps: false
 });
 
-ToolsProvider.belongsTo(Tools,{foreignKey: "id_tools", as: "tools"});
-ToolsProvider.belongsTo(Provider,{foreignKey: "id_provider", as: "provider"});
+ToolProvider.belongsTo(Tools,{foreignKey: "id_tools", as: "tools"});
+ToolProvider.belongsTo(Provider,{foreignKey: "id_provider", as: "provider"});
 
-export default ToolsProvider;
+export default ToolProvider;
