@@ -3,4 +3,5 @@ import ProviderController from "./provider.controller";
 import ToolController from "./tools.controller";
 import MaterialController from "./material.controller";
 import SignUpController from "./signUpController";
-export { CategoryController, ProviderController, ToolController, MaterialController, SignUpController };
+import UserController from "./user.Controller";
+export { CategoryController, ProviderController, ToolController, MaterialController, SignUpController, UserController};

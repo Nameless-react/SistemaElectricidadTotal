@@ -3,14 +3,15 @@ import { writeFile } from "fs/promises";
 import path from "path";
 import { z } from "zod";
 import { validateUser } from "../functions/validations/userValidation";
+import { validateProfileUpdate } from "../functions/validations/profileValidation";
 import { ToolRepository, CategoryRepository, ProviderRepository, MaintenanceNotesRepository, MaterialRepository, UserRepository } from "../repositories";
-import { ValidationUserService ,ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService, UserService } from "../Services";
-import { SignUpController, ToolController, MaterialController } from "../controllers";
+import { ValidationUserProfileService ,ValidationUserService ,ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService, UserService } from "../Services";
+import { SignUpController, ToolController, MaterialController, UserController } from "../controllers";
 import sequelze from "../config/databaseConnection";
 import { Category, Provider, Tool, MaintenanceNotes, Material } from "../models";
 import { validateMaterialsForm } from "../functions/validations/materialsValidtion";
 import User from "../models/user.model";
-
+import { admin } from "../config/firebaseConfig";
 
 export const createToolController = () => {
 
@@ -18,7 +19,7 @@ export const createToolController = () => {
     const maintenanceNotesService = new MaintenanceNotesService(maintenanceNotesRepository);
     const validationToolsService = new ValidationToolsService(z);
     const validationMaintenanceNotesService = new ValidationMaintenanceNotesService(z);
-    const imageService = new ImageService(writeFile, path);
+    const imageService = new ImageService(writeFile, path, admin);
     const categoryRepository = new CategoryRepository(Category);
     const providerRepository = new ProviderRepository(Provider);
     const categoryService = new CategoryService(categoryRepository);
@@ -39,6 +40,13 @@ export const createMaterialController = () => {
     return new MaterialController(materialService, validationMaterialService, categoryService, providerService);
 }
 
+export const createUserController = () => {
+    const validationUserProfileService = new ValidationUserProfileService(validateProfileUpdate);
+    const imageService = new ImageService(writeFile, path, admin);
+    const userRepository = new UserRepository(User, sequelze);
+    const userService = new UserService(userRepository);
+    return new UserController(userService, imageService, validationUserProfileService);
+}
 
 export const createSignUpController = () => {
     const userRepository = new UserRepository(User, sequelze);
