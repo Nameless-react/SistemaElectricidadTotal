@@ -17,7 +17,7 @@ Message.init({
     idUserAuthor: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        field: "id_user_author"
+        field: "id_users_author"
     },
     message: {
         type: DataTypes.STRING,
@@ -50,7 +50,7 @@ Message.init({
 
 Message.belongsTo(User, {
     foreignKey: {
-        name: "id_user_author",
+        name: "id_users_author",
         allowNull: false,
         as: "idUserAuthor"
     }

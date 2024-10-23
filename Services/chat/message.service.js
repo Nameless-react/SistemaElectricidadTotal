@@ -1,33 +1,42 @@
 import { validateIdMessage, validateMessage, validateIdConversation } from "/functions/validations/messageValidation";
+import { ValidationFailureError, NotFoundError, DeletionError } from "/errors/errors";
 
 export default class MessageService {
-    constructor(messageRepository) {
+    constructor(messageRepository, pusherServer) {
         this.messageRepository = messageRepository;
+        this.pusherServer = pusherServer;
     }
 
-    async saveMessage(message) {
-        const validatedMessage = validateMessage(message);
+    async saveMessage(newMessage) {
+        const validatedMessage = validateMessage(newMessage);
         if (validatedMessage.error) throw new ValidationFailureError(validatedMessage.error.message);
-        return await this.messageRepository.saveMessage(validatedMessage.data);
+
+        const { message, idUser, idConversation, email, name } = validatedMessage.data;
+        await this.messageRepository.saveMessage(validatedMessage.data);
+
+
+        await this.pusherServer.trigger(
+            idConversation.toString(),
+            "message::new",
+            {
+                message,
+                idUser: idUser,
+                date: new Date(),
+                User: {
+                    email,
+                    name
+                }
+            }
+        )
     }
 
-    async getMessageById(id) {
-        const validIdMessage = validateIdMessage({ idMessage: id });
-        if (validIdMessage.error) throw new ValidationFailureError(validIdMessage.error);
-
-
-        const message = await this.messageRepository.getMessageById(validIdMessage.data.idMessages);
-        if (!message) throw new NotFoundError("El mensaje no fue encontrado")
-        return message;
-    }
-
-    async getMessagesByConversationId(message) {
-        const validConversationId = validateIdConversation({ idConversation: message.idConversation });
+    async getMessagesByConversationId(idConversation) {
+        const validConversationId = validateIdConversation({ idConversation });
         if (validConversationId.error) throw new ValidationFailureError(validConversationId.error);
 
-        const message = await this.messageRepository.getMessagesByConversation(validConversationId.data.idConversation);
-        if (!message) throw new NotFoundError(`El mensaje no fue encontrado`)
-        return message;
+        const messages = await this.messageRepository.getMessagesByConversation(validConversationId.data.idConversation);
+        if (!messages) throw new NotFoundError(`El chat no tiene mensajes`)
+        return messages;
     }
 
     async deleteMessage(id) {

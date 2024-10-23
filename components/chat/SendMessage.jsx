@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUp } from "@fortawesome/free-solid-svg-icons"; 
 import { useState } from "react";
 
-export default function SendMessage({ setMessages }) {
+export default function SendMessage({ idUserAuthor, idConversation, email, name }) {
     const [inputMessage, setInputMessage] = useState("");
 
     const handleChange = (e) => setInputMessage(e.target.value)
@@ -12,15 +12,13 @@ export default function SendMessage({ setMessages }) {
     const handleSendMessage = async (e) => {
         e.preventDefault();
         
-        
         const data = await fetch('/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ message: inputMessage })
+            body: JSON.stringify({ message: inputMessage, idUserAuthor, idConversation, email, name })
         })
-        await data.json()
         setInputMessage("")
     }
 

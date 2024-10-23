@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
-
+import User from './user.model';
 
 class ConversationParticipants extends Model {}
 
@@ -29,12 +29,17 @@ ConversationParticipants.init({
     modelName: "conversationParticipants",
     tableName: 'conversation_participants',
     timestamps: false,
+    defaultScope: {
+        attributes: ['idConversation', 'idUsers']
+    }
 });
 
-//     CONSTRAINT FK_USERS
-// FOREIGN KEY(ID_USERS)
-// REFERENCES USERS(ID_USERS),
-// CONSTRAINT FK_CONVERSATIONS
-// FOREIGN KEY(ID_CONVERSATION)
-// REFERENCES CONVERSATIONS(ID_CONVERSATION)
+
+ConversationParticipants.belongsTo(User, {
+    foreignKey: {
+        name: "id_users",
+        allowNull: false,
+    }
+});
+
 export default ConversationParticipants;

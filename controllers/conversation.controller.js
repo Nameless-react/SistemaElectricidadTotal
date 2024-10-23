@@ -1,45 +1,43 @@
+import ConversationService from "/services/chat/conversation.service";
+import { ConversationRepository } from "../repositories";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
 import { NextResponse } from "next/server";
+import { ConversationParticipants, Conversation  } from "/models";
+import sequelize from "/config/databaseConnection";
+
+const conversationRepository = new ConversationRepository(Conversation, ConversationParticipants, sequelize)
+const conversationService = new ConversationService(conversationRepository)
 
 
-class MessageController {
-    constructor(messageService) {
-        this.messageService = messageService
+// *Modificar las rutas de la función que trae todas las conversaciones en las que está el usuario
+class ConversationController {
+    constructor(conversationService) {
+        this.conversationService = conversationService
     }
 
-    getMessage = apiErrorWrapper(async (req, params) => {
+    getConversation = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        const message = await this.messageService.getAppointmentById(parseInt(id));
-        return NextResponse.json(appointment, { status: 200 })
+        const conversations = await this.conversationService.getConversation(parseInt(id));
+        return NextResponse.json(conversations, { status: 200 })
+    })
+    
+    getConversationsByUserId = apiErrorWrapper(async (req, params) => {
+        const { id } = params.params;
+        const conversations = await this.conversationService.getConversationsByUserId(parseInt(id));
+        return NextResponse.json(conversations, { status: 200 })
     })
 
-    getMessages = apiErrorWrapper(async (req, res) => {
-        const messages = await this.messageService.getAppointments();
-        return NextResponse.json(appointments, { status: 200 })
-    })
-
-    saveMessage = apiErrorWrapper(async (req, res) => {
+    createConversation = apiErrorWrapper(async (req, res) => {
         const parseBody = await req.json();
-        await this.messageService.saveMessage(parseBody);
+        await this.conversationService.saveMessage(parseBody);
         return NextResponse.json({ message: "Su cita ha sido agendada con éxito. Por favor, revise su correo electrónico para confirmar la cita." }, { status: 201 });
     })
 
-    deleteMessage = apiErrorWrapper(async (req, params) => {
+    deleteConversation = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        await this.messageService.deleteMessage(id);
+        await this.conversationService.deleteMessage(id);
         return NextResponse.json({ message: "la cita ha sido cancelada exitosamente" }, { status: 200 });
-    })
-    updateMessage = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
-        const parseBody = await req.json();
-
-        const updatedAppointment = await this.messageService.updateAppointment({ 
-            idAppointment: parseInt(id),
-            ...parseBody    
-        });
-
-        return NextResponse.json(updatedAppointment, { status: 200 })
     })
 }
 
-export default new AppointmentController(messageService);
+export default new ConversationController(conversationService);

@@ -1,11 +1,16 @@
+"use client"
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faMapMarkerAlt, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import links from "../../shared/links";
-export default function Footer() {
+import { usePathname } from "next/navigation";
 
+
+
+export default function Footer() {
+    const pathName = usePathname();
     const footerLinks = links.map((link, index) => (
         <li key={index}><Link href={link.url}>{link.label}</Link></li>
     ));
@@ -13,7 +18,7 @@ export default function Footer() {
 
     const DateYear = new Date().getFullYear();
     return (
-        <footer className="bg-main-color text-white py-6">
+        pathName !== "/chat" && <footer className="bg-main-color text-white py-6">
             <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between">
 
                 {/* Información de Contacto */}

@@ -69,6 +69,8 @@
     border-radius: 20px;
     background-color: #23272F;
     width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .messageContainerActualUser .message {
@@ -187,7 +189,7 @@
     width: 12%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    width: 60px;
+    width: 55px;
 }
 
 .chat > div {
@@ -221,5 +223,4 @@
         width: 72%;
         right: 5%;
     }
-     
 }

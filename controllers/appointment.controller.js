@@ -39,7 +39,7 @@ class AppointmentController {
 
     cancelAppointment = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        await this.appointmentService.cancelAppointment(id);
+        await this.appointmentService.cancelAppointment(parseInt(id));
         return NextResponse.json({ message: "la cita ha sido cancelada exitosamente" }, { status: 200 });
     })
     updateAppointment = apiErrorWrapper(async (req, params) => {

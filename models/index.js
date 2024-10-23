@@ -1,4 +1,4 @@
-import Tool from "./tool.model"; "./tool.model";
+import Tool from "./tool.model";
 import Material from "./material.model";
 import Provider from "./provider.model";
 import ToolProvider from "./tools_provider.model";
@@ -8,9 +8,10 @@ import Category from "./category.model";
 import Appointment from "./appointment.model";
 import AppointmentConfirmation from "./appointment_confirmation.model";
 import Conversation from "./conversation.model";
-import ConversationParticipants from "./conversation_participants";
-import Message from "../components/chat/Message";
+import ConversationParticipants from "./conversation_participants.model";
+import Message from "./message.model";
 import User from "./user.model";
+import Task from "./task.model";
 
 
 export {
@@ -24,6 +25,7 @@ export {
     MaterialProvider,
     Material,
     Provider,
+    Task,
     ToolProvider,
     Tool,
     User

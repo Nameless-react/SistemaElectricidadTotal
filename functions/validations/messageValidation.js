@@ -20,6 +20,14 @@ export const messageValidations = z.object({
         required_error: "El número del id de la conversación es necesario"
     }).positive({
         message: "El número del id tiene que ser mayor a 0"
+    }),
+    email: z.string({
+        invalid_type_error: "El correo tiene que ser un texto"
+    }).email({
+         message: "Dirección de correo invalida"
+    }),
+    name: z.string({
+        invalid_type_error: "El nombre tiene que ser un texto"
     })
 })
 

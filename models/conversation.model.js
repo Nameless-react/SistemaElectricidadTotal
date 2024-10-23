@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
-
+import ConversationParticipants from "./conversation_participants.model"
 
 class Conversation extends Model {}
 
@@ -30,12 +30,11 @@ Conversation.init({
     timestamps: false,
 });
 
-// AppointmentConfirmation.belongsTo(Appointment, {
-//     foreignKey: {
-//         name: "id_appointment",
-//         allowNull: false,
-//         as: "idAppointment"
-//     }
-// });
+Conversation.hasMany(ConversationParticipants, {
+    foreignKey: {
+        name: "id_conversation",
+        allowNull: false,
+    }
+});
 
 export default Conversation;
