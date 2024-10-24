@@ -6,32 +6,38 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
-export default function EditImageModal({ title, classNames = {
-    base: "",
-    button: "",
-    span: "",
-    modal: "",
-    modal_header: "",
-    modal_body: "",
-} }) {
+export default function EditImageModal({ title,
+    setServerError,
+    serverError,
+    classNames = {
+        base: "",
+        button: "",
+        span: "",
+        modal: "",
+        modal_header: "",
+        modal_body: "",
+    } }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [formData, setFormData] = useState({});
     const [imagePreview, setImagePreview] = useState(null);
     const [errors, setErrors] = useState([]);
-    const [serverErrors, setServerErrors] = useState([]);
 
-    const handleImageSubmit = (e) => {
+    const handleImageSubmit = async (e) => {
         e.preventDefault();
         const formToSend = new FormData();
         formToSend.append("image", formData.image);
-        const response = fetch(`/api/auth/profile/updateImage`, {
+
+        const response = await fetch(`/api/auth/profile/updateImage`, { // Added await here
             method: "POST",
             body: formToSend
         });
-        if (!response.ok) {
-            setServerErrors("Error al subir imagen");
+
+        if (response.ok) {
+            window.location.reload();
+        } else {
+            const data = await response.json();
+            setServerError(data);
         }
-        window.location.reload();
     }
 
     return (
@@ -77,12 +83,16 @@ export default function EditImageModal({ title, classNames = {
                                 <form
                                     onSubmit={handleImageSubmit}
                                 >
+                                    <div className="flex justify-center">
 
-                                    <button
-                                        type="submit"
-                                        className="bg-blue-700 hover:bg-blue-800 w-1/4 mx-auto text-white font-bold py-2 px-4 rounded">
-                                        Guardar
-                                    </button>
+                                        <button
+                                            type="submit"
+                                            className="bg-blue-700 hover:bg-blue-800 w-1/4 mx-auto text-white font-bold py-2 px-4 rounded">
+                                            Guardar
+                                        </button>
+
+                                    </div>
+                                    {serverError && serverError.error && <p className="text-red-500 text-center mt-4 mb-4">{serverError.error.internal_server_error.message}</p>}
                                 </form>
                             }
 

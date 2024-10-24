@@ -5,6 +5,13 @@ import { faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-sv
 import { faMapMarkerAlt, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import links from "../../shared/links";
+/**
+ * Renders the footer section of the website, including contact information, navigation links, 
+ * and social media links. The footer displays the current year and is styled with a color 
+ * scheme matching the main theme of the website.
+ * 
+ * @returns {JSX.Element} A React component representing the footer of the website.
+ */
 export default function Footer() {
 
     const footerLinks = links.map((link, index) => (

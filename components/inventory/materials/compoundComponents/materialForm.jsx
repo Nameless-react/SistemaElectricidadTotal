@@ -7,11 +7,11 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
 import { FormErrorsClient, FormErrorsServer } from "../../../errors/form_errors/formErrors";
 export const MaterialForm = ({ className = "", children }) => {
-    const { handleSubmit, formData, setErrors, setServerError, id, router } = useMaterialForm();
+    const { handleSubmit, formData, setErrors, setServerError, id, router, serverError } = useMaterialForm();
 
     const submitUrl = id
-        ? `${process.env.NEXT_PUBLIC_URL_MATERIALS_UPDATE}?id=${id}`
-        : process.env.NEXT_PUBLIC_URL_MATERIALS_CREATE;
+        ? `${process.env.NEXT_PUBLIC_URL_MATERIALS_MATERIAL}?id=${id}`
+        : process.env.NEXT_PUBLIC_URL_MATERIALS_MATERIAL;
 
     return (
         <div className={className}>
@@ -28,6 +28,7 @@ export const MaterialForm = ({ className = "", children }) => {
                 )}
             >
                 {children}
+                { serverError && serverError.error && <p className="text-red-500 text-center mt-4">{serverError.error.internal_server_error.message}</p> }
             </form>
         </div>
     );

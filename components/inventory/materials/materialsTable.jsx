@@ -20,9 +20,17 @@ import { SearchInput } from "../../search/searchInput";
 import SubmitModal from "../../modals/submitModal";
 
 
+/**
+ * Renders a table displaying a list of materials with options for sorting, searching, and pagination.
+ * Provides functionality to add, edit, and delete materials, as well as view material details.
+ * Displays success messages for create, update, and delete actions.
+ *
+ * @param {Array} materials - Array of material objects to be displayed in the table.
+ */
 export default function MaterialsTable({ materials }) {
     const searchParams = useSearchParams();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [serverError, setServerError] = useState({});
     const router = useRouter();
     const updateSuccess = searchParams.get("updateSuccess");
     const createSuccess = searchParams.get("createSuccess");
@@ -72,6 +80,9 @@ export default function MaterialsTable({ materials }) {
                 <Link className=" flex items-center mt-2 sm:mt-0 justify-center w-full sm:w-auto bg-green-700 hover:bg-green-800 transition duration-300 ease-in-out text-white font-bold py-3 ml-1 px-8 rounded-xl " href={"/gestion-inventario/materiales/gestionar"}>
                     <FontAwesomeIcon icon={faPlus} />
                 </Link>
+            </div>
+            <div>
+                {serverError && serverError.error && <p className="text-red-500 text-center mt-4 mb-4">{serverError.error.internal_server_error.message}</p>}
             </div>
             <SuccessModal
                 title={updateSuccess ? "Material actualizado" : createSuccess ? "Material creado" : deleteSuccess ? "Material eliminado" : "Equipo creado"}
@@ -138,7 +149,7 @@ export default function MaterialsTable({ materials }) {
                                         </Button>
                                     </Link>
                                     <SubmitModal
-                                        onSubmit={() => handleDelete(material.id, process.env.NEXT_PUBLIC_URL_MATERIALS_DELETE, process.env.NEXT_PUBLIC_URL_MATERIALS)}
+                                        onSubmit={() => handleDelete(material.id, process.env.NEXT_PUBLIC_URL_MATERIALS_MATERIAL, process.env.NEXT_PUBLIC_URL_MATERIALS,setServerError)}
                                         title={"Eliminar material"}
                                         message={"¿Estas seguro de eliminar este material?"}
                                         actionValue={"Eliminar"}

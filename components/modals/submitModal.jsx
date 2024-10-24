@@ -10,6 +10,7 @@ export default function SubmitModal({
     classNameModalButton = "",
     classNameSubmitButton = "",
     isWithIcon = false,
+
     icon = faQuestion
 }) {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();

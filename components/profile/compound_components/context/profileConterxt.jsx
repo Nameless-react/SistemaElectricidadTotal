@@ -13,13 +13,18 @@ export const useProfile = () => useContext(ProfileContext);
  */
 export const ProfileProvider = ({ children, user }) => {
     const [userData, setUserData] = useState(user || {}); // Inicializamos con user
-
+    const [serverError, setServerError] = useState({});
     useEffect(() => {
         setUserData(user);
     }, [user]); 
     
     return (
-        <ProfileContext.Provider value={{ userData, setUserData }}>
+        <ProfileContext.Provider value={{
+             userData,
+             serverError,
+             setServerError, 
+             setUserData 
+             }}>
             {children}
         </ProfileContext.Provider>
     );

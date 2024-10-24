@@ -4,29 +4,28 @@ import Image from 'next/image';
 import { Suspense } from 'react';
 
 
-
-/*
-    Este componente permite subir las imagenes a un formulario de envio de datos.
-    Se utiliza la librería next/image para mostrar las imagenes de forma dinamica.
-    Para este componente se deben de cargar dos funciones, handleImageChange y handleImageRemove, las cuales estan en la carpeta functions/handles/tools (proximamente images)
-    Se deben de pasar dos useState, uno que seria el formulario(formData) y otro que seria el preview de la imagen(imagePreview).
-    Asimismo se deben de pasar las dos funciones de los useState, setFormData y setImagePreview.
-    Ejemplo:
-    
-    import {handleImageChange, handleImageRemove} from '../../functions/handles/tools'
-
-    const [formData, setFormData] = useState({});
-    const [imagePreview, setImagePreview] = useState(null);
-
-    <UploadImage
-        handleImageChange={handleImageChange}
-        handleImageRemove={handleImageRemove}
-        formData={formData}
-        setFormData={setFormData}
-        imagePreview={imagePreview}
-        setImagePreview={setImagePreview}
-    />
-*/
+/**
+ * This component allows you to upload images to a form to send data.
+ * The next/image library is used to dynamically display images.
+ * To use this component, you need to load two functions, handleImageChange and handleImageRemove, which are in the functions/handles/tools (images) folder.
+ * You need to pass two useState variables, one that will be the form data (formData) and the other that will be the image preview (imagePreview).
+ * You also need to pass the two functions of the useState variables, setFormData and setImagePreview.
+ * Example:
+ *
+ * import {handleImageChange, handleImageRemove} from '../../functions/handles/tools'
+ *
+ * const [formData, setFormData] = useState({});
+ * const [imagePreview, setImagePreview] = useState(null);
+ *
+ * <UploadImage
+ *     handleImageChange={handleImageChange}
+ *     handleImageRemove={handleImageRemove}
+ *     formData={formData}
+ *     setFormData={setFormData}
+ *     imagePreview={imagePreview}
+ *     setImagePreview={setImagePreview}
+ * />
+ */
 export const UploadImage = ({ className = "" ,handleImageChange, handleImageRemove, formData, setFormData, imagePreview, setImagePreview, setErrors = "", errors = ""}) => {
     return (
         <div className={className}>

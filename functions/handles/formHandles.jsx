@@ -64,21 +64,24 @@ export const handleImageRemove = (formData, setFormData, setImagePreview) => {
 }
 
 
-export const handleDelete = async (id, urlToFetch, urlToRedirect) => {
+export const handleDelete = async (id, urlToFetch, urlToRedirect, setServerError) => {
 
     try {
         const response = await fetch(`${urlToFetch}?id=${id}`, {
             method: 'DELETE',
         });
 
-        if (!response.ok) {
-            throw new Error('Error al eliminar');
+        if (response.ok) {
+            const data = await response.json();
+            window.location.href = `${urlToRedirect}?deleteSuccess=true`;
+
+        } else {
+            const data = await response.json();
+            setServerError(data);
         }
-        const data = await response.json();
-        window.location.href = `${urlToRedirect}?deleteSuccess=true`;
 
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         alert("Error al eliminar");
     }
 

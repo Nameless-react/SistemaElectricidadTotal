@@ -32,18 +32,19 @@ export const handleSubmit = async (e, id = null, formData, setErrors, setServerE
 
     try {
         const response = await fetch(urlFetch, {
-            method: 'POST',
+            method: id ? 'PUT' : 'POST',
             body: JSON.stringify(formData),
         });
 
-        if (!response.ok) {
+        if (response.ok) {
+            router.push(`${urlRedirect}${id ? `?updateSuccess=true` : '?createSuccess=true'}`);
+        } else {
             const error = await response.json();
-            console.error(error);
+            //console.error(error);
             setServerError(error);
         }
-        router.push(`${urlRedirect}${id ? `?updateSuccess=true` : '?createSuccess=true'}`);
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         setServerError(error);
     }
 }

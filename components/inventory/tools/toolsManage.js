@@ -3,10 +3,22 @@ import React from 'react'
 import { ToolFormProvider } from "./compoundComponents/context/toolsFormContext";
 import { ToolForm, ToolName, ToolModel, ToolDescription, ToolsCategoryDropdown, ToolsProviderDropdown, ToolStatusDropdown, ToolSerial, ToolCost, ToolDate, ToolsMaintenanceNotesCheckbox, ToolImage } from './compoundComponents/tools/toolForm';
 import { SubmitButton } from '../../buttons/form/submitButton';
-import { useSearchParams } from 'next/navigation';
-export default function ManageTool({ categories, providers,id ,tool}) {
-   
+import { useToolsForm } from './compoundComponents/context/toolsFormContext';
+/**
+ * Renders a form for managing tools, allowing users to add or update tool details.
+ *
+ * @param {Object} props - The properties for the component.
+ * @param {Array} props.categories - An array of category objects for the tool.
+ * @param {Array} props.providers - An array of provider objects for the tool.
+ * @param {string} props.id - The ID of the tool, used to determine if the form is for updating an existing tool.
+ * @param {Object} props.tool - The tool object containing existing tool details.
+ *
+ * @returns {JSX.Element} - A React component rendering the tool management form.
+ */
+export default function ManageTool({ categories, providers, id, tool }) {
+
     return (
+
         <div className="flex-grow sm:mx-auto sm:max-w-7xl pt-5 px-2 sm:px-6 mb-10">
             <h1 className="text-3xl text-center mb-8 font-semibold mt-10 text-white">
                 Agregar Equipo
@@ -56,6 +68,7 @@ export default function ManageTool({ categories, providers,id ,tool}) {
                     <div className="flex justify-center w-full">
                         <SubmitButton id={id} title={id ? 'Actualizar Equipo' : 'Agregar Equipo'} className="mt-10 w-full sm:w-1/2" />
                     </div>
+                  
                 </ToolForm>
             </ToolFormProvider>
         </div>
