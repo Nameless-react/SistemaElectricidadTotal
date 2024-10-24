@@ -26,6 +26,13 @@ Status.init(
     }
 );
 
-Status.belongsTo(Projects, { foreignKey: 'id_status', as: 'idStatus' });
+Status.belongsTo(Projects, {
+    foreignKey: {
+        name: "id_status",
+        allowNull: false,
+        as: "idStatus"
+    }
+});
+
 
 export default Status;
