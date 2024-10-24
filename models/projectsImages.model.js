@@ -4,8 +4,9 @@ import sequelize from '/config/databaseConnection';
 class ProjectImages extends Model {}
 
 ProjectImages.init({
-    id_projects_images: {
+    idProjectsImages: {
         type: DataTypes.INTEGER,
+        field: 'id_projects_images',
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
@@ -14,19 +15,24 @@ ProjectImages.init({
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    id_project: {
+    idProject: {
         type: DataTypes.INTEGER,
+        field: id_project,
         allowNull: false
     }
 }, {
     sequelize,
     tableName: 'projects_images', 
+    modelName: 'projectImages',
     timestamps: false
 });
 
 
-ProjectImages.associate = (models) => {
-    ProjectImages.belongsTo(models.Project, { foreignKey: 'id_project', as: 'project' });
-};
-
+ProjectImages.belongsTo(Projects, {
+    foreignKey: {
+        name: "id_projects",
+        allowNull: false,
+        as: "idProjects"
+    }
+});
 export default ProjectImages;
