@@ -12,7 +12,7 @@ export default function SendMessage({ idUserAuthor, idConversation, email, name 
     const handleSendMessage = async (e) => {
         e.preventDefault();
         
-        const data = await fetch('/api/chat', {
+        const data = await fetch('/api/chat/messages', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

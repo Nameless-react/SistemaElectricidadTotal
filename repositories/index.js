@@ -9,6 +9,8 @@ import UserRepository from "./userRepository.js";
 import MessageRepository from "./message.repository.js";
 import ConversationRepository from "./conversation.repository.js";
 import ConversationParticipantsRepository from "./conversation_participants.js";
+import TaskRepository from "./task.repository.js";
+
 
 export {
     AppointmentRepository,
@@ -20,6 +22,7 @@ export {
     MaintenanceNotesRepository,
     MaterialRepository,
     ProviderRepository,
+    TaskRepository,
     ToolRepository,
     UserRepository,
 }

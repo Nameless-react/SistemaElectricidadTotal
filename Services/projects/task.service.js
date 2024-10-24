@@ -1,71 +1,52 @@
-import { validateAppointment, validatePartialAppointment, validateIdAppointment } from "/functions/validations/appointmentValidation";
+import { validateTask, validatePartialTask, validateIdTask } from "/functions/validations/taskValidation";
 import { ValidationFailureError, NotFoundError, DeletionError } from "/errors/errors";
-import { randomUUID } from "node:crypto";
-import VerificationAppointment from "/components/templateMails/VerificationAppointment";
 
 
 export default class TaskService {
     constructor(taskRepository) {
-        this.appointmentRepository = appointmentRepository;
+        this.taskRepository = taskRepository;
     }
 
-    async saveAppointment(task) {
-        const validatedAppointment = validateAppointment(task);
-        if (validatedAppointment.error) throw new ValidationFailureError(validatedAppointment.error.message);
+    async saveTask(task) {
+        const validatedTask = validateTask(task);
+        if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
 
-        const token = randomUUID();
-        
-
-        const result = await this.appointmentRepository.saveAppointment({ ...validatedAppointment.data, token });
-        const savedAppointment = await this.appointmentRepository.getAppointment(validatedAppointment.data)
-    
-        this.mailService.sendEmail('ElectricidadTotal <no-reply-citas@electricidadtotal.com>', validatedAppointment.data.email, "Confirmación de cita", 
-            <VerificationAppointment 
-                appointmentDate={savedAppointment.appointmentDate}
-                appointmentTime={savedAppointment.appointmentTime}
-                token={token}
-                idAppointment={savedAppointment.idAppointment}
-             />)
-        return result;
+        return await this.taskRepository.saveAppointment(validatedTask.data);
     }
 
-    async getAppointmentById(id) {
-        const validIdAppointment = validateIdAppointment({ idAppointment: id });
-        if (validIdAppointment.error) throw new ValidationFailureError(validIdAppointment.error);
+    async getTaskById(id) {
+        const validIdTask = validateIdTask({ idTask: id });
+        if (validIdTask.error) throw new ValidationFailureError(validIdTask.error);
 
 
-        const appointment = await this.appointmentRepository.getAppointmentById(id);
-        if (!appointment) throw new NotFoundError("La cita no fue encontrada")
-        return appointment;
+        const task = await this.taskRepository.getTaskById(id);
+        if (!task) throw new NotFoundError("La tarea no fue encontrada")
+        return task;
     }
 
-    async getAppointment(appointmentFields) {
-        const appointment = await this.appointmentRepository.getAppointment(appointmentFields);
-        if (!appointment) throw new NotFoundError(`La cita no fue encontrada`)
-        return appointment;
+    async getTask(taskFields) {
+        const task = await this.taskRepository.getTask(taskFields);
+        if (!task) throw new NotFoundError(`La tarea no fue encontrada`)
+        return task;
     }
 
-    async getAppointments() {
-        return await this.appointmentRepository.getAppointments();
+    async getTask() {
+        return await this.taskRepository.getTasks();
     }
 
-    async cancelAppointment(id) {
-        const validIdAppointment = validateIdAppointment({ idAppointment: id });
-        if (validIdAppointment.error) throw new ValidationFailureError(validIdAppointment.error);
+    async deleteTask(id) {
+        const validatedTask = validateIdTask({ idTask: id });
+        if (validatedTask.error) throw new ValidationFailureError(validatedTask.error);
 
-        const deleted = await this.appointmentRepository.cancelAppointment(validIdAppointment.data.idAppointment);
-        if (!deleted) throw new DeletionError("No se pudo eliminar la cita");
+        const deleted = await this.taskRepository.deleteTask(validatedTask.data.idTask);
+        if (!deleted) throw new DeletionError("No se pudo eliminar la tarea");
     }
 
-    async updateAppointment(appointment) {
-        const validatedAppointment = validatePartialAppointment(appointment);
-        if (validatedAppointment.error) throw new ValidationFailureError(validatedAppointment.error.message);
+    async updateTask(task) {
+        const validatedTask = validatePartialTask(task);
+        if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
 
-        await this.getAppointmentById(validatedAppointment.data.idAppointment);
-        return await this.appointmentRepository.updateAppointment(validatedAppointment.data);
-    }
-
-    async appointmentConfirmation(appointmentConfirmation) {
-        return await this.appointmentConfirmationRepository.confirmAppointment(appointmentConfirmation.confirmToken);
+        await this.getTaskById(validatedTask.data.idTask);
+        return await this.taskRepository.updateTask(validatedTask.data);
     }
 }

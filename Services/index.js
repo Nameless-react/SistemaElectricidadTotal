@@ -9,6 +9,9 @@ import MaterialService from "./materials/material.service";
 import ValidationMaterialService from "./materials/validations/validationMaterial.service";
 import UserService from "./users/user.service";
 import ValidationUserService from "./users/validations/validationUser.service";
+import TaskService from "./projects/task.service";
+
+
 export {
     CategoryService,
     MaintenanceNotesService,
@@ -20,5 +23,6 @@ export {
     ValidationMaterialService,
     ImageService,
     UserService,
-    ValidationUserService
+    ValidationUserService,
+    TaskService
 }
