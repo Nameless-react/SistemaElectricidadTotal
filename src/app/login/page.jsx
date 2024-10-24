@@ -7,14 +7,20 @@ import { getServerSession } from "next-auth/next"; // Import the server-side ses
 import { options } from "../api/auth/[...nextauth]/options";
 import { redirect } from "next/navigation"; // Import redirect function from next/navigation
 
+/**
+ * Page that renders the sign in and sign up forms, as well as the 
+ * corresponding panels for each action.
+ * 
+ * If the user is already authenticated, it redirects to the home page.
+ * 
+ * @returns a JSX element containing the sign in and sign up forms and panels.
+ */
 export default async function Login() {
 
     const session = await getServerSession(options); 
-
     if (session) {
         redirect("/");
     }
-
 
     return (
         <>

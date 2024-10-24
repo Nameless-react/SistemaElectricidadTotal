@@ -10,6 +10,7 @@ import ValidationMaterialService from "./materials/validations/validationMateria
 import UserService from "./users/user.service";
 import ValidationUserService from "./users/validations/validationUser.service";
 import TaskService from "./projects/task.service";
+import ValidationUserProfileService from "./users/validations/validationUserProfile.service";
 
 
 export {
@@ -24,5 +25,6 @@ export {
     ImageService,
     UserService,
     ValidationUserService,
+    ValidationUserProfileService,
     TaskService
 }

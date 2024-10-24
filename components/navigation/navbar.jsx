@@ -109,15 +109,15 @@ export default function NavbarApp() {
                                         color="warning"
                                         as="button"
                                         className="transition-transform"
-                                        src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                                        src={session.user.image ? session.user.image : "/noProfile.png"}
                                     />
                                 </DropdownTrigger>
                                 <DropdownMenu aria-label="Profile Actions" variant="flat" style={{ backgroundColor: "#171717", borderRadius: "8px" }}>
                                     <DropdownItem key="profile" className="h-14 gap-2">
                                         <p className="font-semibold">Bienvenido</p>
-                                        <p className="font-semibold">zoenosesee.com</p>
+                                        <p className="font-semibold">{session.user.name}</p>
                                     </DropdownItem>
-                                    <DropdownItem key="settings">Mi Perfil</DropdownItem>
+                                    <DropdownItem key="settings" href={"/perfil"}>Mi Perfil</DropdownItem>
                                     <DropdownItem key="projects" href="/portal-clientes/mis-proyectos">Mis Proyectos</DropdownItem>
                                     <DropdownItem key="chats" href="/chat">Mis Chats</DropdownItem>
                                     <DropdownItem key="config" href="/ajustes">Ajustes</DropdownItem>

@@ -15,8 +15,8 @@
  * @property {boolean} verify - Indicates if the user has verified their account.
  * @property {boolean} deleted - Indicates if the user has been deleted.
  * @property {string} [phone] - User's phone number.
+ * @property {string} [address] - User's address.
  */
-
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../config/databaseConnection';
 
@@ -90,6 +90,11 @@ User.init({
         validate: {
             is: /^\d{8}$/ 
         }
+    },
+    address: {
+        type: DataTypes.STRING(500),
+        allowNull: true,
+        defaultValue: 'Direccion no Disponible'
     }
 }, {
     sequelize,
