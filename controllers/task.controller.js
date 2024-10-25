@@ -15,38 +15,45 @@ class TaskController {
         this.taskService = taskService
     }
 
-    getAppointment = apiErrorWrapper(async (req, params) => {
+    getTask = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        const appointment = await this.taskService.getAppointmentById(parseInt(id));
-        return NextResponse.json(appointment, { status: 200 })
+        const task = await this.taskService.getTaskById(parseInt(id));
+        return NextResponse.json(task, { status: 200 });
+    })
+    
+    getTasks = apiErrorWrapper(async (req, res) => {
+        const tasks = await this.taskService.getTasks();
+        return NextResponse.json(tasks, { status: 200 });
+    })
+    
+    getTasksByProject = apiErrorWrapper(async (req, params) => {
+        const { id } = params.params;
+        const tasksByProject = await this.taskService.getTasksByProject({ idProjects: id });
+        return NextResponse.json(tasksByProject, { status: 200 });
     })
 
-    getAppointments = apiErrorWrapper(async (req, res) => {
-        const appointments = await this.taskService.getAppointments();
-        return NextResponse.json(appointments, { status: 200 })
-    })
-
-    saveAppointment = apiErrorWrapper(async (req, res) => {
+    saveTask = apiErrorWrapper(async (req, res) => {
         const parseBody = await req.json();
-        await this.taskService.saveAppointment(parseBody);
-        return NextResponse.json({ message: "Su cita ha sido agendada con éxito. Por favor, revise su correo electrónico para confirmar la cita." }, { status: 201 });
+        await this.taskService.saveTask(parseBody);
+        return NextResponse.json({ message: "Tarea guardada con éxito" }, { status: 201 });
     })
 
-    cancelAppointment = apiErrorWrapper(async (req, params) => {
+    deleteTask = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        await this.taskService.cancelAppointment(parseInt(id));
-        return NextResponse.json({ message: "la cita ha sido cancelada exitosamente" }, { status: 200 });
+        await this.taskService.deleteTask(parseInt(id));
+        return NextResponse.json({ message: "La tarea se eliminó con éxito" }, { status: 200 });
     })
+
     updateTask = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
         const parseBody = await req.json();
 
-        const updatedAppointment = await this.taskService.updateAppointment({ 
-            idTask: parseInt(id),
+        const updatedTask = await this.taskService.updateTask({ 
+            idTasks: parseInt(id),
             ...parseBody    
         });
 
-        return NextResponse.json(updatedAppointment, { status: 200 })
+        return NextResponse.json(updatedTask, { status: 200 })
     })
 }
 

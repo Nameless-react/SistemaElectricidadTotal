@@ -42,7 +42,7 @@ Task.init({
 
 Task.belongsTo(Projects, {
     foreignKey: {
-        name: "id_projects",
+        name: "idProjects",
         allowNull: false,
     }
 });

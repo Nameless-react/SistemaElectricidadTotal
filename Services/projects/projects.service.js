@@ -1,48 +1,52 @@
+import { validateProject, validateIdProject, validatePartiaProject } from "/functions/validations/projectValidation";
+import { ValidationFailureError , NotFoundError} from "/errors/errors";
+
 class ProjectsService {
-    constructor(projectsRepository) {
+    constructor(projectsRepository, projectsImagesService) {
         this.projectsRepository = projectsRepository;
+        this.projectsImagesService = projectsImagesService;
     }
 
     async getProjects() {
-        try {
-            return await this.projectsRepository.getProjects();
-        } catch (error) {
-            throw new Error("Error while getting projects: " + error.message);
-        }
+        return await this.projectsRepository.getProjects();
     }
 
     async getProjectById(id) {
-        try {
-            return await this.projectsRepository.getProjectById(id);
-        } catch (error) {
-            throw new Error("Error while getting the project by ID: " + error.message);
-        }
+        const validIdProject = validateIdProject({ idProjects: id });
+        if (validIdProject.error) throw new ValidationFailureError(validIdProject.error);
+
+
+        const project = await this.projectsRepository.getProjectById(id);
+        if (!project) throw new NotFoundError("El proyecto no fue encontrado")
+
+        return project
+       
     }
 
     async createProject(projectData) {
-        try {
-            return await this.projectsRepository.createProject(projectData);
-        } catch (error) {
-            throw new Error("Error while creating the project: " + error.message);
-        }
+        const validatedProject = validateProject(projectData);
+        if (validatedProject.error) throw new ValidationFailureError(validatedProject.error.message);
+
+        return await this.projectsRepository.createProject(validatedProject.data );
     }
 
 
-    async updateProject(id, projectData) {
-        try {
-            return await this.projectsRepository.updateProject(id, projectData);
-        } catch (error) {
-            throw new Error("Error while updating the project: " + error.message);
-        }
+    async updateProject( projectData) {
+        console.log(projectData)
+        const validatedProject = validatePartiaProject(projectData);
+        if (validatedProject.error) throw new ValidationFailureError(validatedProject.error.message);
+
+        await this.getProjectById(validatedProject.data.idProjects);
+        return await this.projectsRepository.updateProject( {...validatedProject.data});
     }
 
 
     async deleteProject(id) {
-        try {
-            return await this.projectsRepository.deleteProject(id);
-        } catch (error) {
-            throw new Error("Error while deleting the project: " + error.message);
-        }
+        const validIdProject= validateIdProject({ idProjects: id });
+        if (validIdProject.error) throw new ValidationFailureError(validIdProject.error);
+
+        const deleted = await this.projectsRepository.deleteProject(validIdProject.data.idProjects);
+        if (!deleted) throw new DeletionError("No se pudo eliminar el proyecto");   
     }
 }
 

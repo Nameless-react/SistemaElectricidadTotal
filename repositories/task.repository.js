@@ -9,10 +9,10 @@ export default class TaskRepository {
         return result;
     }
 
-    async deleteTask(idTask) {
+    async deleteTask(idTasks) {
         return await this.taskModel.destroy({
             where: {
-                idTask
+                idTasks
             }
         })
     }
@@ -34,10 +34,10 @@ export default class TaskRepository {
         });
     }
 
-    async updateTask({ idTask, ...newTaskData }) {
+    async updateTask({ idTasks, ...newTaskData }) {
         const result = await this.taskModel.update(newTaskData, {
             where: {
-                idTask
+                idTasks
             },
             returning: true,
             plain: true

@@ -3,7 +3,6 @@ import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
 import { ProjectsService } from "../Services"; 
 import ProjectModel from "../models/projects.model";
-import config from "/config/config"
 import ProjectsRepository from "../repositories/project.repository";
 
 
@@ -52,7 +51,6 @@ class ProjectController {
 
         return NextResponse.json(updatedProject, { status: 200 })
     })
-    
 }
 
 export default new ProjectController(projectsService);

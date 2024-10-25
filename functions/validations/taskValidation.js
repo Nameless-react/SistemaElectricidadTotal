@@ -1,39 +1,42 @@
 import { z } from "zod";
+import { format, isAfter } from "@formkit/tempo"
 
-export const messageValidations = z.object({
-    idMessages: z.coerce.number({
-        invalid_type_error: "El id de los mensajes tiene que ser un número"
+
+export const taskValidations = z.object({
+    idTasks: z.coerce.number({
+        invalid_type_error: "El id de las tareas tiene que ser un número"
     }).positive({
-        message: "El número del id tiene que ser mayor a 0"
+        message: "El número del id  de las tareas tiene que ser mayor a 0"
     }),
-    message: z.string({
-        invalid_type_error: "El mensaje tiene que ser un texto",
-        required_error: "El mensaje es necesario para enviarlo"
+    title: z.string({
+        invalid_type_error: "El título de la tarea tiene que ser un texto",
+        required_error: "El título es necesario para la tarea"
     }),
-    idUserAuthor: z.number({
-        invalid_type_error: "El id del usuario tiene que ser un número"
+    deadline: z.string({
+        invalid_type_error: "El tiempo límite para hacer la tarea tiene que ser un texto"
+    }).datetime({
+        message: "El formato de la fecha y la hora no es valido"
+    }).refine(value => {
+        const currentDate = format(new Date(), "YYYY-MM-DD HH:mm");
+        return (isAfter(value, currentDate) || isEqual(value, currentDate)); 
+    }, {
+        message: "La fecha y hora tiene que ser de igual o posterior a la fecha y hora actual"
+    }),
+    idProjects: z.coerce.number({
+        invalid_type_error: "El número del id del proyecto tiene que ser un número",
+        required_error: "El número del id del proyecto es necesario para una tarea"
     }).positive({
-        message: "El id del usuario tiene que ser un número positivo"
-    }).or(z.null()),
-    idConversation: z.coerce.number({
-        invalid_type_error: "El número del id de la conversación tiene que ser un número",
-        required_error: "El número del id de la conversación es necesario"
-    }).positive({
-        message: "El número del id tiene que ser mayor a 0"
+        message: "El id del proyecto tiene que ser un número positivo"
     }),
-    email: z.string({
+    idStatus: z.coerce.number({
         invalid_type_error: "El correo tiene que ser un texto"
-    }).email({
-         message: "Dirección de correo invalida"
-    }),
-    name: z.string({
-        invalid_type_error: "El nombre tiene que ser un texto"
+    }).positive({
+        message: "El id de estatus tiene que ser un número positivo"
     })
 })
 
 
 
-export const validateMessage = (object) =>  messageValidations.omit({ idMessages: true }).safeParse(object)
-export const validatePartiaMessage = (object) =>  messageValidations.partial().safeParse(object)
-export const validateIdMessage = (object) => messageValidations.pick({ idMessages: true }).safeParse(object);
-export const validateIdConversation = (object) => messageValidations.pick({ idConversation: true }).safeParse(object);
+export const validateTask = (object) =>  taskValidations.omit({ idTasks: true }).safeParse(object)
+export const validatePartialTask = (object) =>  taskValidations.partial().safeParse(object)
+export const validateIdTask = (object) => taskValidations.pick({ idTasks: true }).safeParse(object);
