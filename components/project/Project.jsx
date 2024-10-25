@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+"use server"
 import { Progress } from "@nextui-org/progress";
 import styles from "/css/projects.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,48 +15,8 @@ const statusDetails = {
 
 const defaultStatus = { class: '', icon: faQuestionCircle };
 
-export default function ProjectsList() {
-    const [projects, setProjects] = useState([]);
-    const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchProjects = async () => {
-            try {
-                const response = await fetch('/api/project'); 
-                if (!response.ok) {
-                    throw new Error('Failed to fetch projects');
-                }
-                const data = await response.json();
-                setProjects(data);
-            } catch (err) {
-                setError(err.message);
-            }
-        };
-
-        fetchProjects();
-    }, []);
-
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
-
-    return (
-        <div>
-            {projects.map((project) => (
-                <Project
-                    key={project.id_projects} 
-                    status={project.status}
-                    name={project.name}
-                    description={project.description}
-                    progressValue={project.progressValue} 
-                    employees={project.employees} 
-                />
-            ))}
-        </div>
-    );
-}
-
-function Project({ status, name, description, progressValue, employees }) {
+export default async function Project({ idProjects, status, name, description, progressValue, employees }) {
     const { class: statusClass, icon: statusIcon } = statusDetails[status] || defaultStatus;
 
     return (
@@ -66,7 +26,7 @@ function Project({ status, name, description, progressValue, employees }) {
                     <FontAwesomeIcon className="text-2xl" icon={statusIcon} />
                     <p>{status}</p>
                 </div>
-                <Link href="#">
+                <Link href={`/proyectos/${idProjects}`}>
                     <FontAwesomeIcon className="text-2xl" icon={faArrowRight} />
                 </Link>
             </div>

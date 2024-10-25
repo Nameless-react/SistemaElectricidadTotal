@@ -1,4 +1,4 @@
-import { validateTask, validatePartialTask, validateIdTask } from "/functions/validations/taskValidation";
+import { validateTask, validatePartialTask, validateIdTask, validateIdProjects } from "/functions/validations/taskValidation";
 import { ValidationFailureError, NotFoundError, DeletionError } from "/errors/errors";
 
 
@@ -14,14 +14,21 @@ export default class TaskService {
         return await this.taskRepository.saveTask(validatedTask.data);
     }
 
-    async getTaskById(id) {
-        const validIdTask = validateIdTask({ idTasks: id });
+    async getTaskById(idTasks) {
+        const validIdTask = validateIdTask({ idTasks });
         if (validIdTask.error) throw new ValidationFailureError(validIdTask.error);
 
 
         const task = await this.taskRepository.getTaskById(validIdTask.data.idTasks);
         if (!task) throw new NotFoundError("La tarea no fue encontrada")
         return task;
+    }
+    
+    async getTasksByProject({ idProjects }) {
+        const validIdProjects = validateIdProjects({ idProjects })
+        if (validIdProjects.error) throw new ValidationFailureError(validIdProjects.error);
+
+        return await this.taskRepository.getTasksByProject(validIdProjects.data.idProjects);
     }
 
     async getTask(taskFields) {

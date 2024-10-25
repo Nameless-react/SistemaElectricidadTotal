@@ -40,3 +40,4 @@ export const taskValidations = z.object({
 export const validateTask = (object) =>  taskValidations.omit({ idTasks: true }).safeParse(object)
 export const validatePartialTask = (object) =>  taskValidations.partial().safeParse(object)
 export const validateIdTask = (object) => taskValidations.pick({ idTasks: true }).safeParse(object);
+export const validateIdProjects = (object) => taskValidations.pick({ idProjects: true }).safeParse(object);

@@ -1,14 +1,26 @@
+import { Sequelize } from "sequelize";
 export default class ProjectsRepository {
     constructor(projectModel, sequelize) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
     }
 
-
     async getProjects() {
-        return await this.projectModel.findAll();
+        const projects = await this.projectModel.findAll({
+            include: [
+                {
+                    model: "status",
+                    as: 'status',
+                    attributes: ['name'], // Traer solo el nombre del estado
+                }
+            ],
+            attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
+        });
+    
+        return projects;
     }
-
+    
+    
     async getProjectById(id) {
         const result = await this.projectModel.findByPk(id);
         return result ? result.dataValues : null;
@@ -16,7 +28,6 @@ export default class ProjectsRepository {
 
 
     async createProject(project) {
-        console.log(project)
         const result = await this.sequelize.query(
             `Call create_project_with_images(:p_name ,:p_description, :p_budget , :p_id_status , ARRAY[:p_images_url]);`, {
             replacements: {

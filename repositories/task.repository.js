@@ -26,6 +26,14 @@ export default class TaskRepository {
         return await this.taskModel.findAll();
     }
 
+    async getTasksByProject(idProjects) {
+        return await this.taskModel.findAll({
+            where: {
+                idProjects
+            }
+        });
+    }
+
     async getTask(task) {
         return await this.taskModel.findOne({
             where: {
