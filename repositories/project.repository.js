@@ -1,23 +1,30 @@
 import { Sequelize } from "sequelize";
 export default class ProjectsRepository {
-    constructor(projectModel, sequelize) {
+    constructor(projectModel,statusModel, sequelize) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
+        this.statusModel = statusModel;
     }
 
     async getProjects() {
         const projects = await this.projectModel.findAll({
             include: [
                 {
-                    model: "status",
-                    as: 'status',
-                    attributes: ['name'], // Traer solo el nombre del estado
+                    model: this.statusModel,
+                    attributes: ['name']
                 }
             ],
             attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
         });
-    
-        return projects;
+
+        const formattedProjects = projects.map(project => {
+            const { Status, ...projectData } = project.get({ plain: true }); 
+            return {
+                ...projectData,
+                status: Status.name || 'Unknown' 
+            };
+        });
+        return formattedProjects;
     }
     
     

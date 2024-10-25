@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/databaseConnection'; 
-import Projects from './projects.model'; 
+import sequelize from '../config/databaseConnection';  
 class Status extends Model {
 }
 
@@ -25,14 +24,6 @@ Status.init(
         modelName: 'Status'
     }
 );
-
-Status.belongsTo(Projects, {
-    foreignKey: {
-        name: "id_status",
-        allowNull: false,
-        as: "idStatus"
-    }
-});
 
 
 export default Status;

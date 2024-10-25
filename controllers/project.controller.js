@@ -4,9 +4,10 @@ import apiErrorWrapper from "/errors/apiErrorWrapper";
 import { ProjectsService } from "../Services"; 
 import ProjectModel from "../models/projects.model";
 import ProjectsRepository from "../repositories/project.repository";
+import StatusModel from "../models/status.model";
 
 
-const projectsRepository = new ProjectsRepository(ProjectModel, sequelize);
+const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, sequelize);
 const projectsService= new ProjectsService(projectsRepository);
 
 

@@ -7,7 +7,7 @@ import { getProjectsAction } from "/functions/fetches/projects/projectActions"
 
 export default async function Projects() {
     const projects = await getProjectsAction(); 
-
+    console.log(projects)
     return (
         <div className={styles.projectsContainer}>
             {projects.length === 0 ? (
@@ -17,7 +17,7 @@ export default async function Projects() {
                     <Project
                         key={project.idProjects} 
                         idProjects={project.idProjects} 
-                        status={project.idStatus} 
+                        status={project.status} 
                         name={project.name}
                         description={project.description}
                         progressValue={project.percentage}

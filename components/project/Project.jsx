@@ -18,7 +18,7 @@ const defaultStatus = { class: '', icon: faQuestionCircle };
 
 export default async function Project({ idProjects, status, name, description, progressValue, employees }) {
     const { class: statusClass, icon: statusIcon } = statusDetails[status] || defaultStatus;
-
+    
     return (
         <div className={styles.project}>
             <div className={styles.optionsProject}>
