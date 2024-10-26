@@ -92,12 +92,12 @@
     grid-row: span 3;
 }
 
-.employees {
+.employeesContainer {
     grid-column: span 2;
     grid-row: 3;
 }
 
-.tasks {
+.tasks, .employees {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -108,7 +108,7 @@
     padding: 1em 0;
 }
 
-.task {
+.task, .employee {
     display: grid;
     padding: 1em 1.2em;
     width: 100%;
