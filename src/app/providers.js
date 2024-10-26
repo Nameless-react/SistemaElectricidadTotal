@@ -2,11 +2,8 @@
 import * as React from "react";
 import { NextUIProvider } from "@nextui-org/system";
 import { SessionProvider } from "next-auth/react"; 
-import { useRouter } from 'next/navigation';
 
-export default function Providers({ children }) {
-    const router = useRouter();
-    
+export default function Providers({ children }) {    
     return (
         <SessionProvider>
             <NextUIProvider>

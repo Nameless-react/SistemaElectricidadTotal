@@ -1,8 +1,8 @@
-import { Sequelize } from "sequelize";
 export default class ProjectsRepository {
-    constructor(projectModel,statusModel, sequelize) {
+    constructor(projectModel, statusModel, employeeModel, sequelize) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
+        this.employeeModel = employeeModel;
         this.statusModel = statusModel;
     }
 
@@ -12,11 +12,14 @@ export default class ProjectsRepository {
                 {
                     model: this.statusModel,
                     attributes: ['name']
+                },
+                {
+                    model: this.employeeModel
                 }
             ],
-            attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
+            // attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
         });
-
+    
         const formattedProjects = projects.map(project => {
             const { Status, ...projectData } = project.get({ plain: true }); 
             return {
@@ -24,6 +27,7 @@ export default class ProjectsRepository {
                 status: Status.name || 'Unknown' 
             };
         });
+
         return formattedProjects;
     }
     

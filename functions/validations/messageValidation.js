@@ -28,7 +28,10 @@ export const messageValidations = z.object({
     }),
     name: z.string({
         invalid_type_error: "El nombre tiene que ser un texto"
-    })
+    }),
+    image: z.string({
+        invalid_type_error: "La imagen tiene que ser una url"
+    }).url()
 })
 
 

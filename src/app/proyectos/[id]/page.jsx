@@ -1,7 +1,11 @@
-"use client";
+"use server";
 import ProjectDashboard from "/components/project/ProjectDashboard";
 
-export default function Project({ params }) {
+export default async function Project({ params }) {
+    const { id } = params;
+    let project;
+    if (id) project = await getProjectAction(parseInt(id)); 
+
     return (
         <>
             <ProjectDashboard 

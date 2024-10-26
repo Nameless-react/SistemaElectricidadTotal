@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
-import Users from './users.model';
+import Users from './user.model';
 
 class Employee extends Model {}
 

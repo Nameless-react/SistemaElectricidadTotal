@@ -5,9 +5,9 @@ import { ProjectsService } from "../Services";
 import ProjectModel from "../models/projects.model";
 import ProjectsRepository from "../repositories/project.repository";
 import StatusModel from "../models/status.model";
+import EmployeeModel from "../models/employees.model";
 
-
-const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, sequelize);
+const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, sequelize);
 const projectsService= new ProjectsService(projectsRepository);
 
 
@@ -42,8 +42,6 @@ class ProjectController {
     updateProject = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
         const parseBody = await req.json();
-
-        console.log(parseBody)
 
         const updatedProject = await this.projectsService.updateProject({ 
             idProjects: parseInt(id),
