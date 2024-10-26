@@ -23,6 +23,8 @@ function formatNumberToColones(number) {
 
 export default function ProjectDashboard({ status, name, description, progressValue, employees, tasks, budget, expenses }) {
     return (
+        <>
+        <h1>{name}</h1>
         <div className={style.container}>
             <div className={style.overviewProject}>
                 <div>
@@ -113,9 +115,22 @@ export default function ProjectDashboard({ status, name, description, progressVa
 
             </div>
 
-            <div className={style.employees}>
-
+            <div className={style.employeesContainer}>
+                <h3>Empleados</h3>
+                <div className={style.employees}>
+                <Task 
+                name="Instalar cableado eléctrico en nueva oficina"  
+                />
+                <Task 
+                    name="Revisar sistema de iluminación en bodega" 
+                />
+                <Task 
+                    name="Instalar paneles solares en edificio comercial" 
+                />
+                </div>
+            
             </div>
         </div>
+        </>
     )
 }
