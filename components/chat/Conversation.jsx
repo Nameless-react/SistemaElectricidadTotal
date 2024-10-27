@@ -1,29 +1,32 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ChatList from "./ChatList";
 import ChatMessages from "./ChatMessages";
 import styles from "/css/messages.module.css";
 import { getChatAction } from "/functions/fetches/chats/chatActions";
+import { ChatContext } from "./context/ChatContext";
 
 
-export default function Conversation({ conversations, messages, idConversation }) {
-    const [selectedConversationId, setSelectedConversationId] = useState(idConversation);
-    const [messagesConversation, setMessagesConversation] = useState(messages);
+export default function Conversation() {
+    const { selectedConversationId, setMessagesConversation } = useContext(ChatContext);
+    const [initialLoad, setInitialLoad] = useState(true);
+    
     useEffect(() => {
         const fetchMessages = async () => {
             const newMessages = await getChatAction(selectedConversationId);
             setMessagesConversation(newMessages);
         } 
         
-        fetchMessages();
-        console.log(selectedConversationId)
-        console.log(messagesConversation)
+        if (!initialLoad) fetchMessages();
+        else setInitialLoad(false);
+
+    
     }, [selectedConversationId])
 
     return (
         <div className={styles.chats}>
-            <ChatList conversations={conversations} setSelectedConversationId={setSelectedConversationId} selectedConversationId={selectedConversationId} />
-            <ChatMessages messagesConversation={messagesConversation} setMessagesConversation={setMessagesConversation} idConversation={selectedConversationId} />
+            <ChatList />
+            <ChatMessages />
         </div>
     )
 }

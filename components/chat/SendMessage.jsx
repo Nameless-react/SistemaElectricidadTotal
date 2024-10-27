@@ -3,22 +3,17 @@ import styles from "/css/messages.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleUp } from "@fortawesome/free-solid-svg-icons"; 
 import { useState } from "react";
+import { saveMessageAction } from "/functions/fetches/chats/chatActions";
 
-export default function SendMessage({ idUserAuthor, idConversation, email, name }) {
+
+export default function SendMessage({ idUserAuthor, idConversation, email, name, image }) {
     const [inputMessage, setInputMessage] = useState("");
 
     const handleChange = (e) => setInputMessage(e.target.value)
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
-        
-        const data = await fetch('/api/chat/messages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ message: inputMessage, idUserAuthor, idConversation, email, name })
-        })
+        await saveMessageAction(inputMessage, idUserAuthor, idConversation, email, name, image);
         setInputMessage("")
     }
 

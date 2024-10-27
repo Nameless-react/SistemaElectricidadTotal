@@ -28,6 +28,7 @@
     "@nextui-org/progress": "^2.0.33",
     "@nextui-org/system": "^2.2.2",
     "@nextui-org/table": "^2.0.36",
+    "@nextui-org/tabs": "^2.0.37",
     "@nextui-org/theme": "^2.2.6",
     "@nextui-org/user": "^2.0.31",
     "bcrypt": "^5.1.1",

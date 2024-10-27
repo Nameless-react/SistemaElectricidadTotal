@@ -27,7 +27,11 @@ Project.init({
             min: 0
         }
     },
-  
+    deleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
+    },
     percentage: {
         type: DataTypes.DECIMAL(5,2),
         allowNull: true,

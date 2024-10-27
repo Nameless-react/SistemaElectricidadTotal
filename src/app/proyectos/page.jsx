@@ -7,7 +7,7 @@ import { getProjectsAction } from "/functions/fetches/projects/projectActions"
 
 export default async function Projects() {
     const projects = await getProjectsAction(); 
-    console.log(projects)
+    
     return (
         <div className={styles.projectsContainer}>
             {projects.length === 0 ? (

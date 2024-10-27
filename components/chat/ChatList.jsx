@@ -1,10 +1,11 @@
 "use client"
+import { useContext } from "react";
 import Chat from "/components/chat/Chat";
 import styles from "/css/messages.module.css";
+import { ChatContext } from "./context/ChatContext";
 
-export default function ChatList({ conversations, setSelectedConversationId, selectedConversationId }) {
-    // console.log(setSelectedConversationId)
-    // console.log(selectedConversationId)
+export default function ChatList() {
+    const { conversations, setSelectedConversationId, selectedConversationId } = useContext(ChatContext);
     return (
         <div className={styles.conversationsContainer}>
             <h2>Chats</h2>
