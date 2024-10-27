@@ -31,8 +31,7 @@ class ProjectsService {
     }
 
 
-    async updateProject( projectData) {
-        console.log(projectData)
+    async updateProject(projectData) {
         const validatedProject = validatePartiaProject(projectData);
         if (validatedProject.error) throw new ValidationFailureError(validatedProject.error.message);
 
