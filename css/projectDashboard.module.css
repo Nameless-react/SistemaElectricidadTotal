@@ -138,3 +138,64 @@
     transform: translateY(-10%);
     background-color: #243760;
 }
+
+.optionsProjects {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.titleContainer {
+    grid-column: span 2;
+    grid-row: 3;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.7em;
+    display: flex; /* Cambia a flex para alinear el título y el estado en una fila */
+    justify-content: space-between; /* Coloca el título y el estado en extremos opuestos */
+    align-items: center;
+    padding: 1rem; /* Espaciado para una mejor separación visual */
+}
+
+.title {
+    width: 40%; /* Ajusta según sea necesario */
+    background-color: #1f2c47;
+    padding: 1em 1.2em;
+    border-radius: 20px;
+    transition: transform .5s ease;
+    text-align: center;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #fff;
+    gap: 0.5rem;
+}
+
+.inProgress {
+    border: 2px solid #FFA500;
+    color: #FFA500;
+}
+
+.pending {
+    border: 2px solid #FFD700;
+    color: #FFD700;
+}
+
+.onHold {
+    border: 2px solid #FF4500;
+    color: #FF4500;
+}
+
+.completed {
+    border: 2px solid #32CD32;
+    color: #32CD32;
+}
