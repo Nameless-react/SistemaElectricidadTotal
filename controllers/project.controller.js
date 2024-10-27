@@ -6,6 +6,7 @@ import ProjectModel from "../models/projects.model";
 import ProjectsRepository from "../repositories/project.repository";
 import StatusModel from "../models/status.model";
 import EmployeeModel from "../models/employees.model";
+import { revalidatePath } from "next/cache";
 
 const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, sequelize);
 const projectsService= new ProjectsService(projectsRepository);
@@ -36,6 +37,7 @@ class ProjectController {
     deleteProject = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
         await this.projectsService.deleteProject(parseInt(id));
+        revalidatePath("/proyectos")
         return NextResponse.json({ message: "El proyecto ha sido eliminado de manera exitosa" }, { status: 200 });
     })
 

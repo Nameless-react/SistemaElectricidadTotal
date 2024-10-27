@@ -1,0 +1,29 @@
+.projectContainer {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.optionsProjects {
+    margin: 2rem 0;
+}
+
+
+.optionsProjects h1 {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.deleteProject {
+    width: 80%;
+    margin: 0 auto;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    background-color: #182237;
+    border-radius: 30px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}

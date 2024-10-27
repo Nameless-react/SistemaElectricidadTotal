@@ -13,11 +13,14 @@ export default class ProjectsRepository {
                     model: this.statusModel,
                     attributes: ['name']
                 },
-                {
-                    model: this.employeeModel
-                }
+                // {
+                //     model: this.employeeModel
+                // }
             ],
-            // attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
+            where: {
+                deleted: false
+            },
+            attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
         });
     
         const formattedProjects = projects.map(project => {
@@ -33,7 +36,11 @@ export default class ProjectsRepository {
     
     
     async getProjectById(id) {
-        const result = await this.projectModel.findByPk(id);
+        const result = await this.projectModel.findByPk(id, {
+            where: {
+                deleted: false
+            }
+        });
         return result ? result.dataValues : null;
     }
 
@@ -67,10 +74,12 @@ export default class ProjectsRepository {
     }
     
     
-    async deleteProject(id) {
-        return await this.projectModel.destroy({
+    async deleteProject(idProjects) {
+        return await this.projectModel.update({
+            deleted: true
+        },{
             where: {
-                idProjects: id
+                idProjects
             }
         })
     }

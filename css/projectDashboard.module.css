@@ -1,19 +1,19 @@
 .container {
-    width: 95%;
-    margin: 4rem auto;
+    width: 100%;
+    margin: 4rem 0;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(3, minmax(300px, 1fr));
     grid-template-rows: repeat(3, minmax(400px, auto));
 }
 
-.tasksContainer, .overviewGraphs, .overviewProject > div, .projectFiles, .employees {
+.tasksContainer, .overviewGraphs, .overviewProject > div, .projectFiles, .employeesContainer {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     background-color: #182237;
     border-radius: 30px;
 }
 
-.tasksContainer {
+.tasksContainer, .employeesContainer {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -24,7 +24,7 @@
     grid-row: 2;
 }
 
-.tasksContainer h3 {
+.tasksContainer h3, .employeesContainer h3 {
     font-size: 1.5rem;
     font-weight: bold;
     justify-self: flex-start;
@@ -97,6 +97,21 @@
     grid-row: 3;
 }
 
+.taskHeader, .employeeHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.taskHeader a, .employeeHeader a {
+    color: #fff;
+    background-color: #15803d;
+    font-size: 1.8rem;
+    padding: .01em 1em;
+    border-radius: 20px;
+}
+
 .tasks, .employees {
     display: flex;
     align-items: center;
@@ -110,31 +125,35 @@
 
 .task, .employee {
     display: grid;
-    padding: 1em 1.2em;
-    width: 100%;
+    padding: .5em 1.2em;
+    max-width: 100%;
     background-color: #1f2c47;
     gap: 1rem;
     justify-content: space-between;
     align-items: center;
     justify-items: center;
-    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, minmax(100px, 1fr)) 20px;
     border-radius: 20px;
     transition: transform .5s ease;
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
-.task h3 {
+/* .task i, .employee {
+} */
+
+.task h3, .employee h3 {
     font-size: 1rem;
 }
 
-.task p {
+.task p, .employee p {
     font-weight: lighter;
     color: #eee;
     font-size: .9rem;
 }
 
 
-.task:hover {
+.task:hover, .employee:hover {
     transform: translateY(-10%);
     background-color: #243760;
 }
