@@ -22,26 +22,42 @@ export default class ProjectsRepository {
             },
             attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
         });
-    
+
         const formattedProjects = projects.map(project => {
-            const { Status, ...projectData } = project.get({ plain: true }); 
+            const { Status, ...projectData } = project.get({ plain: true });
             return {
                 ...projectData,
-                status: Status.name || 'Unknown' 
+                status: Status.name || 'Unknown'
             };
         });
 
         return formattedProjects;
     }
-    
-    
+
+
     async getProjectById(id) {
         const result = await this.projectModel.findByPk(id, {
+            include: [
+                {
+                    model: this.statusModel,
+                    attributes: ['name']
+                },
+                // {
+                //     model: this.employeeModel
+                // }
+            ],
             where: {
                 deleted: false
             }
         });
-        return result ? result.dataValues : null;
+        console.log (result)
+        const { Status, ...projectData } = result.get({ plain: true });
+        const formattedProjects = {
+            ...projectData,
+            status: Status.name || 'Unknown'
+        };
+
+        return formattedProjects;
     }
 
 
@@ -58,7 +74,7 @@ export default class ProjectsRepository {
             type: this.sequelize.QueryTypes.RAW,
             logging: console.log,
         });
-        return result[0];  
+        return result[0];
     }
 
     async updateProject({ idProjects, ...newProjectsData }) {
@@ -72,12 +88,12 @@ export default class ProjectsRepository {
 
         return result[1];
     }
-    
-    
+
+
     async deleteProject(idProjects) {
         return await this.projectModel.update({
             deleted: true
-        },{
+        }, {
             where: {
                 idProjects
             }
