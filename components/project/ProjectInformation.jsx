@@ -4,33 +4,30 @@ import ConfigurationProject from "/components/project/ConfigurationProject";
 import ProjectDashboard from "/components/project/ProjectDashboard";
 import styles from "/css/projectPage.module.css";
 import Status from "./Status";
+import { useContext } from "react";
+import { ProjectContext } from "./context/ProjectContext";
 
 
-export default function ProjectInformation({ project }) {
-    console.log (project)
+export default function ProjectInformation() {
+    const { project } = useContext(ProjectContext);
+    
     return (
-        <div className={styles.projectContainer}>
+        project && (<div className={styles.projectContainer}>
             <div className={styles.optionsProjects}>
                 <h1>{project.name}</h1>
-
-                <Status status={project.status} />
-
+                <Status size="s" status={project.status} />
             </div>
             <Tabs fullWidth aria-label="Options" classNames={{
-                tabList: "w-full px-6",
+                tabList: "w-full px-6 bg-[#182237]",
                 tab: "font-bold"
             }}>
                 <Tab key={"Información"} title="Información">
-                    <ProjectDashboard
-                        {...project}
-                        //RECORDAR CAMBIAR EXPENSES
-                        expenses={project.budget}
-                    />
+                    <ProjectDashboard />
                 </Tab>
                 <Tab key={"Configuración"} title="Configuración">
                     <ConfigurationProject name={project.name} idProjects={project.idProjects} />
                 </Tab>
             </Tabs>
-        </div>
+        </div>)
     )
 }

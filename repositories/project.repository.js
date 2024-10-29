@@ -1,9 +1,13 @@
 export default class ProjectsRepository {
-    constructor(projectModel, statusModel, employeeModel, sequelize) {
+    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, sequelize) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
         this.employeeModel = employeeModel;
+        this.taskModel = taskModel;
+        this.teamProjectEmployeeModel = teamProjectEmployeeModel;
         this.statusModel = statusModel;
+        this.teamProjectModel = teamProjectModel;
+        this.userModel = userModel;
     }
 
     async getProjects() {
@@ -13,28 +17,45 @@ export default class ProjectsRepository {
                     model: this.statusModel,
                     attributes: ['name']
                 },
-                // {
-                //     model: this.employeeModel
-                // }
+                {
+                    model: this.teamProjectModel,
+                    include: [
+                        {
+                            model: this.teamProjectEmployeeModel,
+                            required: false,
+                            include: [
+                                {
+                                    model: this.employeeModel,
+                                    include: [
+                                        {
+                                            model: this.userModel
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
             ],
             where: {
                 deleted: false
             },
             attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
         });
-
+        
         const formattedProjects = projects.map(project => {
-            const { Status, ...projectData } = project.get({ plain: true });
+            const { Status, teamProject, ...projectData } = project.get({ plain: true });
             return {
                 ...projectData,
-                status: Status.name || 'Unknown'
-            };
+                status: Status.name || 'Unknown',
+                employees: teamProject?.teamProjectEmployees.map(employee => employee.employee.User.image)
+            }; 
         });
-
+        
         return formattedProjects;
     }
-
-
+    
+    
     async getProjectById(id) {
         const result = await this.projectModel.findByPk(id, {
             include: [
@@ -42,22 +63,66 @@ export default class ProjectsRepository {
                     model: this.statusModel,
                     attributes: ['name']
                 },
-                // {
-                //     model: this.employeeModel
-                // }
+                {
+                    model: this.taskModel,
+                    attributes: ['idTasks', 'title', 'deadline', 'description'],
+                    required: false,
+                    include: [
+                        {
+                            model: this.statusModel,
+                            attributes: ['name'],
+                            required: false
+                        }
+                    ]
+                },
+                {
+                    model: this.teamProjectModel,
+                    include: [
+                        {
+                            model: this.teamProjectEmployeeModel,
+                            required: false,
+                            include: [
+                                {
+                                    model: this.employeeModel,
+                                    include: [
+                                        {
+                                            model: this.userModel
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
             ],
+            attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
             where: {
                 deleted: false
             }
         });
-        console.log (result)
-        const { Status, ...projectData } = result.get({ plain: true });
-        const formattedProjects = {
+        
+       
+        const { Status: projectStatus, tasks, teamProject, ...projectData } = result.get({ plain: true });
+
+
+        const formattedProject = {
             ...projectData,
-            status: Status.name || 'Unknown'
+            status: projectStatus?.name || 'Unknown',
+            employees: teamProject?.teamProjectEmployees.map(employee => ({
+                image: employee.employee.User.image,
+                email: employee.employee.User.email,
+                name: employee.employee.User.name,
+                job: employee.employee.job,
+                idEmployee: employee.employee.idEmployees
+            })),
+            tasks: tasks.map(({ Status: taskStatus, ...taskData }) => ({
+                ...taskData,
+                status: taskStatus?.name || 'Unknown'
+            }))
         };
 
-        return formattedProjects;
+        return formattedProject;
+
     }
 
 

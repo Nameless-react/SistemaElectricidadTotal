@@ -1,15 +1,13 @@
-"use server";
-import { getProjectAction } from "/functions/fetches/projects/projectActions";
+"use client"
 import ProjectInformation from "/components/project/ProjectInformation";
+import { ProjectProvider } from "/components/project/context/ProjectContext";
 
 
-export default async function Project({ params }) {
-    const { id } = params;
-    let project;
-    if (id) project = await getProjectAction(parseInt(id)); 
-
+export default function Project() {
 
     return (
-       <ProjectInformation project={project}/>
+        <ProjectProvider>
+            <ProjectInformation />
+        </ProjectProvider>
     )
 }

@@ -35,8 +35,8 @@ export default async function Project({ idProjects, status, name, description, p
             />
             <div className={styles.members}>
                 <AvatarGroup isBordered>
-                    {employees.map((employee, index) => (
-                        <Avatar key={index} src={employee.avatarUrl || "https://i.pravatar.cc/150"} />
+                    {employees && employees.map((image, index) => (
+                        <Avatar key={index} src={image || "https://i.pravatar.cc/150"} />
                     ))}
                 </AvatarGroup>
             </div>

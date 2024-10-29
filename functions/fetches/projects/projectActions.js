@@ -10,7 +10,6 @@ export const getProjectsAction = async () => {
 export const getProjectAction = async (id) => {
     const response = await fetch(`http://${config.host}:3000/api/projects/${id}`);
     const result = await response.json();
-    console.log (result)
     return result;
 }
 
@@ -20,4 +19,10 @@ export const deleteProjectAction = async (id) => {
     });
     const result = await response.json();
     return result;
+}
+
+export const saveProjectAction = async () => {
+    const response = await fetch(`http://${config.host}:3000/api/projects/`, {
+        method: "POST"
+    })
 }

@@ -9,11 +9,11 @@ export default class MessageService {
 
     async saveMessage(newMessage) {
         const validatedMessage = validateMessage(newMessage);
+        console.log(newMessage)
         if (validatedMessage.error) throw new ValidationFailureError(validatedMessage.error.message);
 
         const { message, idUser, idConversation, email, name, image } = validatedMessage.data;
         await this.messageRepository.saveMessage(validatedMessage.data);
-
 
         await this.pusherServer.trigger(
             idConversation.toString(),

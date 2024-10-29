@@ -6,9 +6,24 @@ import ProjectModel from "../models/projects.model";
 import ProjectsRepository from "../repositories/project.repository";
 import StatusModel from "../models/status.model";
 import EmployeeModel from "../models/employees.model";
+import TaskModel from "../models/task.model"
 import { revalidatePath } from "next/cache";
+import TeamProjectEmployeeModel from "../models/team_project_employee.model";
+import TeamProjectModel from "../models/team_project.model";
+import UserModel from "../models/user.model";
 
-const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, sequelize);
+
+ProjectModel.hasMany(TaskModel, {
+    foreignKey: 'idProjects',
+    sourceKey: 'idProjects',
+});
+
+TeamProjectModel.hasMany(TeamProjectEmployeeModel, {
+    foreignKey: 'id_team_project', // Asegúrate de que coincide con el campo en la tabla
+});
+
+
+const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, TaskModel, TeamProjectModel, TeamProjectEmployeeModel, UserModel, sequelize);
 const projectsService= new ProjectsService(projectsRepository);
 
 

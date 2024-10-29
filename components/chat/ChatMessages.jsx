@@ -20,7 +20,7 @@ export default function ChatMessages() {
 
     useEffect(() => {
         if (!selectedConversationId) return;
-
+        
 
         const channel = pusherClient
             .subscribe(selectedConversationId.toString())
@@ -50,6 +50,7 @@ export default function ChatMessages() {
 
     return (
         <>
+        {console.log(session)}
             {session && (
                 <div className={styles.messagesContainer}>
                     {componentsMessages}

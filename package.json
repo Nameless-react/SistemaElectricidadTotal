@@ -26,6 +26,7 @@
     "@nextui-org/navbar": "^2.0.33",
     "@nextui-org/pagination": "^2.0.36",
     "@nextui-org/progress": "^2.0.33",
+    "@nextui-org/select": "^2.2.7",
     "@nextui-org/system": "^2.2.2",
     "@nextui-org/table": "^2.0.36",
     "@nextui-org/tabs": "^2.0.37",

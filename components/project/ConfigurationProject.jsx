@@ -31,7 +31,7 @@ export default function ConfigurationProject({ name, idProjects }) {
     return (
        <div className={styles.deleteProject}>
             <p>Este proyecto está a punto de ser suspendido. Antes de proceder, asegúrese de que desea confirmar esta acción, ya que la suspensión podría ser irreversible y afectará a todos los participantes y procesos relacionados.</p>
-            <Button color="danger" variant="ghost" className="font-bold min-w-40 outline-none" onPress={onOpen}>Eliminar Proyecto</Button>
+            <Button color="danger" variant="ghost" className="font-bold min-w-40 outline-none" onPress={onOpen}>Suspender Proyecto</Button>
             <Modal backdrop={"blur"} className="dark" isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent>
                 {(onClose) => (

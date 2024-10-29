@@ -2,7 +2,7 @@ import { z } from "zod";
 import { format, isAfter, isEqual } from "@formkit/tempo"
 
 
-export const taskValidations = z.object({
+export const teamProjectValidation = z.object({
     idTasks: z.coerce.number({
         invalid_type_error: "El id de las tareas tiene que ser un número"
     }).positive({
@@ -52,10 +52,10 @@ export const taskValidations = z.object({
 
 
 
-export const validateTask = (object) =>  taskValidations.omit({ idTasks: true }).safeParse(object)
-export const validatePartialTask = (object) =>  taskValidations.partial().safeParse(object)
-export const validateIdTask = (object) => taskValidations.pick({ idTasks: true }).safeParse(object);
-export const validateIdProjects = (object) => taskValidations.pick({ idProjects: true }).safeParse(object);
+export const validate = (object) =>  teamProjectValidation.omit({ idTasks: true }).safeParse(object)
+export const validatePartialTask = (object) =>  teamProjectValidation.partial().safeParse(object)
+export const validateIdTask = (object) => teamProjectValidation.pick({ idTasks: true }).safeParse(object);
+export const validateIdProjects = (object) => teamProjectValidation.pick({ idProjects: true }).safeParse(object);
 
 export const validateTaskClient = taskValidations.omit({ idTasks: true });
 export const validateTaskEmployees = taskValidations.pick({ employees: true });

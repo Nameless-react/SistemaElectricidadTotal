@@ -1,5 +1,4 @@
 "use server";
-
 import styles from '/css/projects.module.css';
 import Project from '/components/project/project';
 import { getProjectsAction } from "/functions/fetches/projects/projectActions"
@@ -7,7 +6,6 @@ import { getProjectsAction } from "/functions/fetches/projects/projectActions"
 
 export default async function Projects() {
     const projects = await getProjectsAction(); 
-    
     return (
         <div className={styles.projectsContainer}>
             {projects.length === 0 ? (
@@ -21,7 +19,7 @@ export default async function Projects() {
                         name={project.name}
                         description={project.description}
                         progressValue={project.percentage}
-                        employees={[1, 2, 3]}
+                        employees={project.employees}
                     />
                 ))
             )}
