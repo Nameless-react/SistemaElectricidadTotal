@@ -1,30 +1,12 @@
 "use client"
-import { createContext, useState, useEffect } from 'react';
-import { getProjectAction } from '/functions/fetches/projects/projectActions';
-import { useParams } from 'next/navigation';
-import { getEmployeesAction } from "/functions/fetches/employees/employeeActions"
+import { createContext, useState } from 'react';
 
 
-export const ProjectContext = createContext();
+export const ProjectContext = createContext(null);
 
-export const ProjectProvider = ({ children }) => {
-    const [project, setProject] = useState(null);
-    const [employees, setEmployees] = useState(null);
-    const { id } = useParams();
-
-    useEffect(() => {
-        if (!parseInt(id)) return;
-
-        const fetchProject = async (id) => {
-            const response = await getProjectAction(id);
-            setProject(response);
-
-            const responseEmployees = await getEmployeesAction();
-            setEmployees(responseEmployees);
-        }
-
-        fetchProject(id)
-    }, [id])
+export const ProjectProvider = ({ children, initialData }) => {
+    const [project, setProject] = useState(initialData.project);
+    const [employees, setEmployees] = useState(initialData.employees);
 
 
     return (

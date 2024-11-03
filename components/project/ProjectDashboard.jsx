@@ -1,5 +1,7 @@
 "use client"
+import { formatNumberToColones } from "/functions/others/moneyFormat";
 import Task from "./Task";
+import Employee from "./Employee";
 import style from "/css/projectDashboard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins, faCashRegister, faWallet } from "@fortawesome/free-solid-svg-icons";
@@ -8,25 +10,10 @@ import ModalCreateTask from "./ModalCreateTask";
 import { useContext } from "react";
 import { ProjectContext } from "./context/ProjectContext";
 import { CircularProgress } from "@nextui-org/progress";
-import Employee from "./Employee";
 
 
-function formatNumberToColones(number) {
-    if (isNaN(number)) {
-        throw new Error('El valor proporcionado no es un número válido.');
-    }
 
-
-    const formatter = new Intl.NumberFormat('es-CR', {
-        style: 'currency',
-        currency: 'CRC',
-        minimumFractionDigits: 2, 
-        maximumFractionDigits: 2  
-    });
-
-    return formatter.format(number);
-}
-
+// *Fix the scroll bar in employees and tasks
 
 export default function ProjectDashboard() {
     const { project } = useContext(ProjectContext);
@@ -86,7 +73,6 @@ export default function ProjectDashboard() {
                     {tasks.length === 0 ? <p className="font-bold">No hay tareas creadas</p> : tasks.map(task => (
                         <Task 
                             {...task}
-                            assignedEmployees={["https://i.pravatar.cc/150?u=a042581f4e29026008d"]}
                         />
                     ))}
                 </div>
@@ -101,7 +87,7 @@ export default function ProjectDashboard() {
                     <ModalAddEmployees />
                 </div>
                 <div className={style.employees}>
-                    {employees.map(employee => (
+                    {employees.length === 0 ? <p className="font-bold">No hay empleados asignados</p> : employees.map(employee => (
                         <Employee 
                             {...employee}
                         />

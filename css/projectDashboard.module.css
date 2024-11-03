@@ -1,3 +1,38 @@
+/* Skeleton */
+.headerSkeleton {
+    width: 100%;
+    background-color: #182237;
+    padding: 20px;
+    margin: 0 auto;
+    margin-top: 7.8rem;
+    border-radius: 10px;
+}
+
+.containerSkeleton {
+    width: 90%;
+    margin: 0 auto;
+}
+
+
+.containerSkeleton .container > div:not(:first-child), .headerSkeleton, .containerSkeleton .container div:first-child .overviewProject > div {
+    background: linear-gradient(180deg, #182237 25%, #1f2c47 50%, #182237 75%);
+    background-size: 100% 200%;
+    animation: skeleton-loading 10s infinite ease-in-out;
+  }
+  
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 0 200%;
+    }
+    100% {
+      background-position: 0 -200%;
+    }
+  }
+  
+
+
+/* -------------------------------------------------------------------------------------------- */
+
 .container {
     width: 100%;
     margin: 4rem 0;
@@ -8,7 +43,7 @@
 }
 
 .tasksContainer, .overviewGraphs, .overviewProject > div, .projectFiles, .employeesContainer {
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    box-shadow: #00000014 0px 4px 12px;
     background-color: #182237;
     border-radius: 30px;
 }
@@ -21,7 +56,6 @@
     gap: 1rem;
     max-height: 700px;
     padding: 1.2rem 2rem;
-    padding-top: 5rem;
     grid-column: span 2;
     grid-row: 2;
 }
@@ -125,9 +159,14 @@
     gap: 1.2rem;
     flex-direction: column;
     overflow: auto;
+    max-height: 100%;
     width: 100%;
-    padding: 1em 0;
+    padding: 0em 1em;
 }
+
+/* .tasks div:first-child, .employees div:first-child {
+    margin-top: 20rem;
+} */
 
 .task, .employee {
     display: grid;

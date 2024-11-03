@@ -1,8 +1,9 @@
 export default class ProjectsRepository {
-    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, sequelize) {
+    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, sequelize) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
         this.employeeModel = employeeModel;
+        this.taskAssignmentModel = taskAssignmentModel;
         this.taskModel = taskModel;
         this.teamProjectEmployeeModel = teamProjectEmployeeModel;
         this.statusModel = statusModel;
@@ -72,6 +73,19 @@ export default class ProjectsRepository {
                             model: this.statusModel,
                             attributes: ['name'],
                             required: false
+                        },
+                        {
+                            model: this.taskAssignmentModel,
+                            include: [
+                                {
+                                    model: this.employeeModel,
+                                    include: [
+                                        {
+                                            model: this.userModel
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 },
@@ -115,10 +129,15 @@ export default class ProjectsRepository {
                 job: employee.employee.job,
                 idEmployee: employee.employee.idEmployees
             })),
-            tasks: tasks.map(({ Status: taskStatus, ...taskData }) => ({
+            tasks: tasks.map(({ Status: taskStatus, taskAssignments, ...taskData }) => ({
                 ...taskData,
-                status: taskStatus?.name || 'Unknown'
+                status: taskStatus?.name || 'Unknown',
+                assignedEmployees: taskAssignments.map(taskResponsible => ({
+                    idEmployee: taskResponsible.idEmployee,
+                    image: taskResponsible.employee.User.image
+                }))
             }))
+            
         };
 
         return formattedProject;
