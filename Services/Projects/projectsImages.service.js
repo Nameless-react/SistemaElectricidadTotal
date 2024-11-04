@@ -20,7 +20,7 @@ class ProjectsImagesService {
         return await this.projectsImagesRepository.createProjectImages(projectImagesData);
 
     }
-
+t
     async deleteProjectImages(id) {
 
         return await this.projectsImagesRepository.deleteProjectImages(id);
