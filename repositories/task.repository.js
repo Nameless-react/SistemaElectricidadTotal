@@ -9,10 +9,10 @@ export default class TaskRepository {
         return result;
     }
 
-    async deleteTask(idTask) {
+    async deleteTask(idTasks) {
         return await this.taskModel.destroy({
             where: {
-                idTask
+                idTasks
             }
         })
     }
@@ -26,6 +26,14 @@ export default class TaskRepository {
         return await this.taskModel.findAll();
     }
 
+    async getTasksByProject(idProjects) {
+        return await this.taskModel.findAll({
+            where: {
+                idProjects
+            }
+        });
+    }
+
     async getTask(task) {
         return await this.taskModel.findOne({
             where: {
@@ -34,10 +42,10 @@ export default class TaskRepository {
         });
     }
 
-    async updateTask({ idTask, ...newTaskData }) {
+    async updateTask({ idTasks, ...newTaskData }) {
         const result = await this.taskModel.update(newTaskData, {
             where: {
-                idTask
+                idTasks
             },
             returning: true,
             plain: true

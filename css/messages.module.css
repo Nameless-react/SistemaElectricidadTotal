@@ -8,6 +8,13 @@
     gap: 6rem;
 }
 
+.noMessages {
+    margin: 0 auto;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
 .conversationsContainer {
     background-color: #111827;
     height: 100vh;

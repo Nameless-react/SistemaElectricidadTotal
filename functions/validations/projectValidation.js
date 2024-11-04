@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { format, isAfter, isEqual } from "@formkit/tempo"
 
 export const projectValidations = z.object({
     idProjects: z.coerce.number({
@@ -14,22 +13,22 @@ export const projectValidations = z.object({
     }),
     budget: z.coerce.number({
         invalid_type_error: "El presupuesto del proyecto tiene que ser un número",
-        required_error: "El presupuesto  es necesaria para un proyecto"
+        required_error: "El presupuesto es necesario para un proyecto"
     }).positive({
         message: "El presupuesto del proyecto tiene que ser un número positivo"
     }),
     description: z.string({
         invalid_type_error: "La descripción tiene que ser un texto",
-        required_error: "La descripción  es necesaria para un proyecto"
+        required_error: "La descripción es necesaria para un proyecto"
     }),
     name: z.string({
         invalid_type_error: " El nombre del proyecto tiene que ser un texto",
         required_error: "El nombre del proyecto es necesario para un proyecto"
     }),
     images: z.string({
-        invalid_type_error: " El URL  de la imagen tiene que ser un texto"
+        invalid_type_error: "El url de la imagen tiene que ser un texto"
     }).array({
-        invalid_type_error: " Tiene que ser una lista "
+        invalid_type_error: "Tiene que ser una lista"
     })
 })
 

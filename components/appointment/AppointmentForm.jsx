@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { updateAppointmentAction, createAppointmentAction } from "../../functions/fetches/appointments/appointmentActions";
-import { revalidatePath } from "next/cache";
 
 export default function AppointmentForm({ appointment }) {
     const { date, time } = getDateTimeForms(appointment?.appointmentDate, appointment?.appointmentTime);
@@ -49,7 +48,6 @@ export default function AppointmentForm({ appointment }) {
 
         const { successMessage } = await response;
         if (successMessage) {
-            console.log("Todo bien")
         }
     }
 

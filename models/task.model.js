@@ -1,6 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
 import Projects from  "./projects.model"
+import Status from './status.model';
 
 
 class Task extends Model {}
@@ -20,6 +21,10 @@ Task.init({
     deadline: {
         type: DataTypes.DATE,
         allowNull: false,
+    },
+    description: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     idProjects: {
         type: DataTypes.INTEGER,
@@ -42,9 +47,16 @@ Task.init({
 
 Task.belongsTo(Projects, {
     foreignKey: {
-        name: "id_projects",
+        name: "idProjects",
         allowNull: false,
     }
 });
+
+Task.belongsTo(Status, {
+    foreignKey: {
+        name: "idStatus",
+        allowNull: false
+    }
+})
 
 export default Task;

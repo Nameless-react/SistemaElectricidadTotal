@@ -1,4 +1,4 @@
-import { validateTask, validatePartialTask, validateIdTask } from "/functions/validations/taskValidation";
+import { validateTask, validatePartialTask, validateIdTask, validateIdProjects } from "/functions/validations/taskValidation";
 import { ValidationFailureError, NotFoundError, DeletionError } from "/errors/errors";
 
 
@@ -11,17 +11,24 @@ export default class TaskService {
         const validatedTask = validateTask(task);
         if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
 
-        return await this.taskRepository.saveAppointment(validatedTask.data);
+        return await this.taskRepository.saveTask(validatedTask.data);
     }
 
-    async getTaskById(id) {
-        const validIdTask = validateIdTask({ idTask: id });
+    async getTaskById(idTasks) {
+        const validIdTask = validateIdTask({ idTasks });
         if (validIdTask.error) throw new ValidationFailureError(validIdTask.error);
 
 
-        const task = await this.taskRepository.getTaskById(id);
+        const task = await this.taskRepository.getTaskById(validIdTask.data.idTasks);
         if (!task) throw new NotFoundError("La tarea no fue encontrada")
         return task;
+    }
+    
+    async getTasksByProject({ idProjects }) {
+        const validIdProjects = validateIdProjects({ idProjects })
+        if (validIdProjects.error) throw new ValidationFailureError(validIdProjects.error);
+
+        return await this.taskRepository.getTasksByProject(validIdProjects.data.idProjects);
     }
 
     async getTask(taskFields) {
@@ -30,15 +37,15 @@ export default class TaskService {
         return task;
     }
 
-    async getTask() {
+    async getTasks() {
         return await this.taskRepository.getTasks();
     }
 
     async deleteTask(id) {
-        const validatedTask = validateIdTask({ idTask: id });
+        const validatedTask = validateIdTask({ idTasks: id });
         if (validatedTask.error) throw new ValidationFailureError(validatedTask.error);
 
-        const deleted = await this.taskRepository.deleteTask(validatedTask.data.idTask);
+        const deleted = await this.taskRepository.deleteTask(validatedTask.data.idTasks);
         if (!deleted) throw new DeletionError("No se pudo eliminar la tarea");
     }
 
@@ -46,7 +53,7 @@ export default class TaskService {
         const validatedTask = validatePartialTask(task);
         if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
 
-        await this.getTaskById(validatedTask.data.idTask);
+        await this.getTaskById(validatedTask.data.idTasks);
         return await this.taskRepository.updateTask(validatedTask.data);
     }
 }

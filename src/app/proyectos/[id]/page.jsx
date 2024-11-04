@@ -1,13 +1,13 @@
-"use client";
-import ProjectDashboard from "/components/project/ProjectDashboard";
+"use client"
+import ProjectInformation from "/components/project/ProjectInformation";
+import { ProjectProvider } from "/components/project/context/ProjectContext";
 
-export default function Project({ params }) {
+
+export default function Project() {
+
     return (
-        <>
-            <ProjectDashboard 
-                budget={200000}
-                expenses={100000}
-            />
-        </>
+        <ProjectProvider>
+            <ProjectInformation />
+        </ProjectProvider>
     )
 }

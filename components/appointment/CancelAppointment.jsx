@@ -30,7 +30,7 @@ export default function CancelAppointment({ appointment }) {
         <div className={styles.cancelContainer}>
             <h1>Cancelar cita</h1>
             <h3>¿Desea cancelar su cita para el día {appointment.appointmentDate} a las {appointment.appointmentTime}?</h3>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && <p className="text-red-600">{error}</p>}
             <div className={styles.buttonsCancel}>
                 <button onClick={handleCanceling} disabled={loading}>
                     {loading ? "Cargando..." : "Confirmar"}

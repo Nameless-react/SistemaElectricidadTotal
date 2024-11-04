@@ -27,17 +27,12 @@ export default class MessageRepository {
         })
     }
 
-    // async getMessageById(id) {
-    //     const result = await this.messageModel.findByPk(id);
-    //     return result ? result.dataValues : null;
-    // }
-
     async getMessagesByConversation(id) {
         const result = await this.messageModel.findAll({
             include: {
                 model: this.userModel,
                 required: true,
-                attributes: ["email", "name"]
+                attributes: ["email", "name", "image"]
             },
             attributes: {
                 exclude: ["id_users_author", "id_conversation"]

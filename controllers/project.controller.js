@@ -3,11 +3,27 @@ import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
 import { ProjectsService } from "../Services"; 
 import ProjectModel from "../models/projects.model";
-import config from "/config/config"
 import ProjectsRepository from "../repositories/project.repository";
+import StatusModel from "../models/status.model";
+import EmployeeModel from "../models/employees.model";
+import TaskModel from "../models/task.model"
+import { revalidatePath } from "next/cache";
+import TeamProjectEmployeeModel from "../models/team_project_employee.model";
+import TeamProjectModel from "../models/team_project.model";
+import UserModel from "../models/user.model";
 
 
-const projectsRepository = new ProjectsRepository(ProjectModel, sequelize);
+ProjectModel.hasMany(TaskModel, {
+    foreignKey: 'idProjects',
+    sourceKey: 'idProjects',
+});
+
+TeamProjectModel.hasMany(TeamProjectEmployeeModel, {
+    foreignKey: 'id_team_project', // Asegúrate de que coincide con el campo en la tabla
+});
+
+
+const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, TaskModel, TeamProjectModel, TeamProjectEmployeeModel, UserModel, sequelize);
 const projectsService= new ProjectsService(projectsRepository);
 
 
@@ -36,14 +52,13 @@ class ProjectController {
     deleteProject = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
         await this.projectsService.deleteProject(parseInt(id));
+        revalidatePath("/proyectos")
         return NextResponse.json({ message: "El proyecto ha sido eliminado de manera exitosa" }, { status: 200 });
     })
 
     updateProject = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
         const parseBody = await req.json();
-
-        console.log(parseBody)
 
         const updatedProject = await this.projectsService.updateProject({ 
             idProjects: parseInt(id),
@@ -52,7 +67,6 @@ class ProjectController {
 
         return NextResponse.json(updatedProject, { status: 200 })
     })
-    
 }
 
 export default new ProjectController(projectsService);
