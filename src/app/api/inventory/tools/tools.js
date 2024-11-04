@@ -23,8 +23,7 @@ export default async function ToolsServerSideComponent() {
         if (tools.length === 0) {
             return <p>No se encontraron herramientas.</p>;
         }
-
-
+        
         return <ToolsTable tools={tools} />;
 
     } catch (error) {

@@ -1,6 +1,17 @@
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+/**
+ * Renders a contact form section with a title and an informational message.
+ * The form includes fields for the user's email, subject, and message,
+ * and provides a submit button with an icon.
+ *
+ * The component is styled to be responsive, with a layout that adapts
+ * for different screen sizes, providing a user-friendly interface for
+ * visitors to reach out for more information or assistance.
+ *
+ * @returns {JSX.Element} A React component rendering the contact form section.
+ */
 export default function ContactForm() {
     return (
         <div className="p-8 rounded-xl">

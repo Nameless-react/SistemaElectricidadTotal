@@ -1,56 +1,56 @@
 import bcrypt from 'bcrypt';
 
 class UserRepository {
+    
     /**
      * Constructor for the UserRepository class.
-     * @param {Object} User - The Sequelize model for the users table.
-     * @param {Object} sequelize - The Sequelize instance.
+     * @param {Model} User - The User model.
+     * @param {Sequelize} sequelize - The Sequelize instance.
      */
     constructor(User, sequelize) {
         this.User = User;
         this.sequelize = sequelize;
     }
 
+
     /**
      * Retrieves all users from the database.
-     * @returns {Promise<Array>} A promise that resolves with an array of users.
-     * @throws {Error} Throws an error if users cannot be retrieved.
+     * @returns {Array|null} A promise that resolves with an array of users or null if none are found.
+     * @throws {Error} If an error occurs while connecting to the database or executing the query.
      */
     async getAllUsers() {
         try {
             const users = await this.User.findAll();
-            if (!users) {
-                throw new Error("No users found");
-            }
-            return users;
+            return users? users : null;
         } catch (error) {
             throw new Error(error, "Error while getting users");
         }
     }
 
+   
     /**
-     * Gets a user by id.
-     * @param {number} id - The id of the user.
-     * @returns {Promise<Object>} - The user object.
-     * @throws {Error} - If there is an error while getting the user.
+     * Retrieves a user from the database by their id.
+     * @param {number} id - The id of the user to be retrieved.
+     * @returns {Promise<Object>} - The user object if found, otherwise null.
+     * @throws {Error} - If an error occurs while connecting to the database or executing the query.
      */
     async getUserById(id) {
         try {
             const user = await this.User.findOne({ where: { id_users: id } });
-            if (!user) {
-                throw new Error("User not found");
-            }
-            return user;
+           
+            return user? user : null;
+
         } catch (error) {
             throw new Error(error, "Error while getting user");
         }
     }
 
+  
     /**
-     * Gets a user session by id. The user session is a combination of the user and their session.
-     * @param {number} id - The id of the user session.
-     * @returns {Promise<Object>} - The user session object.
-     * @throws {Error} - If there is an error while getting the user session.
+     * Retrieves a user session by its id from the database.
+     * @param {number} id - The id of the user session to retrieve.
+     * @returns {Promise<Object>} - The user session object with the given id, or null if not found.
+     * @throws {Error} - If an error occurs while connecting to the database or executing the query.
      */
     async getUserSessionById(id) {
         try {
@@ -61,23 +61,20 @@ class UserRepository {
                     type: this.sequelize.QueryTypes.SELECT,
                 }
             );
-            if (!user) {
-                throw new Error("User not found");
-            }
-            return user[0];
+            return user? user[0] : null;
         } catch (error) {
             console.error(error);
             throw new Error(error, "Error while getting user");
         }
     }
 
+    
     /**
-     * Saves a user to the database. If isFromSignup is true, it will call the stored procedure to save the user.
-     * If isFromSignup is false, it will throw an error.
-     * @param {Object} user - The user data to be saved.
-     * @param {boolean} isFromSignup - Indicates if the user is being saved from the signup form.
-     * @returns {Promise<Object>} - The newly saved user.
-     * @throws {Error} - If there is an error while saving the user.
+     * Saves a user to the database.
+     * @param {Object} user - An object containing the user's data.
+     * @param {boolean} isFromSignup - A boolean indicating whether the user is being saved from the signup form.
+     * @returns {Promise<Object>} - The user object if saved successfully, otherwise null.
+     * @throws {Error} - If an error occurs while saving the user.
      */
     async saveUser(user, isFromSignup) {
         let defaultRole = "Usuario";
@@ -128,28 +125,41 @@ class UserRepository {
                     },
                     type: this.sequelize.QueryTypes.RAW
                 });
-                return newUser;
-            } else {
-
-            }
+                return newUser? newUser : null;
+            } 
         } catch (error) {
             console.error(error);
             throw new Error("Error while saving user: " + error.message);
         }
     }
 
+    
+    /**
+     * Updates the user's profile image.
+     * @param {string} image - The URL of the new image.
+     * @param {number} id - The ID of the user.
+     * @returns {Promise<Object>} - The updated user.
+     * @throws {Error} - If an error occurs while updating the user.
+     */
     async updateUserImage(image, id) {
         try {
             const result = await this.User.update({ image: image }, { where: { id_users: id } });
-            if (!result) {
-                throw new Error("User not found");
-            }
-            return result;
+
+            return result? result : null;
+
         } catch (error) {
             throw new Error('Error while saving user: ' + error.message)
         }
     }
 
+  
+    /**
+     * Updates the user's profile.
+     * @param {Object} formData - The data to update the user's profile.
+     * @param {number} id - The ID of the user.
+     * @returns {Promise<Object>} - The updated user.
+     * @throws {Error} - If an error occurs while updating the user.
+     */
     async updateUserProfile(formData, id) {
         const { name, firstsurname, secondsurname, phone, address } = formData;
         try {
@@ -161,11 +171,7 @@ class UserRepository {
                 address: address
             }, { where: { id_users: id } });
 
-            if (!result) {
-                throw new Error("User not found");
-            }
-
-            return result;
+            return result? result : null;
 
         } catch (error) {
             throw new Error('Error while updating user profile: ' + error.message);

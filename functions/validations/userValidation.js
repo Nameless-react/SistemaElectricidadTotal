@@ -19,19 +19,19 @@ export const validateUser = (formData) => {
             .trim()
             .min(3, "El nombre debe tener al menos 3 caracteres")
             .max(255, "El nombre debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z\s]+$/, { message: "El nombre solo puede contener letras y espacios" })
+            .regex(/^[a-zA-ZÀ-ÿ0-9\s]+$/, { message: "El nombre solo puede contener letras, números, tildes y espacios" })
             .refine((value) => value !== '', { message: "El nombre es requerido." }),
         firstSurName: z.string()
             .trim()
             .min(3, "El primer apellido debe tener al menos 3 caracteres")
             .max(255, "El primer apellido debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z\s]+$/, { message: "El primer apellido solo puede contener letras y espacios" })
+            .regex(/^[a-zA-ZÀ-ÿ0-9\s]+$/, { message: "El primer apellido solo puede contener letras, números, tildes y espacios" })
             .refine((value) => value !== '', { message: "El primer apellido es requerido." }),
         secondSurName: z.string()
             .trim()
             .min(3, "El segundo apellido debe tener al menos 3 caracteres")
             .max(255, "El segundo apellido debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z\s]+$/, { message: "El segundo apellido solo puede contener letras y espacios" })
+            .regex(/^[a-zA-ZÀ-ÿ0-9\s]+$/, { message: "El segundo apellido solo puede contener letras, números, tildes y espacios" })
             .refine((value) => value !== '', { message: "El segundo apellido es requerido." }),
         identification: z.string()
             .trim()
@@ -45,6 +45,9 @@ export const validateUser = (formData) => {
         password: z.string()
             .trim()
             .min(8, "La contraseña debe tener al menos 8 caracteres")
+            .regex(/[A-Z]/, "La contraseña debe contener al menos una letra mayúscula")
+            .regex(/[a-z]/, "La contraseña debe contener al menos una letra minúscula")
+            .regex(/[\W_]/, "La contraseña debe contener al menos un carácter especial")
             .refine((value) => value !== '', { message: "La contraseña es requerida." }),
         confirmPassword: z.string()
             .trim()
@@ -57,7 +60,7 @@ export const validateUser = (formData) => {
             .refine((value) => value !== '', { message: "El teléfono es requerido." }),
     }).refine((data) => data.password === data.confirmPassword, {
         message: "Las contraseñas no coinciden.",
-        path: ["confirmPassword"], 
+        path: ["confirmPassword"],
     });
 
     const result = validationSchema.safeParse(formData);

@@ -7,7 +7,7 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useSession } from "next-auth/react";
 import { ProfileFormAddress, ProfileFormContainer, ProfileFormFirstSurName, ProfileFormName, ProfileFormPhone, ProfileFormSecondSurName } from "../../profile/compound_components/profileForm";
 import { Button } from "@nextui-org/button";
-export default function UpdateProfileForm({ title, user, classNames = {
+export default function UpdateProfileForm({ title, user,  classNames = {
     base: "",
     modal: "",
     modal_header: "",

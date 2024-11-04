@@ -2,6 +2,11 @@ import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
+/**
+ * Component to show the notifications
+ *
+ * @returns {JSX.Element}
+ */
 export default function Notifications() {
     
     

@@ -3,17 +3,25 @@ import { useProfileForm } from "./context/profileFormContext"
 import { useEffect } from "react"
 import { FormErrorsClient } from "../../errors/form_errors/formErrors";
 import { FormErrorsServer } from "../../errors/form_errors/formErrors";
+/**
+ * Component that renders a form with the given children and a submit handler.
+ * The form will be submitted to the "/api/auth/profile" endpoint.
+ * If there are any server errors, they will be displayed in a red paragraph.
+ * @param {{ children: ReactNode, classNames?: { base: string, form: string } }} props
+ * @returns {JSX.Element}
+ */
 export const ProfileFormContainer = ({ children, classNames = {
     base: "",
     form: "",
 } }) => {
-    const { formData, setErrors, setServerErrors, handleSubmit } = useProfileForm();
+    const { formData, setErrors, setServerErrors, serverErrors, handleSubmit } = useProfileForm();
     return (
         <div className={classNames.base}>
             <form
                 onSubmit={(e) => handleSubmit(e, formData, setErrors, setServerErrors, "/api/auth/profile")}
                 className={classNames.form}>
                 {children}
+            {serverErrors && serverErrors.error && <p className="text-red-500 text-center mt-4 mb-4">{serverErrors.error.internal_server_error.message}</p>}
             </form>
         </div>
     )

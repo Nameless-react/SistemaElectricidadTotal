@@ -86,6 +86,14 @@ class ImageService {
             return { success: false, error: 'Error processing file upload' };
         }
     }
+    /**
+     * Uploads an image to the local file system and returns a URL for the uploaded image
+     * 
+     * @param {FormData} formData - The form data containing the image to be uploaded
+     * @param {string} folder - The folder in which to store the image in the local file system
+     * @param {string} host - The hostname of the server
+     * @returns {Promise<{success: boolean, imagePath: string}>} A promise that resolves with an object containing the success status and the URL for the uploaded image
+     */
     async uploadImage(formData, folder, host) {
         try {
             const file = formData.get('image');
@@ -130,6 +138,11 @@ class ImageService {
         }
     }
 
+    /**
+     * Regenerates a signed URL for a given file path in Firebase Storage.
+     * @param {string} filePath The path to the file in Firebase Storage.
+     * @returns {Promise<string>} A signed URL that can be used to access the file.
+     */
     async regenerateSignedURL(filePath) {
         const bucket = this.adminFirebase.storage().bucket();
         const fileUpload = bucket.file(filePath);
@@ -159,11 +172,22 @@ class ImageService {
 
         return currentTime > expirationTime;
     }
+    /**
+     * Converts a file to a Buffer.
+     * @param {File} file The file to be converted.
+     * @returns {Promise<Buffer>} A promise that resolves with the file contents as a Buffer.
+     */
     async convertFileToBuffer(file) {
         const bytes = await file.arrayBuffer();
         return Buffer.from(bytes);
     }
 
+    /**
+     * Saves a file to the local file system.
+     * @param {string} filePath The path to the file to be saved.
+     * @param {Buffer} buffer The file contents to be saved.
+     * @returns {Promise<void>} A promise that resolves when the file has been saved.
+     */
     async saveFile(filePath, buffer) {
         await this.writeFile(filePath, buffer);
     }

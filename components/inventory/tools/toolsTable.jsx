@@ -21,6 +21,14 @@ import { SearchInput } from "../../search/searchInput";
 import SubmitModal from "../../modals/submitModal";
 
 
+/**
+ * Renders a table displaying a list of tools with options for sorting, searching, and pagination.
+ * Provides functionality to add, edit, and delete tools, as well as view tool details.
+ * Displays success messages for create, update, and delete actions.
+ *
+ * @param {Array} tools - Array of tool objects to be displayed in the table.
+ * @returns {JSX.Element} A React component rendering the tools table.
+ */
 export default function ToolsTable({ tools }) {
     const searchParams = useSearchParams();
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -29,6 +37,7 @@ export default function ToolsTable({ tools }) {
     const createSuccess = searchParams.get("createSuccess");
     const deleteSuccess = searchParams.get("deleteSuccess");
     const [search, setSearch] = useState("");
+    const [serverError, setServerError] = useState({});
     const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'ascending' });
     const [page, setPage] = useState(1);
     const itemsPerPage = 8;
@@ -77,6 +86,9 @@ export default function ToolsTable({ tools }) {
                 <Link className=" flex items-center mt-2 sm:mt-0 justify-center w-full sm:w-auto bg-green-700 hover:bg-green-800 transition duration-300 ease-in-out text-white font-bold py-3 ml-1 px-8 rounded-xl " href={"/gestion-inventario/equipos/gestionar"}>
                     <FontAwesomeIcon icon={faPlus} />
                 </Link>
+            </div>
+            <div>
+                {serverError && serverError.error && <p className="text-red-500 text-center mt-4 mb-4">{serverError.error.internal_server_error.message}</p>}
             </div>
             <SuccessModal
                 title={updateSuccess ? "Equipo actualizado" : "Equipo creado"}
@@ -152,7 +164,7 @@ export default function ToolsTable({ tools }) {
                                         </Button>
                                     </Link>
                                     <SubmitModal
-                                        onSubmit={() => handleDelete(tool.id, process.env.NEXT_PUBLIC_URL_TOOLS_DELETE, process.env.NEXT_PUBLIC_URL_TOOLS)}
+                                        onSubmit={() => handleDelete(tool.id, process.env.NEXT_PUBLIC_URL_TOOLS_Tool, process.env.NEXT_PUBLIC_URL_TOOLS, setServerError)}
                                         title={"Eliminar equipo"}
                                         message={"¿Estas seguro de eliminar este equipo?"}
                                         actionValue={"Eliminar"}

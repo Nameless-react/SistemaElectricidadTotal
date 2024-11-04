@@ -3,6 +3,12 @@ class ValidationMaintenanceNotesService {
         this.zod = zod;
     }
 
+/**
+ * Validates the maintenance notes form data.
+ * 
+ * @param {FormData} formData The form data to be validated.
+ * @returns {Object} The validation result containing success status and data/error details.
+ */
     async validateToolsMaintenance(formData) {
 
         const parsedData = Object.fromEntries(formData.entries());

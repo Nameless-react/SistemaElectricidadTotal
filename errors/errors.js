@@ -3,7 +3,7 @@ export class SQLError extends Error {
         super(message);
         this.name = 'SQLError';
         this.details = details;
-        this.statusCode = 500; 
+        this.statusCode = 500;
     }
 }
 
@@ -47,5 +47,19 @@ export class ConflictError extends SQLError {
         super(message, details);
         this.statusCode = 409;
         this.name = "ConflictError"
+    }
+}
+
+export class ErrorHandler {
+    sendError(res, message, error = 'GeneralError', status = 500) {
+        const errorResponse = {
+            error: {
+                [error]: {
+                    message
+                }
+            }
+        };
+
+        return res.json(errorResponse, { status });
     }
 }
