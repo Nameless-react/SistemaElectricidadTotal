@@ -1,15 +1,14 @@
 import { z } from "zod";
 import { format, isAfter, isEqual } from "@formkit/tempo"
-import { parseDate } from "@internationalized/date";
 
 export const appointmentValidations = z.object({
-    idAppointment: z.number({
+    idAppointment: z.coerce.number({
         invalid_type_error: "El id de la cita tiene que ser un número"
     }).positive({
-        message: "El número tiene que ser mayor a 0"
+        message: "El número del id tiene que ser mayor a 0"
     }),
     email: z.string({
-        invalid_type_error: "El correo tiene que se un texto",
+        invalid_type_error: "El correo tiene que ser un texto",
         required_error: "El correo es necesario para agendar la cita"
     }).email({
         message: "Dirección de correo invalida"
@@ -17,7 +16,7 @@ export const appointmentValidations = z.object({
     assignEmployee: z.number({
         invalid_type_error: "El id del empleado asignado tiene que ser un número"
     }).positive({
-        message: "El id del empleado tien que ser un número positivo"
+        message: "El id del empleado tiene que ser un número positivo"
     }).or(z.null()),
     isInOffice: z.boolean({
         invalid_type_error: "El valor donde específica si es en las oficinas tiene que ser verdadero o falso",
@@ -26,7 +25,7 @@ export const appointmentValidations = z.object({
     address: z.string({
         invalid_type_error: "La dirección tiene que ser un texto",
         required_error: "La dirección es necesaria para agendar una cita"
-    }),
+    }).optional(),
     appointmentDate: z.preprocess(
         value => value.toString(),
         z.string({
@@ -59,7 +58,7 @@ export const appointmentValidations = z.object({
 export const validateAppointment = (object) =>  (
     appointmentValidations
         .omit({ idAppointment: true, assignEmployee: true })
-        .refine(modelValidation => !(modelValidation.address.length < 5 && !modelValidation.isInOffice),
+        .refine(modelValidation => !(modelValidation.address?.length < 5 && !modelValidation.isInOffice),
         {
             message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
             path: ["address"]
@@ -69,22 +68,34 @@ export const validateAppointment = (object) =>  (
 
 
 export const validateAppointmentClientSide =  appointmentValidations
-        .omit({ idAppointment: true, assignEmployee: true })
-        .refine(modelValidation => !(modelValidation.address.length < 5 && !modelValidation.isInOffice),
-        {
-            message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
-            path: ["address"]
-        })
+                                                    .omit({ idAppointment: true, assignEmployee: true })
+                                                    .refine(modelValidation => !(modelValidation.address?.length < 5 && !modelValidation.isInOffice),
+                                                    {
+                                                        message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
+                                                        path: ["address"]
+                                                    })
 
+
+
+export const validateAppointmentParialClientSide = appointmentValidations
+                                                    .partial()
+                                                    .refine(modelValidation => !(modelValidation.address?.length < 5 && !modelValidation.isInOffice),
+                                                    {
+                                                        message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
+                                                        path: ["address"]
+                                                    })
 
 
 export const validatePartialAppointment = (object) =>  (
     appointmentValidations
         .partial()
-        .refine(modelValidation => !(modelValidation.address.length < 5 && !modelValidation.isInOffice),
+        .refine(modelValidation => !(modelValidation.address?.length < 5 && !modelValidation.isInOffice),
         {
             message: "La dirección tiene que ser mayor a 5 palabras en caso de no ser una cita en las oficinas",
             path: ["address"]
         })
         .safeParse(object)
     )
+
+
+export const validateIdAppointment = (object) => appointmentValidations.pick({ idAppointment: true }).safeParse(object);

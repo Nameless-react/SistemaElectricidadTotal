@@ -10,7 +10,7 @@ export default class AppointmentRepository {
                 p_email: appointment.email,
                 p_appointment_date: appointment.appointmentDate,
                 p_appointment_time: appointment.appointmentTime,
-                p_address: appointment.address,
+                p_address: appointment.address || "",
                 p_is_in_office: appointment.isInOffice,
                 p_assign_employee: null,
                 p_confirmation_token: appointment.token
@@ -23,13 +23,11 @@ export default class AppointmentRepository {
     }
 
     async cancelAppointment(id) {
-        const affectedRows = await this.appointmentModel.destroy({
+        return await this.appointmentModel.destroy({
             where: {
                 idAppointment: id
             }
         })
-        if (affectedRows < 1) throw new DatabaseDeletionError("No se pudo eliminar el recurso");
-        return true;
     }
 
     async getAppointmentById(id) {
@@ -50,11 +48,14 @@ export default class AppointmentRepository {
     }
 
     async updateAppointment({ idAppointment, ...newAppointmentData }) {
-        await this.appointmentModel.update(newAppointmentData, {
+        const result = await this.appointmentModel.update(newAppointmentData, {
             where: {
                 idAppointment
-            }
+            },
+            returning: true,
+            plain: true
         });
-        return await this.getAppointment(idAppointment);
+
+        return result[1];
     }
 }

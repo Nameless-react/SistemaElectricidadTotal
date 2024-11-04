@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server";
+import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
 import AppointmentService from "/services/appointments/appointment.service";
 import appointmentModel from "/models/appointment.model";
 import appointmentConfirmationModel from "/models/appointment_confirmation.model"
-import sequelize from "/config/databaseConnection";
 import MailService from "/services/appointments/mail.service";
 import { AppointmentConfirmationRepository, AppointmentRepository } from "/repositories/index";
+import config from "/config/config"
 
 
-
-const mailService = new MailService(process.env.RESEND_API_KEY);
+const mailService = new MailService(config.resend);
 const appointmentConfirmationRepository = new AppointmentConfirmationRepository(appointmentConfirmationModel, sequelize);
 const appointmentRepository = new AppointmentRepository(appointmentModel, sequelize);
 const appointmentService = new AppointmentService(appointmentRepository, mailService,appointmentConfirmationRepository );
@@ -34,7 +34,7 @@ class AppointmentController {
     saveAppointment = apiErrorWrapper(async (req, res) => {
         const parseBody = await req.json();
         await this.appointmentService.saveAppointment(parseBody);
-        return NextResponse.json({ message: "La cita ha sido agendada exitosamente. Para confirmar la cita revisar el correo que se envió" }, { status: 201 });
+        return NextResponse.json({ message: "Su cita ha sido agendada con éxito. Por favor, revise su correo electrónico para confirmar la cita." }, { status: 201 });
     })
 
     cancelAppointment = apiErrorWrapper(async (req, params) => {

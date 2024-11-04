@@ -6,91 +6,50 @@ export default class ProjectsRepository {
 
 
     async getProjects() {
-        try {
-            const result = await this.sequelize.query("SELECT * FROM projects", {
-                type: this.sequelize.QueryTypes.SELECT,
-                logging: console.log,
-            });
-            return result;
-        } catch (error) {
-            throw new Error("Error while fetching projects");
-        }
+        return await this.projectModel.findAll();
     }
 
-
     async getProjectById(id) {
-        try {
-            const result = await this.sequelize.query("SELECT * FROM projects WHERE id_projects = :id", {
-                replacements: { id },
-                type: this.sequelize.QueryTypes.SELECT,
-                logging: console.log,
-            });
-            return result[0]; 
-        } catch (error) {
-            throw new Error("Error while fetching the project");
-        }
+        const result = await this.projectModel.findByPk(id);
+        return result ? result.dataValues : null;
     }
 
 
     async createProject(project) {
-        try {
-            const result = await this.sequelize.query(
-                `INSERT INTO projects (name, description, budget, id_status, percentage) 
-                 VALUES (:name, :description, :budget, :id_status, :percentage) RETURNING *`, {
-                replacements: {
-                    name: project.name,
-                    description: project.description,
-                    budget: project.budget,
-                    id_status: project.id_status,
-                    percentage: project.percentage,
-                },
-                type: this.sequelize.QueryTypes.INSERT,
-                logging: console.log,
-            });
-            return result[0];  
-        } catch (error) {
-            throw new Error("Error while creating the project");
-        }
+        console.log(project)
+        const result = await this.sequelize.query(
+            `Call create_project_with_images(:p_name ,:p_description, :p_budget , :p_id_status , ARRAY[:p_images_url]);`, {
+            replacements: {
+                p_name: project.name,
+                p_description: project.description,
+                p_budget: project.budget,
+                p_id_status: project.idStatus,
+                p_images_url: project.images
+            },
+            type: this.sequelize.QueryTypes.RAW,
+            logging: console.log,
+        });
+        return result[0];  
     }
 
+    async updateProject({ idProjects, ...newProjectsData }) {
+        const result = await this.projectModel.update(newProjectsData, {
+            where: {
+                idProjects
+            },
+            returning: true,
+            plain: true
+        });
 
-    async updateProject(id, updatedProject) {
-        try {
-            const result = await this.sequelize.query(
-                `UPDATE projects 
-                 SET name = :name, description = :description, budget = :budget, id_status = :id_status, percentage = :percentage 
-                 WHERE id_projects = :id RETURNING *`, {
-                replacements: {
-                    id,
-                    name: updatedProject.name,
-                    description: updatedProject.description,
-                    budget: updatedProject.budget,
-                    id_status: updatedProject.id_status,
-                    percentage: updatedProject.percentage,
-                },
-                type: this.sequelize.QueryTypes.UPDATE,
-                logging: console.log,
-            });
-            return result[0]; 
-        } catch (error) {
-            throw new Error("Error while updating the project");
-        }
+        return result[1];
     }
-
-
+    
+    
     async deleteProject(id) {
-        try {
-            const result = await this.sequelize.query("DELETE FROM projects WHERE id_projects = :id RETURNING *", {
-                replacements: { id },
-                type: this.sequelize.QueryTypes.DELETE,
-                logging: console.log,
-            });
-            if (result.length === 0) {
-                throw new Error("Project not found or could not be deleted");
+        return await this.projectModel.destroy({
+            where: {
+                idProjects: id
             }
-            return result[0];  
-        } catch (error) {
-            throw new Error("Error while deleting the project");
-        }
+        })
     }
 }

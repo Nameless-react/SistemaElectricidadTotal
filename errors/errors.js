@@ -28,11 +28,12 @@ export class ValidationFailureError extends Error {
     constructor(message) {
         super(message);
         this.statusCode = 400;
-        this.name = "ValidationFailureError"
+        this.name = "ValidationFailureError" 
+        this.error = message
     }
 }
 
-export class DatabaseDeletionError extends SQLError {
+export class DeletionError extends SQLError {
     constructor(message = 'Error al eliminar el recurso', details = null) {
         super(message, details);
         this.statusCode = 400;

@@ -2,9 +2,9 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/navbar";
 import { Button, } from "@nextui-org/button";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import navBarLinks from "/shared/links";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Logout } from "@/app/test/logut";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faBell } from "@fortawesome/free-solid-svg-icons";
