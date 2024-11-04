@@ -37,6 +37,12 @@ class ProjectsService {
     }
 
 
+    /**
+     * Deletes a project given its ID
+     * @param {number} id - The ID of the project to be deleted
+     * @throws {Error} If there is an error while deleting the project
+     * @returns {Promise<void>} 
+     */
     async deleteProject(id) {
         try {
             return await this.projectsRepository.deleteProject(id);
