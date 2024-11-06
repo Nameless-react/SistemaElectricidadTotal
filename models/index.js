@@ -12,6 +12,8 @@ import ConversationParticipants from "./conversation_participants.model";
 import Message from "./message.model";
 import User from "./user.model";
 import Task from "./task.model";
+import Employee from "./employees.model";
+import ExpensesProjects from "./expenses_project.model";
 
 
 export {
@@ -20,6 +22,8 @@ export {
     Category,
     Conversation,
     ConversationParticipants,
+    Employee,
+    ExpensesProjects,
     Message,
     MaintenanceNotes,
     MaterialProvider,

@@ -25,7 +25,7 @@ export default function ProjectInformation() {
                     <ProjectDashboard />
                 </Tab>
                 <Tab key={"Configuración"} title="Configuración">
-                    <ConfigurationProject name={project.name} idProjects={project.idProjects} />
+                    <ConfigurationProject />
                 </Tab>
             </Tabs>
         </div>)

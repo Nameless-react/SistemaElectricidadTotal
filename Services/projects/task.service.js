@@ -11,7 +11,7 @@ export default class TaskService {
         const validatedTask = validateTask(task);
         if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
 
-        return await this.taskRepository.saveTask(validatedTask.data);
+        return await this.taskRepository.saveTask({ ...validatedTask.data, employees: [...validatedTask.data.employees] });
     }
 
     async getTaskById(idTasks) {

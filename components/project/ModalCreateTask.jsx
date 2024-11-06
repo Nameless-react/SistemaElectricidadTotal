@@ -1,4 +1,4 @@
-import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, useDisclosure } from "@nextui-org/modal"
+import { Modal, ModalContent, ModalHeader, ModalBody, useDisclosure } from "@nextui-org/modal"
 import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem } from "@nextui-org/select";
@@ -36,7 +36,7 @@ export default function ModalCreateTask() {
     const onSubmit = async (taskFormData) => {
         const { successMessage } = await createTaskAction(taskFormData);
         if (successMessage) {
-            reset();
+            // reset(); 
         }
     }
 
@@ -126,10 +126,9 @@ export default function ModalCreateTask() {
                                             </Select>
                                         )}
                                     />
-                                    {console.log(project.employees)}
                                     <Textarea aria-label="Descripción de la tarea" label="Descripción" {...register("description")} isInvalid={errors?.description} errorMessage={errors?.description?.message} />
 
-                                    <Button size="sm" onPress={onClose} className="bg-green-600 self-end text-sm text-white font-bold py-6 px-8 rounded-2xl mt-8" type="submit">
+                                    <Button size="sm" className="bg-green-600 self-end text-sm text-white font-bold py-6 px-8 rounded-2xl mt-8" type="submit">
                                         {isSubmitting ? "Enviando..." : "Confirmar"}
                                         <FontAwesomeIcon className="text-xl" icon={faCircleCheck} />
                                     </Button>

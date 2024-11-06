@@ -9,6 +9,7 @@ export const ProjectProvider = ({ children, initialData }) => {
     const [employees, setEmployees] = useState(initialData.employees);
 
 
+
     return (
         <ProjectContext.Provider value={{ project, setProject, employees, setEmployees }}>
             {children}

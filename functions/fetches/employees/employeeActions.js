@@ -23,3 +23,20 @@ export const deleteEmployeeAction = async (id) => {
         return { errors: e }
     }
 }
+
+export const addTeamProjectEmployee = async (employees) => {
+    try {
+        const response = await fetch(`http://${config.host}:3000/api/employees/${id}`, {
+            method: "POST",
+            // body: {}
+        });
+        const result = await response.json();
+
+        // revalidatePath(`/proyectos/${task.idProjects}`)
+        if (result.error) return {errors: result.error}
+
+        return { successMessage: "El empleado ha sido eliminado con éxito", data: {} }   
+    } catch (e) {
+        return { errors: e }
+    }
+}

@@ -1,5 +1,5 @@
 export default class ProjectsRepository {
-    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, sequelize) {
+    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, expensesModel, budgetModel, sequelize) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
         this.employeeModel = employeeModel;
@@ -9,6 +9,8 @@ export default class ProjectsRepository {
         this.statusModel = statusModel;
         this.teamProjectModel = teamProjectModel;
         this.userModel = userModel;
+        this.expensesModel = expensesModel;
+        this.budgetModel = budgetModel;
     }
 
     async getProjects() {
@@ -61,6 +63,14 @@ export default class ProjectsRepository {
         const result = await this.projectModel.findByPk(id, {
             include: [
                 {
+                    model: this.budgetModel,
+                    attributes: ["description", "amount", "date", "idUser"]
+                },
+                {
+                    model: this.expensesModel,
+                    attributes: ["description", "amount", "date", "idUser"]
+                },
+                {
                     model: this.statusModel,
                     attributes: ['name']
                 },
@@ -76,16 +86,25 @@ export default class ProjectsRepository {
                         },
                         {
                             model: this.taskAssignmentModel,
+                            attributes: {
+                                exclude: ["idTaskAssignment", "id_task", "id_employee", "idTask"]
+                            },
                             include: [
                                 {
                                     model: this.employeeModel,
+                                    attributes: {
+                                        exclude: ["idEmployees"]
+                                    },
                                     include: [
                                         {
-                                            model: this.userModel
+                                            model: this.userModel,
+                                            attributes: {
+                                                exclude: ["password", "createdAt", "updatedAt", "deleted", "verify", "id_users"]
+                                            }
                                         }
                                     ]
                                 }
-                            ]
+                            ],
                         }
                     ]
                 },
@@ -94,13 +113,22 @@ export default class ProjectsRepository {
                     include: [
                         {
                             model: this.teamProjectEmployeeModel,
+                            attributes: {
+                                exclude: ["idTeamProject", "idTeamProjectEmployee", "idEmployee", "id_team_project"]
+                            },
                             required: false,
                             include: [
                                 {
                                     model: this.employeeModel,
+                                    attributes: {
+                                        exclude: ["idEmployees"]
+                                    },
                                     include: [
                                         {
-                                            model: this.userModel
+                                            model: this.userModel,
+                                            attributes: {
+                                                exclude: ["password", "created_at", "updated_at", "deleted", "verify", "id_users"]
+                                            }
                                         }
                                     ]
                                 }
@@ -109,11 +137,14 @@ export default class ProjectsRepository {
                     ]
                 }
             ],
-            attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
+            attributes: ['idProjects', 'name', 'description', 'percentage'],
             where: {
                 deleted: false
-            }
+            },
+            order: [[{ model: this.taskModel }, 'idTasks', 'ASC']],
+            subQuery: false 
         });
+        
         
        
         const { Status: projectStatus, tasks, teamProject, ...projectData } = result.get({ plain: true });
@@ -122,21 +153,21 @@ export default class ProjectsRepository {
         const formattedProject = {
             ...projectData,
             status: projectStatus?.name || 'Unknown',
-            employees: teamProject?.teamProjectEmployees.map(employee => ({
+            employees: teamProject?.teamProjectEmployees?.map(employee => ({
                 image: employee.employee.User.image,
                 email: employee.employee.User.email,
                 name: employee.employee.User.name,
                 job: employee.employee.job,
-                idEmployee: employee.employee.idEmployees
-            })),
-            tasks: tasks.map(({ Status: taskStatus, taskAssignments, ...taskData }) => ({
+                idEmployee: employee.id_employee
+            })) || [],
+            tasks: tasks?.map(({ Status: taskStatus, taskAssignments, ...taskData }) => ({
                 ...taskData,
                 status: taskStatus?.name || 'Unknown',
-                assignedEmployees: taskAssignments.map(taskResponsible => ({
+                assignedEmployees: taskAssignments?.map(taskResponsible => ({
                     idEmployee: taskResponsible.idEmployee,
                     image: taskResponsible.employee.User.image
-                }))
-            }))
+                })) || []
+            })) || []
             
         };
 
