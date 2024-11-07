@@ -16,15 +16,15 @@ export const handleSubmit = async (e, formData, setErrors, setServerErrors, urlt
             },
             body: JSON.stringify(data),
         });
-
-        if (!response.ok) {
+        
+        if (response.ok) {
+            const result = await response.json();
+            window.location.reload();
+        } else {
             const error = await response.json();
             setServerErrors(error);
             return;
         }
-        const result = await response.json();
-
-        window.location.reload();
 
     } catch (error) {
         console.log(error);

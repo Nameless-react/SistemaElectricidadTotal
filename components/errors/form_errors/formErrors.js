@@ -1,3 +1,10 @@
+
+/**
+ * Component that displays validation errors for a form field from the client side.
+ *
+ * @param {{ errors: object, errorName: string }} props - The props object containing all errors and the specific error name to display.
+ * @returns {JSX.Element} A JSX element displaying the error messages for the specified field.
+ */
 export const FormErrorsClient = ({ errors, errorName }) => {
     return (
         <>
@@ -19,6 +26,13 @@ export const FormErrorsClient = ({ errors, errorName }) => {
     );
 };
 
+/**
+ * Componente que muestra los errores de validaci n de un formulario provenientes del servidor.
+ *
+ * @param {{ serverError: object, errorName: string }} props - La props serverError contiene el objeto de error
+ *  completo devuelto por el servidor, y errorName es el nombre del campo que se quiere mostrar los errores.
+ * @returns {JSX.Element} Un JSX.Element con los errores de validaci n.
+ */
 export const FormErrorsServer = ({ serverError, errorName }) => {
     return (
         <>

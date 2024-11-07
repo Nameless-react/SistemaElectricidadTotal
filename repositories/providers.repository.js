@@ -1,4 +1,3 @@
-
 class ProviderRepository {
     constructor(providerModel) {
         this.providerModel = providerModel;
@@ -6,56 +5,47 @@ class ProviderRepository {
 
     /**
      * Retrieves all providers from the database.
-     * @returns {Promise<Array>} A promise that resolves with an array of providers.
-     * @throws {Error} Throws an error if providers cannot be retrieved.
-    **/
+     * @returns {Promise<Array|null>} A promise that resolves with an array of providers or null if none are found.
+     */
     async getProviders() {
         try {
             const providers = await this.providerModel.findAll();
-            if (!providers || providers.length === 0) {
-                throw new Error("No se encontraron proveedor");
-            }
-            return providers;
+            return providers.length > 0 ? providers : null; // Return null if no providers are found
         } catch (error) {
-            console.error("Error al obtener los proveedor:", error);
+            console.error("Error retrieving providers:", error);
             throw new Error("Error al obtener los proveedores");
         }
     }
+
     /**
      * Retrieves a provider by its ID from the database.
      * @param {number} id - The ID of the provider to retrieve.
-     * @returns {Promise<Provider>} A promise that resolves with the retrieved provider.
-     * @throws {Error} Throws an error if the provider cannot be retrieved.
-     * */
+     * @returns {Promise<Provider|null>} A promise that resolves with the retrieved provider or null if not found.
+     */
     async getProviderById(id) {
         try {
             const provider = await this.providerModel.findByPk(id);
-            if (!provider) {
-                throw new Error("Proveedoredor no encontrado");
-            }
-            return provider.dataValues;
+            return provider ? provider.dataValues : null; // Return null if provider not found
         } catch (error) {
-            console.error("Error al obtener el proveedor:", error);
+            console.error("Error retrieving provider by ID:", error);
             throw new Error("Error al obtener el proveedor");
         }
     }
+
     /**
      * Retrieves a provider by its name from the database.
      * @param {string} name - The name of the provider to retrieve.
-     * @returns {Promise<Provider>} A promise that resolves with the retrieved provider.
-     *  @throws {Error} Throws an error if the provider cannot be retrieved.
-     * */
+     * @returns {Promise<Provider|null>} A promise that resolves with the retrieved provider or null if not found.
+     */
     async getProviderByName(name) {
         try {
             const provider = await this.providerModel.findOne({ where: { name } });
-            if (!provider) {
-                throw new Error("Proveedoredor no encontrado");
-            }
-            return provider.dataValues;
+            return provider ? provider.dataValues : null; // Return null if provider not found
         } catch (error) {
-            console.error("Error al obtener el proveedor:", error);
+            console.error("Error retrieving provider by name:", error);
             throw new Error("Error al obtener el proveedor");
         }
     }
 }
+
 export default ProviderRepository;

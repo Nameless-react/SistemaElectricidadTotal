@@ -2,6 +2,18 @@
 import { MaterialFormProvider } from "./compoundComponents/context/materialFormContext"
 import { MaterialCategoryDropdown, MaterialCost, MaterialDate, MaterialDescription, MaterialExpiration, MaterialForm, MaterialName, MaterialProviderDropdown, MaterialStatusDropdown, MaterialStock } from "./compoundComponents/materialForm"
 import { SubmitButton } from "../../buttons/form/submitButton"
+/**
+ * Renders a form for managing materials, including adding and updating material details.
+ *
+ * @param {Object} props - The properties for the component.
+ * @param {Array} props.providers - An array of provider objects for the material.
+ * @param {Array} props.categories - An array of category objects for the material.
+ * @param {string} props.id - The ID of the material, used to determine if the form is for updating an existing material.
+ * @param {Object} props.material - The material object containing existing material details.
+ * @param {string} props.title - The title to be displayed at the top of the form.
+ *
+ * @returns {JSX.Element} - A React component rendering the material management form.
+ */
 export default function ManageMaterial({ providers, categories, id, material, title }) {
     return (
         <div className="flex-grow sm:mx-auto sm:max-w-7xl pt-5 px-2 sm:px-6 mb-10">

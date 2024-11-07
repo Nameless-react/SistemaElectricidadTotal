@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input, Textarea } from "@nextui-org/input";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/dropdown";
 import { Button } from "@nextui-org/button";
@@ -8,21 +8,58 @@ import { useToolsForm } from "../context/toolsFormContext";
 import { Checkbox } from '@nextui-org/checkbox';
 import { UploadImage } from '../../../../images/formImages';
 import { FormErrorsClient, FormErrorsServer } from '../../../../errors/form_errors/formErrors';
+/**
+ * A form component to create or edit a tool.
+ * 
+ * @param {Object} props Component props.
+ * @param {string} [props.className=""] The class name of the component.
+ * @param {React.ReactNode} [props.children=null] The children of the component.
+ * @returns {React.ReactElement} A react component that renders the form with the children inside.
+ * @example
+ * import { ToolForm } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolForm = () => {
+ *     return (
+ *         <ToolForm>
+ *             <ToolName />
+ *             <ToolModel />
+ *             <ToolDescription />
+ *             <ToolCost />
+ *         </ToolForm>
+ *     )
+ * }
+ */
 export const ToolForm = ({ className = "", children }) => {
-    const { handleSubmit, formData, setErrors, setServerError, isChecked, setIsChecked, id, router } = useToolsForm();
-
+    const { handleSubmit, formData, setErrors, setServerError, isChecked, setIsChecked, id, router, serverError } = useToolsForm();
+     
     return (
         <div className={className}>
             <form
                 onSubmit={id
-                    ? (e) => handleSubmit(e, id, formData, setErrors, setServerError, isChecked, `${process.env.NEXT_PUBLIC_URL_TOOLS_UPDATE}?id=${id}`, process.env.NEXT_PUBLIC_URL_TOOLS, router)
-                    : (e) => handleSubmit(e, id, formData, setErrors, setServerError, isChecked, process.env.NEXT_PUBLIC_URL_TOOLS_CREATE, process.env.NEXT_PUBLIC_URL_TOOLS, router)
+                    ? (e) => handleSubmit(e, id, formData, setErrors, setServerError, isChecked, `${process.env.NEXT_PUBLIC_URL_TOOLS_Tool}?id=${id}`, process.env.NEXT_PUBLIC_URL_TOOLS, router)
+                    : (e) => handleSubmit(e, id, formData, setErrors, setServerError, isChecked, process.env.NEXT_PUBLIC_URL_TOOLS_Tool, process.env.NEXT_PUBLIC_URL_TOOLS, router)
                 }>
                 {children}
+                {/* {serverError && serverError.error && <p className="text-red-500 text-center mt-4">{serverError.error.internal_server_error.message}</p>} */}
             </form>
         </div>
     )
 }
+/**
+ * A form component to render an input for the tool's name.
+ * 
+ * @param {Object} props Component props.
+ * @param {string} [props.className=""] The class name of the component.
+ * @returns {React.ReactElement} A react component that renders the input.
+ * @example
+ * import { ToolName } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolName = () => {
+ *     return (
+ *         <ToolName />
+ *     )
+ * }
+ */
 export const ToolName = ({ className = "" }) => {
     const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
 
@@ -47,6 +84,21 @@ export const ToolName = ({ className = "" }) => {
     )
 }
 
+/**
+ * A form component to render an input for the tool's model.
+ * 
+ * @param {Object} props Component props.
+ * @param {string} [props.className=""] The class name of the component.
+ * @returns {React.ReactElement} A react component that renders the input.
+ * @example
+ * import { ToolModel } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolModel = () => {
+ *     return (
+ *         <ToolModel />
+ *     )
+ * }
+ */
 export const ToolModel = ({ className = "" }) => {
     const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     return (
@@ -70,6 +122,21 @@ export const ToolModel = ({ className = "" }) => {
     );
 }
 
+/**
+ * A form component to render a textarea for the tool's description.
+ * 
+ * @param {Object} props Component props.
+ * @param {string} [props.className=""] The class name of the component.
+ * @returns {React.ReactElement} A react component that renders the textarea.
+ * @example
+ * import { ToolDescription } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolDescription = () => {
+ *     return (
+ *         <ToolDescription />
+ *     )
+ * }
+ */
 export const ToolDescription = ({ className = "" }) => {
     const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     return (
@@ -87,6 +154,22 @@ export const ToolDescription = ({ className = "" }) => {
         </div>
     )
 }
+
+/**
+ * A form component to render an input for the tool's cost.
+ * 
+ * @param {Object} props Component props.
+ * @param {string} [props.className=""] The class name of the component.
+ * @returns {React.ReactElement} A react component that renders the input.
+ * @example
+ * import { ToolCost } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolCost = () => {
+ *     return (
+ *         <ToolCost />
+ *     )
+ * }
+ */
 
 export const ToolCost = ({ className = "" }) => {
     const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
@@ -112,6 +195,21 @@ export const ToolCost = ({ className = "" }) => {
     )
 }
 
+/**
+ * A form component to render an input for the tool's purchase date.
+ * 
+ * @param {Object} props Component props.
+ * @param {string} [props.className=""] The class name of the component.
+ * @returns {React.ReactElement} A react component that renders the input.
+ * @example
+ * import { ToolDate } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolDate = () => {
+ *     return (
+ *         <ToolDate />
+ *     )
+ * }
+ */
 export const ToolDate = ({ className = "" }) => {
     const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     return (
@@ -136,6 +234,21 @@ export const ToolDate = ({ className = "" }) => {
     )
 }
 
+/**
+ * A form component to render an input for the tool's serial number.
+ * 
+ * @param {Object} props Component props.
+ * @param {string} [props.className=""] The class name of the component.
+ * @returns {React.ReactElement} A react component that renders the input.
+ * @example
+ * import { ToolSerial } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolSerial = () => {
+ *     return (
+ *         <ToolSerial />
+ *     )
+ * }
+ */
 export const ToolSerial = ({ className = "" }) => {
     const { formData, setFormData, handleChange, errors, setErrors, serverError } = useToolsForm();
     React.useEffect(() => {
@@ -166,6 +279,20 @@ export const ToolSerial = ({ className = "" }) => {
     )
 }
 
+/**
+ * A form component to handle the upload and display of an image for a tool.
+ * Integrates with the UploadImage component to manage image changes and previews.
+ *
+ * @returns {React.ReactElement} A react component that renders the image upload interface.
+ * @example
+ * import { ToolImage } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolImage = () => {
+ *     return (
+ *         <ToolImage />
+ *     )
+ * }
+ */
 export const ToolImage = ({ }) => {
     const { formData, setFormData, imagePreview, setImagePreview, handleImageChange, handleImageRemove, errors, setErrors, serverError } = useToolsForm();
 
@@ -190,6 +317,22 @@ export const ToolImage = ({ }) => {
     )
 }
 
+/**
+ * A dropdown component to handle the selection of a tool status.
+ * Integrates with the ToolsFormContext to manage form data and validation.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className=""] - The CSS class to be applied to the component.
+ * @returns {React.ReactElement} A react component that renders the tool status dropdown interface.
+ * @example
+ * import { ToolStatusDropdown } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ *
+ * const MyToolStatusDropdown = () => {
+ *     return (
+ *         <ToolStatusDropdown />
+ *     )
+ * }
+ */
 export const ToolStatusDropdown = ({ className = "" }) => {
     const { formData, setFormData, handleDropdownChange, errors, setErrors, serverError } = useToolsForm();
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Seleccionar"]));
@@ -254,6 +397,22 @@ export const ToolStatusDropdown = ({ className = "" }) => {
     );
 };
 
+/**
+ * A dropdown component to handle the selection of a tool category.
+ * Integrates with the ToolsFormContext to manage form data and validation.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className=""] - The CSS class to be applied to the component.
+ * @returns {React.ReactElement} A react component that renders the tool category dropdown interface.
+ * @example
+ * import { ToolsCategoryDropdown } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ *
+ * const MyToolsCategoryDropdown = () => {
+ *     return (
+ *         <ToolsCategoryDropdown />
+ *     )
+ * }
+ */
 export const ToolsCategoryDropdown = ({ className = "" }) => {
     const { formData, setFormData, handleDropdownChange, errors, setErrors, serverError } = useToolsForm();
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Seleccionar"]));
@@ -319,6 +478,22 @@ export const ToolsCategoryDropdown = ({ className = "" }) => {
     )
 }
 
+/**
+ * A dropdown component to handle the selection of a provider.
+ * Integrates with the ToolsFormContext to manage form data and validation.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className=""] - The CSS class to be applied to the component.
+ * @returns {React.ReactElement} A react component that renders the provider dropdown interface.
+ * @example
+ * import { ToolsProviderDropdown } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ *
+ * const MyToolsProviderDropdown = () => {
+ *     return (
+ *         <ToolsProviderDropdown />
+ *     )
+ * }
+ */
 export const ToolsProviderDropdown = ({ className = "" }) => {
     const { formData, setFormData, handleDropdownChange, errors, setErrors, serverError } = useToolsForm();
     const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Seleccionar"]));
@@ -385,6 +560,21 @@ export const ToolsProviderDropdown = ({ className = "" }) => {
     )
 }
 
+/**
+ * A checkbox component allowing users to add maintenance notes for tools.
+ * 
+ * This component integrates with the ToolsFormContext to handle form data related to maintenance notes.
+ * It manages the visibility of a textarea for note input based on the tool's status and checkbox state.
+ * 
+ * The component:
+ * - Shows a checkbox and a label asking if the user wants to add maintenance notes.
+ * - Displays a textarea for input if the checkbox is checked and the tool's status is "En reparacion".
+ * - Handles form data updates for maintenance notes and the checkbox state.
+ * 
+ * @param {Object} props - The component props.
+ * @param {string} [props.className=""] - The CSS class to be applied to the component.
+ * @returns {React.ReactElement} A React component that renders the maintenance notes checkbox interface.
+ */
 export const ToolsMaintenanceNotesCheckbox = ({ className = "" }) => {
 
     const { formData, setFormData, isChecked, setIsChecked, handleChange, errors, setErrors } = useToolsForm();
@@ -461,6 +651,23 @@ export const ToolsMaintenanceNotesCheckbox = ({ className = "" }) => {
     );
 }
 
+
+/**
+ * A form component to render an input for the tool's expected recovery date.
+ * 
+ * @param {Object} props - The component props.
+ * @param {string} [props.className=""] - The CSS class to be applied to the component.
+ * @returns {React.ReactElement} A react component that renders the expected recovery date input.
+ * 
+ * @example
+ * import { ToolExpectedRecoveryDate } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolExpectedRecoveryDate = () => {
+ *     return (
+ *         <ToolExpectedRecoveryDate />
+ *     )
+ * }
+ */
 export const ToolExpectedRecoveryDate = ({ className = "" }) => {
 
     const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
@@ -494,6 +701,22 @@ export const ToolExpectedRecoveryDate = ({ className = "" }) => {
     )
 }
 
+/**
+ * A form component to render an input for the tool's start maintenance date.
+ * 
+ * @param {Object} props - The component props.
+ * @param {string} [props.className=""] - The CSS class to be applied to the component.
+ * @returns {React.ReactElement} A react component that renders the start maintenance date input.
+ * 
+ * @example
+ * import { ToolStartMaintenanceDate } from '../../components/inventory/tools/compoundComponents/tools/toolForm';
+ * 
+ * const MyToolStartMaintenanceDate = () => {
+ *     return (
+ *         <ToolStartMaintenanceDate />
+ *     )
+ * }
+ */
 export const ToolStartMaintenanceDate = ({ className = "" }) => {
     const { formData, setFormData, handleChange, errors, setErrors } = useToolsForm();
     return (

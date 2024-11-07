@@ -15,5 +15,5 @@ export async function middleware(req) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/perfil/:path*', '/api/auth/profile/:path*', '/gestion-inventario/:path*', '/api/inventory/:path*'],
+  matcher: ['/perfil/:path*', '/api/auth/profile/:path*', '/gestion-inventario/:path*'],
 }

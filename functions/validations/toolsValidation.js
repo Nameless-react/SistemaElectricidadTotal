@@ -10,27 +10,26 @@ export const validateFormTools = (formData) => {
         date: new Date(formData.date)
     };
 
-
+    console.log(parsedData);
 
     const validationSchema = z.object({
         name: z.string()
             .trim()
             .min(3, "El nombre debe tener al menos 3 caracteres")
             .max(255, "El nombre debe tener como máximo 20 caracteres")
-            .regex(/^[a-zA-Z\s]+$/, { message: "El nombre solo puede contener letras y espacios" })
+            .regex(/^[a-zA-ZÀ-ÿ0-9\s]+$/, { message: "El nombre solo puede contener letras, números, tildes y espacios" })
             .refine((value) => value !== '', { message: "El nombre es requerido." }),
 
         model: z.string()
             .trim()
             .min(4, "El modelo debe tener al menos 4 caracteres")
             .max(255, "El modelo debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z0-9\s]+$/, { message: "El modelo solo puede contener letras, números y espacios" }),
-
+            .regex(/^[a-zA-Z0-9-]+$/, { message: "El modelo solo puede contener letras, números y guiones" }),
         description: z.string()
             .trim()
             .min(10, "La descripción debe tener al menos 10 caracteres")
             .max(255, "La descripción debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z0-9\s]+$/, { message: "La descripción solo puede contener letras, números y espacios" }),
+            .regex(/^[a-zA-ZÀ-ÿ0-9\s]+$/, { message: "La descripción solo puede contener letras, números, tildes y espacios" }),
 
         cost: z.number()
             .nonnegative("El costo debe ser un valor positivo")
@@ -49,7 +48,7 @@ export const validateFormTools = (formData) => {
             .trim()
             .min(4, "El serial debe tener al menos 4 caracteres")
             .max(255, "El serial debe tener como máximo 255 caracteres")
-            .regex(/^[a-zA-Z0-9\s]+$/, { message: "El serial solo puede contener letras, números y espacios" }),
+            .regex(/^[a-zA-Z0-9-]+$/, { message: "El serial solo puede contener letras, números y guiones" }),
 
         status: z.string().min(1, "El estado es requerido"),
 
@@ -73,7 +72,6 @@ export const validateFormTools = (formData) => {
     });
 
     const result = validationSchema.safeParse(parsedData);
-
 
     if (result.success) {
         return {

@@ -12,6 +12,14 @@ import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, } from "@nextui-
 import { Avatar } from "@nextui-org/avatar";
 import Image from "next/image";
 
+/**
+ * The main navbar component, it will be displayed in the top of the page.
+ * This component will handle the different states of the navbar, such as the
+ * mobile menu and the dropdown menus.
+ *
+ * @function NavbarApp
+ * @returns {JSX.Element} The navbar component.
+ */
 export default function NavbarApp() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobileScreen, setIsMobileScreen] = useState(false);

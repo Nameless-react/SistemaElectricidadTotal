@@ -9,6 +9,13 @@ import { usePathname } from "next/navigation";
 
 
 
+/**
+ * Renders the footer section of the website, including contact information, navigation links, 
+ * and social media links. The footer displays the current year and is styled with a color 
+ * scheme matching the main theme of the website.
+ * 
+ * @returns {JSX.Element} A React component representing the footer of the website.
+ */
 export default function Footer() {
     const pathName = usePathname();
     const footerLinks = links.map((link, index) => (

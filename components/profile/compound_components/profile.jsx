@@ -33,30 +33,48 @@ export const ProfileContainer = ({ children, className = "" }) => {
  * The button is a button element with an aria-label of "Edit profile picture" and a role of button.
  */
 
+/**
+ * Component that renders the user's profile image with an editable option.
+ *
+ * Props:
+ * @param {string} className - CSS classes to style the image container.
+ * @param {string} size - Size of the Avatar, options include "xs", "sm", "md", "lg", "xl". Default is "xl".
+ *
+ * The component uses the user's data to display their profile image. 
+ * If the user does not have an image, a default image is shown.
+ * The Avatar is bordered and has a warning color.
+ * An EditImageModal is provided to allow the user to change their profile picture.
+ */
 export const ProfileImage = ({ className = "", size = "xl" }) => {
-    const { userData } = useProfile();
+    const { userData, serverError, setServerError } = useProfile();
+
     return (
-        <div className="relative inline-block">
-            <Avatar
-                isBordered
-                color="warning"
-                size={size}
-                className={className}
-                src={userData.image ? userData.image : "/noProfile.png"}
-                alt={`Profile image of ${userData.name || "user"}`}
-            />
-            <EditImageModal
-                title={"Editar foto de perfil"}
-                classNames={{
-                    base: "flex flex-col items-center justify-center absolute md:top-16  md:right-2 top-16 right-5 bg-blue-700 hover:bg-blue-800 p-2 transition duration-300 ease-in-out rounded-full",
-                    button: "relative group",
-                    span: "absolute bottom-full mb-2 hidden group-hover:flex w-max bg-gray-700 transition duration-300 ease-in-out text-white text-sm rounded-md shadow-md px-2 py-1",
-                    modal: "dark",
-                    modal_header: "",
-                    modal_body: "mb-5",
-                }}
-            />
-        </div>
+        <>
+            <div className="relative inline-block">
+                <Avatar
+                    isBordered
+                    color="warning"
+                    size={size}
+                    className={className}
+                    src={userData.image ? userData.image : "/noProfile.png"}
+                    alt={`Profile image of ${userData.name || "user"}`}
+                />
+                <EditImageModal
+                    title={"Editar foto de perfil"}
+                    setServerError={setServerError}
+                    serverError={serverError}
+                    classNames={{
+                        base: "flex flex-col items-center justify-center absolute md:top-16  md:right-2 top-16 right-5 bg-blue-700 hover:bg-blue-800 p-2 transition duration-300 ease-in-out rounded-full",
+                        button: "relative group",
+                        span: "absolute bottom-full mb-2 hidden group-hover:flex w-max bg-gray-700 transition duration-300 ease-in-out text-white text-sm rounded-md shadow-md px-2 py-1",
+                        modal: "dark",
+                        modal_header: "",
+                        modal_body: "mb-5",
+                    }}
+                />
+
+            </div>
+        </>
     );
 }
 
@@ -114,7 +132,7 @@ export const ProfileAddress = ({ classNames = {
     )
 }
 
-export const ProfileOptions = ({  classNames = {
+export const ProfileOptions = ({ classNames = {
     base: "",
     label: "",
     icon: "",
@@ -132,8 +150,9 @@ export const ProfileOptions = ({  classNames = {
                 </h2>
                 <p className={classNames?.value}>Puedes actualizar tu información personal desde aquí.</p>
                 <UpdateProfileForm
+                 
                     user={userData}
-                    classNames={{ modal: "dark", modal_header:"mt-2", button:classNames.button} }
+                    classNames={{ modal: "dark", modal_header: "mt-2", button: classNames.button }}
                 />
             </section>
         </>
