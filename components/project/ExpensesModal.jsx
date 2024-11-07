@@ -28,7 +28,7 @@ export default function ExpensesModal({ expense, formatNumberToColones }) {
                 <ModalContent className="p-12 pt-6">
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Gastos</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1 font-bold">Gastos</ModalHeader>
                             <ModalBody>
                                 <div className={style.expensesHeader}>
                                     <p>Monto</p>

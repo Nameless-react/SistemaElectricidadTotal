@@ -47,7 +47,7 @@ export default function ModalCreateTask() {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Crear Tarea</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1 font-bold">Crear Tarea</ModalHeader>
                             <ModalBody>
                                 <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col">
                                     <Input label="Título" className="outline-none" type="text" aria-label="Título de la tarea" {...register("title")} isInvalid={errors?.title} errorMessage={errors?.title?.message} />

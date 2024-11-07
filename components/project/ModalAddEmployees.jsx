@@ -9,23 +9,26 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { addTeamProjectEmployee } from "/functions/fetches/employees/employeeActions";
+import { addTeamProjectEmployeeAction } from "/functions/fetches/employees/employeeActions";
 
 export default function ModalAddEmployees() {
 
     const { project, employees } = useContext(ProjectContext);
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const { register, handleSubmit, control, reset, formState: { errors, isSubmitting }, getValues } = useForm({
+    const employeesNotAssigned = employees.filter(employee => project.employees.every(assignEmployee => assignEmployee.idEmployee !== employee.idEmployee));
+   
+
+    const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(validateTeamProjectClient),
         defaultValues: {
-            idProjects: project.idProjects,
-            employees: new Set(project.employees.map(employee => employee.idEmployee))
+            idTeamProject: project.idTeamProject,
+            employees: new Set()
         },
         mode: "onBlur"
     })
 
     const onSubmit = async (employeesFormData) => {
-        const { successMessage } = await addTeamProjectEmployee(employeesFormData);
+        const { successMessage } = await addTeamProjectEmployeeAction(employeesFormData);
         if (successMessage) {
             reset();
         }
@@ -37,16 +40,15 @@ export default function ModalAddEmployees() {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                        {/* {console.log(getValues())} */}
-                            <ModalHeader className="flex flex-col gap-1">Administrar Empleados</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1 font-bold">Administrar Empleados</ModalHeader>
                             <ModalBody>
-                                <form className="flex justify-center gap-10 items-center flex-col">
+                                <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col">
                                     <Controller
                                         control={control}
                                         name="employees"
                                         render={({ field: { onChange, values, onBlur } }) => (
                                             <Select
-                                                items={employees}
+                                                items={employeesNotAssigned}
                                                 isMultiline={true}
                                                 isInvalid={!!errors?.employees}
                                                 errorMessage={errors?.employees?.message}

@@ -28,7 +28,7 @@ export default function BudgetsModal({ budget, formatNumberToColones }) {
                 <ModalContent className="p-12 pt-6">
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Presupuesto y actualizaciones</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1 font-bold">Presupuesto y actualizaciones</ModalHeader>
                             <ModalBody>
                                 <div className={style.budgetsHeader}>
                                     <p>Monto</p>

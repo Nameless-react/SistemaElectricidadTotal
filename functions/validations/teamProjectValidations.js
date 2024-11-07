@@ -18,7 +18,6 @@ export const teamProjectValidation = z.object({
     }).positive({
         message: "El id del proyecto tiene que ser un número positivo"
     }),
-    
     employees: z.set(
         z.coerce.number({
             invalid_type_error: "El id del empleado tiene que ser un número"
@@ -36,4 +35,4 @@ export const validateIdTeamProject = (object) => teamProjectValidation.pick({ id
 export const validateIdProjects = (object) => teamProjectValidation.pick({ idProjects: true }).safeParse(object);
 
 export const validateTeamProjectClient = teamProjectValidation.omit({ name: true, idProjects: true });
-export const validateidTeamProjectEmployees = teamProjectValidation.pick({ employees: true });
+export const validateIdTeamProjectEmployees = teamProjectValidation.pick({ employees: true });

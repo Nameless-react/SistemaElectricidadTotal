@@ -114,7 +114,7 @@ export default class ProjectsRepository {
                         {
                             model: this.teamProjectEmployeeModel,
                             attributes: {
-                                exclude: ["idTeamProject", "idTeamProjectEmployee", "idEmployee", "id_team_project"]
+                                exclude: ["idTeamProjectEmployee", "idEmployee", "id_team_project"]
                             },
                             required: false,
                             include: [
@@ -153,6 +153,7 @@ export default class ProjectsRepository {
         const formattedProject = {
             ...projectData,
             status: projectStatus?.name || 'Unknown',
+            idTeamProject: teamProject?.idTeamProject,
             employees: teamProject?.teamProjectEmployees?.map(employee => ({
                 image: employee.employee.User.image,
                 email: employee.employee.User.email,

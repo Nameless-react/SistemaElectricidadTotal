@@ -7,10 +7,10 @@ export const getEmployeesAction = async () => {
     return result;
 }
 
-export const deleteEmployeeAction = async (id) => {
+export const deleteTeamProjectEmployeeAction = async (id) => {
     try {
         
-        const response = await fetch(`http://${config.host}:3000/api/employees/${id}`, {
+        const response = await fetch(`http://${config.host}:3000/api/teams/employees/${id}`, {
             method: "DELETE"
         });
         const result = await response.json();
@@ -24,18 +24,21 @@ export const deleteEmployeeAction = async (id) => {
     }
 }
 
-export const addTeamProjectEmployee = async (employees) => {
+export const addTeamProjectEmployeeAction = async (teamProjectEmployees) => {
     try {
-        const response = await fetch(`http://${config.host}:3000/api/employees/${id}`, {
+        const response = await fetch(`http://${config.host}:3000/api/teams/employees`, {
             method: "POST",
-            // body: {}
+            body: JSON.stringify({
+                ...teamProjectEmployees,
+                employees: [...teamProjectEmployees.employees]
+            })
         });
         const result = await response.json();
 
         // revalidatePath(`/proyectos/${task.idProjects}`)
         if (result.error) return {errors: result.error}
 
-        return { successMessage: "El empleado ha sido eliminado con éxito", data: {} }   
+        return { successMessage: "El empleado ha sido agregado con éxito", data: {} }   
     } catch (e) {
         return { errors: e }
     }
