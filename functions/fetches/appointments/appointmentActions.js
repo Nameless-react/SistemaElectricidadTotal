@@ -7,6 +7,12 @@ export const getAppointmentAction = async (id) => {
     return result;
 }
 
+export const getAppointmentsAction = async () => {
+    const response = await fetch(`http://${config.host}:3000/api/appointments/`);
+    const result = await response.json();
+    return result;
+}
+
 
 export const createAppointmentAction = async (appointment) => {
     try {

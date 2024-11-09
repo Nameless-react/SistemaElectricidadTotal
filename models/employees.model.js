@@ -41,4 +41,6 @@ Employee.belongsTo(Users, {
     }
 });
 
+
+
 export default Employee;

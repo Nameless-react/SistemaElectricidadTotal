@@ -18,7 +18,7 @@ export const deleteTeamProjectEmployeeAction = async (id) => {
         // revalidatePath(`/proyectos/${task.idProjects}`)
         if (result.error) return {errors: result.error}
 
-        return { successMessage: "El empleado ha sido eliminado con éxito", data: {} }
+        return { successMessage: "El empleado ha sido eliminado del equipo con éxito", data: {} }
     } catch (e) {
         return { errors: e }
     }

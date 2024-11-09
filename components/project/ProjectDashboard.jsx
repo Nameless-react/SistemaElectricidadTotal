@@ -6,13 +6,13 @@ import Employee from "./Employee";
 import style from "/css/projectDashboard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet } from "@fortawesome/free-solid-svg-icons";
-import ModalAddEmployees from "./ModalAddEmployees";
-import ModalCreateTask from "./ModalCreateTask"; 
+import ModalAddEmployees from "./AddEmployees";
 import { useContext } from "react";
 import { ProjectContext } from "./context/ProjectContext";
 import { CircularProgress } from "@nextui-org/progress";
-import ExpensesModal from "./ExpensesModal";
-import BudgetsModal from "./BudgetsModal";
+import ExpensesModal from "./Expenses";
+import BudgetsModal from "./Budgets";
+import FormTask from "./CreateTaskModal";
 
 
 export default function ProjectDashboard() {
@@ -54,7 +54,7 @@ export default function ProjectDashboard() {
             <div className={style.tasksContainer}>
                 <div className={style.taskHeader}>
                     <h3>Tareas</h3>
-                    <ModalCreateTask />
+                    <FormTask modalTitle={"Agregar tarea"} />
                 </div>
                 <div className={style.tasks}>
                     <div className={style.informationTasks}>

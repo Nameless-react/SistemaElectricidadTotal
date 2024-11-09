@@ -1,17 +1,16 @@
 import { NextResponse } from "next/server";
 import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
-import TeamService from "/services/teams/team.service";
+import TeamService from "/services/teamProject/teamProject.service";
 import { TeamProject, TeamProjectEmployee } from "/models/index";
-import EmployeeRepository from "../repositories/employee.repository";
+import TeamProjectRepository from "../repositories/teamProject.repository";
 
 
-
-const teamRepository = new EmployeeRepository(TeamProject, TeamProjectEmployee, sequelize);
+const teamRepository = new TeamProjectRepository(TeamProject, TeamProjectEmployee, sequelize);
 const teamService = new TeamService(teamRepository);
 
 
-class TeamController {
+class TeamProjectController {
     constructor(teamService) {
         this.teamService = teamService
     }
@@ -44,10 +43,9 @@ class TeamController {
     addEmployee = apiErrorWrapper(async (req, params) => {
         const parseBody = await req.json();
 
-        const addedEmployees = await this.teamService.addEmployee({ ...parseBody, employees: new Set([...parseBody.employees]) });
-
-        return NextResponse.json(addedEmployees, { status: 200 })
+        await this.teamService.addEmployee({ ...parseBody, employees: new Set([...parseBody.employees]) });
+        return NextResponse.json({ messaage: "El empleado se agregó con éxito" }, { status: 200 })
     })
 }
 
-export default new TeamController(teamService);
+export default new TeamProjectController(teamService);

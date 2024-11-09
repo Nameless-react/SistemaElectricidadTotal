@@ -14,6 +14,8 @@ import User from "./user.model";
 import Task from "./task.model";
 import Employee from "./employees.model";
 import ExpensesProjects from "./expenses_project.model";
+import TeamProject from "./team_project.model";
+import TeamProjectEmployee from "./team_project_employee.model";
 
 
 export {
@@ -31,6 +33,8 @@ export {
     Provider,
     Task,
     ToolProvider,
+    TeamProject,
+    TeamProjectEmployee,
     Tool,
     User
 }

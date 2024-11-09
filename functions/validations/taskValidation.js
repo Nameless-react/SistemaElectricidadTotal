@@ -58,4 +58,5 @@ export const validateIdTask = (object) => taskValidations.pick({ idTasks: true }
 export const validateIdProjects = (object) => taskValidations.pick({ idProjects: true }).safeParse(object);
 
 export const validateTaskClient = taskValidations.omit({ idTasks: true });
+export const validatePartialTaskClient = taskValidations.omit({ idTasks: true }).partial();
 export const validateTaskEmployees = taskValidations.pick({ employees: true });

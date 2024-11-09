@@ -1,6 +1,8 @@
 export default class AppointmentRepository {
-    constructor(appointmentModel, sequelize) {
+    constructor(appointmentModel, employeeModel, appointmentConfirmationModel, sequelize) {
         this.appointmentModel = appointmentModel;
+        this.employeeModel = employeeModel;
+        this.appointmentConfirmationModel = appointmentConfirmationModel;
         this.sequelize = sequelize;
     }
 
@@ -36,7 +38,26 @@ export default class AppointmentRepository {
     }
 
     async getAppointments() {
-        return await this.appointmentModel.findAll();
+        const result = await this.appointmentModel.findAll({
+            include: [
+                {
+                    model: this.employeeModel,
+                    attributes: ["idUsers"]
+                },
+                {
+                    model: this.appointmentConfirmationModel,
+                    attributes: ["confirmed"]
+                }
+            ]
+        });
+
+        const formattedResult = {
+            ...result,
+            confirmed: appointmentConfirmation.confirmed
+        }
+
+        return formattedResult;
+
     }
 
     async getAppointment(appointment) {

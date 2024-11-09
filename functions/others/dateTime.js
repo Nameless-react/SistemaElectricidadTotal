@@ -1,7 +1,7 @@
 import { getLocalTimeZone, today, Time, parseDate, parseTime } from "@internationalized/date";
 
 
-export default function getDateTimeForms(appointmentDate, appointmentTime) {
+export function getDateTimeForms(appointmentDate, appointmentTime) {
     const date = new Date();
     const hourLimit = 17;
     const nextDayHour = 7;
@@ -21,3 +21,5 @@ export default function getDateTimeForms(appointmentDate, appointmentTime) {
         time: timeValidated
     }
 } 
+
+export const getDateTask = (deadline) => deadline ? parseDate(deadline) : today(getLocalTimeZone()).add({ days: 1 }) 

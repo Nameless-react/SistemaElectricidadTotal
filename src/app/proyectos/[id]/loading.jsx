@@ -1,4 +1,4 @@
-import SkeletonProjectDashboard from "/components/project/SkeletonProjectDashboard";
+import SkeletonProjectDashboard from "/components/skeletons/SkeletonProjectDashboard";
 
 export default function Loading() {
     return (
