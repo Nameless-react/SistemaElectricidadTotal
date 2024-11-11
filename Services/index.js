@@ -9,11 +9,13 @@ import MaterialService from "./materials/material.service";
 import ValidationMaterialService from "./materials/validations/validationMaterial.service";
 import UserService from "./users/user.service";
 import ValidationUserService from "./users/validations/validationUser.service";
-import TaskService from "./projects/task.service";
+import TaskService from "./Projects/task.service";
 import ValidationUserProfileService from "./users/validations/validationUserProfile.service";
-import ProjectsService from "./projects/projects.service";
-import ProjectsImagesService from "./projects/projectsImages.service";
-
+import ProjectsService from "./Projects/projects.service";
+import ProjectsImagesService from "./Projects/projectsImages.service";
+import ExpensesProjectsService from "./expenses_projects/expensesProjects.service";
+import ExpensesService from "./expenses/expenses.service";
+import ExpenseCategoryService from "./expenses_categories/expenseCategory.service";
 export {
     CategoryService,
     MaintenanceNotesService,
@@ -29,5 +31,8 @@ export {
     ValidationUserProfileService,
     ProjectsService,
     ProjectsImagesService,
-    TaskService
+    TaskService,
+    ExpensesProjectsService,
+    ExpensesService,
+    ExpenseCategoryService
 }

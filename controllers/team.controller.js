@@ -1,61 +1,58 @@
 import { NextResponse } from "next/server";
 import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
-import TaskService from "/services/projects/task.service";
-import { Task } from "/models/index";
-import { TaskRepository } from "/repositories/index";
+import TeamService from "/services/teams/team.service";
+import { TeamProject, TeamProjectEmployee } from "/models/index";
+import EmployeeRepository from "../repositories/employee.repository";
 
 
-const taskRepository = new TaskRepository(Task, sequelize);
-const taskService = new TaskService(taskRepository);
+
+const teamRepository = new EmployeeRepository(TeamProject, TeamProjectEmployee, sequelize);
+const teamService = new TeamService(teamRepository);
 
 
-class TaskController {
-    constructor(taskService) {
-        this.taskService = taskService
+class TeamController {
+    constructor(teamService) {
+        this.teamService = teamService
     }
 
-    getTask = apiErrorWrapper(async (req, params) => {
+    getTeam = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        const task = await this.taskService.getTaskById(parseInt(id));
+        const task = await this.teamService.getTaskById(parseInt(id));
         return NextResponse.json(task, { status: 200 });
     })
     
-    getTasks = apiErrorWrapper(async (req, res) => {
-        const tasks = await this.taskService.getTasks();
+    getTeams = apiErrorWrapper(async (req, res) => {
+        const tasks = await this.teamService.getTasks();
         return NextResponse.json(tasks, { status: 200 });
-    })
-    
-    getTasksByProject = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
-        const tasksByProject = await this.taskService.getTasksByProject({ idProjects: id });
-        return NextResponse.json(tasksByProject, { status: 200 });
-    })
+    });
 
-    saveTask = apiErrorWrapper(async (req, res) => {
+    getTeamByProject = apiErrorWrapper(async (req, params) => {
+        const { id } = params.params;
+        const team = await this.teamService.getTeamByProject(parseInt(id));
+        return NextResponse.json(team, { status: 200 });
+    });
+   
+    saveTeam = apiErrorWrapper(async (req, res) => {
         const parseBody = await req.json();
         
-        await this.taskService.saveTask({ ...parseBody, employees: new Set(parseBody.employees) });
+        await this.teamService.saveTask({ ...parseBody, employees: new Set(parseBody.employees) });
         return NextResponse.json({ message: "Tarea guardada con éxito" }, { status: 201 });
     })
 
-    deleteTask = apiErrorWrapper(async (req, params) => {
+    deleteEmployee = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        await this.taskService.deleteTask(parseInt(id));
-        return NextResponse.json({ message: "La tarea se eliminó con éxito" }, { status: 200 });
+        await this.teamService.deleteEmployee(parseInt(id));
+        return NextResponse.json({ message: "El empleado se eliminó con éxito" }, { status: 200 });
     })
 
-    updateTask = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+    addEmployee = apiErrorWrapper(async (req, params) => {
         const parseBody = await req.json();
 
-        const updatedTask = await this.taskService.updateTask({ 
-            idTasks: parseInt(id),
-            ...parseBody    
-        });
+        const addedEmployees = await this.teamService.addEmployee({ ...parseBody, employees: new Set([...parseBody.employees]) });
 
-        return NextResponse.json(updatedTask, { status: 200 })
+        return NextResponse.json(addedEmployees, { status: 200 })
     })
 }
 
-export default new TaskController(taskService);
+export default new TeamController(teamService);

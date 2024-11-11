@@ -10,8 +10,9 @@ import MessageRepository from "./message.repository.js";
 import ConversationRepository from "./conversation.repository.js";
 import ConversationParticipantsRepository from "./conversation_participants.js";
 import TaskRepository from "./task.repository.js";
-
-
+import ExpensesRepository from "./expensesRepository.js";
+import ExpensesProjectsRepository from "./exprensesProjects.repository.js";
+import ExpenseCategoryRepository from "./expenseCategory.repository.js";
 export {
     AppointmentRepository,
     AppointmentConfirmationRepository,
@@ -25,4 +26,7 @@ export {
     TaskRepository,
     ToolRepository,
     UserRepository,
+    ExpensesProjectsRepository,
+    ExpensesRepository,
+    ExpenseCategoryRepository
 }

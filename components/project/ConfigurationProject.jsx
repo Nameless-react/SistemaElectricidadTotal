@@ -3,14 +3,18 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import styles from "/css/projectPage.module.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { deleteProjectAction } from "/functions/fetches/projects/projectActions";
 import { useRouter } from "next/navigation";
+import { ProjectContext } from "./context/ProjectContext";
 
 
-export default function ConfigurationProject({ name, idProjects }) {
+export default function ConfigurationProject() {
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [confirmName,setConfirmName] = useState("");
+    const { project } = useContext(ProjectContext);
+    const { name, idProjects } = project;
+
     const router =  useRouter();
 
     const handleChange = (e) => setConfirmName(e.target.value)

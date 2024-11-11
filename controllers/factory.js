@@ -4,16 +4,17 @@ import path from "path";
 import { z } from "zod";
 import { validateUser } from "../functions/validations/userValidation";
 import { validateProfileUpdate } from "../functions/validations/profileValidation";
-import { ToolRepository, CategoryRepository, ProviderRepository, MaintenanceNotesRepository, MaterialRepository, UserRepository } from "../repositories";
-import { ValidationUserProfileService ,ValidationUserService ,ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService, UserService } from "../Services";
-import { SignUpController, ToolController, MaterialController, UserController } from "../controllers";
+import { ExpenseCategoryRepository,ExpensesRepository, ExpensesProjectsRepository, ToolRepository, CategoryRepository, ProviderRepository, MaintenanceNotesRepository, MaterialRepository, UserRepository } from "../repositories";
+import { ExpenseCategoryService ,ExpensesService, ExpensesProjectsService, ValidationUserProfileService, ValidationUserService, ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService, UserService } from "../Services";
+import { ExpenseCategoryController ,ExprensesController, SignUpController, ToolController, MaterialController, UserController, appointmentController } from "../controllers";
 import sequelze from "../config/databaseConnection";
-import { Category, Provider, Tool, MaintenanceNotes, Material } from "../models";
-import { validateMaterialsForm} from "../functions/validations/materialsValidtion";
+import { Category, Provider, Tool, MaintenanceNotes, Material, ExpensesProjects } from "../models";
+import { validateMaterialsForm } from "../functions/validations/materialsValidtion";
 import { validateFormTools } from "../functions/validations/toolsValidation";
 import User from "../models/user.model";
 import { ErrorHandler } from "../errors/errors";
 import { admin } from "../config/firebaseConfig";
+import ExpenseCategory from "../models/expense_category.model";
 
 /**
  * Creates an instance of ToolController.
@@ -57,7 +58,7 @@ export const createMaterialController = () => {
  * @returns {UserController} - the UserController instance
  */
 export const createUserController = () => {
-    const errorHandler  = new ErrorHandler();
+    const errorHandler = new ErrorHandler();
     const validationUserProfileService = new ValidationUserProfileService(validateProfileUpdate);
     const imageService = new ImageService(writeFile, path, admin);
     const userRepository = new UserRepository(User, sequelze);
@@ -77,5 +78,22 @@ export const createSignUpController = () => {
     const validationUserService = new ValidationUserService(validateUser);
     return new SignUpController(userService, validationUserService, errorHandler);
 }
+
+export const createExpensesController = () => {
+    const errorHandler = new ErrorHandler();
+    const expensesProjectsRepository = new ExpensesProjectsRepository(ExpensesProjects, sequelze);
+    const expensesRepository = new ExpensesRepository(sequelze);
+    const expensesService = new ExpensesService(expensesRepository);
+    const expensesProjectsService = new ExpensesProjectsService(expensesProjectsRepository);
+    return new ExprensesController(expensesProjectsService, expensesService, errorHandler);
+}
+
+export const createExpensesCategoryController = () => {
+    const errorHandler = new ErrorHandler();
+    const expenseCategoryRepository = new ExpenseCategoryRepository(sequelze, ExpenseCategory);
+    const expenseCategoryService = new ExpenseCategoryService(expenseCategoryRepository);
+    return new ExpenseCategoryController(expenseCategoryService, errorHandler);
+}
+
 
 

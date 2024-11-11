@@ -11,7 +11,9 @@ import { revalidatePath } from "next/cache";
 import TeamProjectEmployeeModel from "../models/team_project_employee.model";
 import TeamProjectModel from "../models/team_project.model";
 import UserModel from "../models/user.model";
-
+import TaskAssignmentsModel from "../models/taskAssignments.model";
+import ExpensesProjectsModel from "../models/expenses_project.model"
+import ProjectBudgetModel from "../models/project_budget.model"
 
 ProjectModel.hasMany(TaskModel, {
     foreignKey: 'idProjects',
@@ -19,11 +21,15 @@ ProjectModel.hasMany(TaskModel, {
 });
 
 TeamProjectModel.hasMany(TeamProjectEmployeeModel, {
-    foreignKey: 'id_team_project', // Asegúrate de que coincide con el campo en la tabla
+    foreignKey: 'id_team_project',
 });
 
+TaskModel.hasMany(TaskAssignmentsModel, {
+    foreignKey: "id_task"
+})
 
-const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, TaskModel, TeamProjectModel, TeamProjectEmployeeModel, UserModel, sequelize);
+
+const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, TaskModel, TeamProjectModel, TeamProjectEmployeeModel, UserModel, TaskAssignmentsModel, ExpensesProjectsModel, ProjectBudgetModel, sequelize);
 const projectsService= new ProjectsService(projectsRepository);
 
 

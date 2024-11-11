@@ -12,6 +12,17 @@ import ConversationParticipants from "./conversation_participants.model";
 import Message from "./message.model";
 import User from "./user.model";
 import Task from "./task.model";
+import Employee from "./employees.model";
+import ExpensesProjects from "./expenses_project.model";
+import Project from "./projects.model";
+
+ExpensesProjects.belongsTo(Project, {
+    foreignKey: {
+        name: "idProjects",
+        allowNull: false,
+        as: "idProjects"
+    }
+});
 
 
 export {
@@ -20,6 +31,8 @@ export {
     Category,
     Conversation,
     ConversationParticipants,
+    Employee,
+    ExpensesProjects,
     Message,
     MaintenanceNotes,
     MaterialProvider,
@@ -28,5 +41,6 @@ export {
     Task,
     ToolProvider,
     Tool,
+    Project,
     User
 }

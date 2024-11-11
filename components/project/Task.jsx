@@ -29,7 +29,7 @@ export default function Task({ idTasks, title, status, deadline, assignedEmploye
             <p>{status}</p>
             <AvatarGroup isBordered>
                     {assignedEmployees.map((employee, index) => (
-                        <Avatar size="sm" key={index} src={employee.avatarUrl || "https://i.pravatar.cc/150"} />
+                        <Avatar size="sm" key={index} src={employee.image || "https://i.pravatar.cc/150"} />
                     ))}
             </AvatarGroup>
             <Dropdown className="dark">

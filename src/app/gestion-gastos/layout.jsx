@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
         <div className="flex-row sm:flex min-h-screen">
             {/* Sidebar */}
             <aside
-                className={`fixed  top-0 mt-[15px] left-0 h-screen transition-transform duration-300 ease-in-out
+                className={`fixed top-0 sm:mt-[15px] z-50 left-0 h-screen sm:h-auto transition-transform duration-300 ease-in-out
                            ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
                            md:relative md:translate-x-0 md:w-60 md:shrink-0`}
                 aria-label="Sidebar"
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
                 <div className="h-[100%] px-3 py-4 overflow-y-auto bg-gray-800 rounded-r-lg">
 
                     <ul className="space-y-2 font-medium">
-                        <li className=' sm:hidden flex justify-end items-center mt-10 sm:mt-0'>
+                        <li className=' sm:hidden flex justify-end items-center'>
                             <FontAwesomeIcon
                                 icon={faTimes}
                                 onClick={toggleSidebar} className=" p-3 text-white rounded-lg hover:bg-gray-700 mt-2 cursor-pointer transtion duration-300 ease-in-out"

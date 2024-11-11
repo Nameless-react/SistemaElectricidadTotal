@@ -8,7 +8,8 @@ import appointmentController from "./appointment.controller";
 import messageController from "./message.controller";
 import conversationController from "./conversation.controller";
 import taskController from "./task.controller";
-
+import ExprensesController from "./expensesController";
+import ExpenseCategoryController from "./expensesCategory.controller";
 
 export { 
     CategoryController,
@@ -17,6 +18,8 @@ export {
     MaterialController,
     SignUpController, 
     UserController,
+    ExprensesController,
+    ExpenseCategoryController,
     appointmentController,
     conversationController,
     messageController,

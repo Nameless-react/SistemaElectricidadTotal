@@ -1,63 +1,37 @@
 "use client"
+import { formatNumberToColones } from "/functions/others/moneyFormat";
+import { ScrollShadow } from "@nextui-org/scroll-shadow";
 import Task from "./Task";
+import Employee from "./Employee";
 import style from "/css/projectDashboard.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoins, faCashRegister, faWallet } from "@fortawesome/free-solid-svg-icons";
+import { faWallet } from "@fortawesome/free-solid-svg-icons";
 import ModalAddEmployees from "./ModalAddEmployees";
 import ModalCreateTask from "./ModalCreateTask"; 
 import { useContext } from "react";
 import { ProjectContext } from "./context/ProjectContext";
 import { CircularProgress } from "@nextui-org/progress";
-import Employee from "./Employee";
-
-
-function formatNumberToColones(number) {
-    if (isNaN(number)) {
-        throw new Error('El valor proporcionado no es un número válido.');
-    }
-
-
-    const formatter = new Intl.NumberFormat('es-CR', {
-        style: 'currency',
-        currency: 'CRC',
-        minimumFractionDigits: 2, 
-        maximumFractionDigits: 2  
-    });
-
-    return formatter.format(number);
-}
+import ExpensesModal from "./ExpensesModal";
+import BudgetsModal from "./BudgetsModal";
 
 
 export default function ProjectDashboard() {
     const { project } = useContext(ProjectContext);
-    const { percentage, employees, tasks, budget } = project;
-    const expenses = budget;
+    const { percentage, employees, tasks, projectBudgets, expensesProjects } = project;
+    const expense = expensesProjects.reduce((acc, expense) => acc + expense.amount, 0);
+    const budget = projectBudgets.reduce((acc, earn) => acc + earn.amount, 0);
+
+
 
     return (
         <div className={style.container}>
             <div className={style.overviewProject}>
-                <div>
-                    <div>
-                        <h3>Presupuesto</h3>
-                        <p>{formatNumberToColones(budget)}</p>
-                    </div>
-                    <div>
-                        <FontAwesomeIcon icon={faCoins} />
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <h3>Gastos</h3>
-                        <p>{formatNumberToColones(expenses)}</p>
-                    </div>
-                    <div>
-                        <FontAwesomeIcon icon={faCashRegister} />
-                    </div>
-                </div>
+               <BudgetsModal budget={budget} formatNumberToColones={formatNumberToColones}/>
+                <ExpensesModal expense={expense} formatNumberToColones={formatNumberToColones} />
                 <div>
                     <div>
                         <h3>Saldo restante</h3>
-                        <p>{formatNumberToColones(budget - expenses)}</p>
+                        <p>{formatNumberToColones(budget - expense)}</p>
                     </div>
                     <div>
                         <FontAwesomeIcon icon={faWallet} />
@@ -83,12 +57,17 @@ export default function ProjectDashboard() {
                     <ModalCreateTask />
                 </div>
                 <div className={style.tasks}>
-                    {tasks.length === 0 ? <p className="font-bold">No hay tareas creadas</p> : tasks.map(task => (
-                        <Task 
-                            {...task}
-                            assignedEmployees={["https://i.pravatar.cc/150?u=a042581f4e29026008d"]}
-                        />
-                    ))}
+                    <div className={style.informationTasks}>
+                        <h4>Nombre</h4>
+                        <p>Fecha Límite</p>
+                        <p>Estado</p>
+                        <p>Encargados</p>
+                    </div>
+                    <ScrollShadow className="w-full flex gap-5 flex-col">
+                        {!tasks || tasks.length === 0  ? <p className="font-bold">No hay tareas creadas</p> : tasks.map(task => (
+                            <Task {...task} />
+                        ))}
+                    </ScrollShadow>
                 </div>
             </div>
             <div className={style.projectFiles}>
@@ -101,11 +80,18 @@ export default function ProjectDashboard() {
                     <ModalAddEmployees />
                 </div>
                 <div className={style.employees}>
-                    {employees.map(employee => (
-                        <Employee 
-                            {...employee}
-                        />
-                    ))}
+                    <div className={style.informationEmployees}>
+                        <h4>Nombre</h4>
+                        <p>Puesto</p>
+                        <p>Correo</p>
+                    </div>
+                    <ScrollShadow className="w-full flex gap-5 flex-col">
+                        {!employees || employees.length === 0 ? <p className="font-bold">No hay empleados asignados</p> : employees.map(employee => (
+                            <Employee 
+                                {...employee}
+                            />
+                        ))}
+                    </ScrollShadow>
                 </div>
             </div>
         </div>
