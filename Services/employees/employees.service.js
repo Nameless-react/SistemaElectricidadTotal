@@ -1,4 +1,4 @@
-import { validateTask, validatePartialTask, validateIdTask, validateIdProjects } from "/functions/validations/taskValidation";
+import { validateEmployee,validateIdEmployee,validatePartialEmployee } from "/functions/validations/employeeValidation";
 import { ValidationFailureError, NotFoundError, DeletionError } from "/errors/errors";
 
 
@@ -7,38 +7,45 @@ export default class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    async saveTask(task) {
-        const validatedTask = validateTask(task);
-        if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
-
-        return await this.employeeRepository.saveTask(validatedTask.data);
-    }
-    
-    async getTasksByProject({ idProjects }) {
-        const validIdProjects = validateIdProjects({ idProjects })
-        if (validIdProjects.error) throw new ValidationFailureError(validIdProjects.error);
-
-        return await this.employeeRepository.getTasksByProject(validIdProjects.data.idProjects);
-    }
-
-
     async getEmployees() {
         return await this.employeeRepository.getEmployees();
     }
 
-    async deleteTask(id) {
-        const validatedTask = validateIdTask({ idTasks: id });
-        if (validatedTask.error) throw new ValidationFailureError(validatedTask.error);
+    async getEmployeeById(id) {
+        const validIdEmployee = validateIdEmployee({ idEmployees: id });
+        if (validIdEmployee.error) throw new ValidationFailureError(validIdEmployee.error);
 
-        const deleted = await this.employeeRepository.deleteTask(validatedTask.data.idTasks);
-        if (!deleted) throw new DeletionError("No se pudo eliminar la tarea");
+
+        const employee = await this.employeeRepository.getEmployeeById(id);
+        if (!employee) throw new NotFoundError("El empleado no fue encontrado")
+
+        return employee
+       
     }
 
-    async updateTask(task) {
-        const validatedTask = validatePartialTask(task);
-        if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
-
-        await this.getTaskById(validatedTask.data.idTasks);
-        return await this.employeeRepository.updateTask(validatedTask.data);
+    async updateEmployee(employeeData) {
+        console.log(employeeData);
+        const validatedEmployee = validatePartialEmployee(employeeData);
+        if (validatedEmployee.error) throw new ValidationFailureError(validatedEmployee.error.message);
+    
+        await this.getEmployeeById(validatedEmployee.data.idEmployees);
+        return await this.employeeRepository.updateEmployee({ ...validatedEmployee.data });
     }
+    
+    async deleteEmployee(id) {
+        const validIdEmployee = validateIdEmployee({ idEmployees: id });
+        if (validIdEmployee.error) throw new ValidationFailureError(validIdEmployee.error);
+    
+        const deleted = await this.employeeRepository.deleteEmployee(validIdEmployee.data.idEmployees);
+        if (!deleted) throw new DeletionError("No se pudo eliminar el empleado");
+    }
+    
+    async createEmployee(employeeData) {
+        const validatedEmployee = validateEmployee(employeeData);
+        if (validatedEmployee.error) throw new ValidationFailureError(validatedEmployee.error.message);
+    
+        return await this.employeeRepository.createEmployee(validatedEmployee.data);
+    }
+    
+
 }
