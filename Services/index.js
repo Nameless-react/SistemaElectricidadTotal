@@ -9,10 +9,10 @@ import MaterialService from "./materials/material.service";
 import ValidationMaterialService from "./materials/validations/validationMaterial.service";
 import UserService from "./users/user.service";
 import ValidationUserService from "./users/validations/validationUser.service";
-import TaskService from "./projects/task.service";
 import ValidationUserProfileService from "./users/validations/validationUserProfile.service";
 import ProjectsService from "./projects/projects.service";
-import ProjectsImagesService from "./projects/projectsImages.service";
+//import ProjectsImagesService from "./projects/projectsImages.service";
+import EmployeeService from "./employees/employees.service";
 
 export {
     CategoryService,
@@ -27,7 +27,7 @@ export {
     UserService,
     ValidationUserService,
     ValidationUserProfileService,
-    ProjectsService,
-    ProjectsImagesService,
-    TaskService
+    EmployeeService,
+    ProjectsService
+
 }

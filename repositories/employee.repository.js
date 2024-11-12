@@ -5,24 +5,31 @@ export default class EmployeeRepository {
         this.sequelize = sequelize;
     }
 
-    async saveEmployee(employee) {
-        const result = await this.sequelize.query("CALL save_employee(:p_id_user_author, :p_message, :p_id_conversation)", {
+    async createEmployee(employee) {
+        const result = await this.sequelize.query("CALL create_employee_withEmail(:p_email, :p_job);", {
             replacements: {
-                p_id_user_author: message.idUserAuthor,
-                p_message: message.message,
-                p_id_conversation: message.idConversation
+                p_email: employee.email,
+                p_job: employee.job
             },
             logging: console.log,
             type: this.sequelize.QueryTypes.RAW
         })
-
-        return result;
+        return result ;
     }
 
-    async deleteEmployee(id) {
+    async getEmployeeById(idEmployees) {
+        return await this.employeeModel.findOne({
+            where: {
+                idEmployees
+            }
+        })
+    }
+
+
+    async deleteEmployee(idEmployees) {
         return await this.employeeModel.destroy({
             where: {
-                idMessage: id
+                idEmployees
             }
         })
     }
@@ -48,6 +55,17 @@ export default class EmployeeRepository {
             }
         })
         return employees;
-    
+    }
+
+    async updateEmployee({idEmployees, ...newEmployeesData}){
+        const result = await  this.employeeModel.update(newEmployeesData,{
+            where: {
+                idEmployees
+            },
+            returning: true,
+            plain: true
+        });
+
+        return result;
     }
 }
