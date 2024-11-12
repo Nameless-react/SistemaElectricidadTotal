@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
-import Appointment from "/models/appointment.model"
 
 
 class AppointmentConfirmation extends Model {}
@@ -49,12 +48,5 @@ AppointmentConfirmation.init({
     timestamps: false,
 });
 
-AppointmentConfirmation.belongsTo(Appointment, {
-    foreignKey: {
-        name: "id_appointment",
-        allowNull: false,
-        as: "idAppointment"
-    }
-});
 
 export default AppointmentConfirmation;

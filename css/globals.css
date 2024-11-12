@@ -8,11 +8,11 @@
     padding: 0;
 }
 
-body {
-  display: grid;
-  min-height: 100dvh;
-  grid-template-rows: auto 1fr auto;
-}
+/* main {
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+} */
 
 .outer-container {
     position: relative;
@@ -27,7 +27,7 @@ body {
     width: 2400px;
     height: 2400px;
     border-radius: 50%;
-    background: linear-gradient(318deg, rgba(186,179,246,1) 9%, rgba(45,86,157,1) 33%, rgba(22,41,75,1) 47%, rgba(17,24,39,1) 64%); 
+    background: linear-gradient(318deg, rgba(186, 179, 246, 1) 9%, rgba(45, 86, 157, 1) 33%, rgba(22, 41, 75, 1) 47%, rgba(17, 24, 39, 1) 64%);
     top: -10%;
     right: 48%;
     transform: translateY(-50%);
@@ -42,6 +42,7 @@ body {
     top: 0;
     left: 0;
 }
+
 .signInForm,
 .signUpForm {
     display: flex;
@@ -52,10 +53,13 @@ body {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     transition: all 0.2s 0.7s;
-    padding: 5rem; /* Padding por defecto */
+    padding: 5rem;
+    /* Padding por defecto */
 }
 
-@media (max-width: 640px) { /* Ajustar este valor según el breakpoint deseado */
+@media (max-width: 640px) {
+
+    /* Ajustar este valor según el breakpoint deseado */
     .signInForm,
     .signUpForm {
         padding: 2rem;
@@ -63,7 +67,9 @@ body {
 
     }
 }
-.signInForm button, .signUpForm button {
+
+.signInForm button,
+.signUpForm button {
     margin-top: 4rem;
     border-radius: 20px;
 }
@@ -82,21 +88,23 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* Agrega un gap entre los paneles si es necesario */
-    gap: 1rem; 
+    gap: 1rem;
 }
 
 .panel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Cambia a flex-end en móviles */
+    justify-content: flex-start;
+    /* Cambia a flex-end en móviles */
     text-align: center;
     z-index: 10;
     gap: 1rem;
 }
 
 .leftPanel {
-    padding: 14rem 17% 2rem 4%;;
+    padding: 14rem 17% 2rem 4%;
+    ;
     pointer-events: all;
 }
 
@@ -160,7 +168,7 @@ body {
     line-height: .5rem;
 }
 
-  .transparent:hover {
+.transparent:hover {
     color: #000;
     background-color: #fff;
 }
@@ -171,11 +179,11 @@ body {
     transform: translate(100%, -50%);
     right: 52%;
 }
-  
+
 .outer-container.sign-up-mode .leftPanel .content {
     transform: translateX(-800px);
 }
-  
+
 .outer-container.sign-up-mode .signInSignUp {
     left: 25%;
 }
@@ -197,11 +205,11 @@ body {
 .outer-container.sign-up-mode .leftPanel {
     pointer-events: none;
 }
-  
+
 .outer-container.sign-up-mode .rightPanel {
     pointer-events: all;
 }
-  
+
 
 
 @media (max-width: 870px) {
@@ -209,114 +217,116 @@ body {
         min-height: 800px;
         height: 150vh;
     }
+
     .signInSignUp {
         width: 100%;
         top: 90%;
         transform: translate(-50%, -100%);
         transition: 2s ease-in-out;
     }
-  
-    .signInSignUp, .container.sign-up-mode .signInSignUp {
+
+    .signInSignUp,
+    .container.sign-up-mode .signInSignUp {
         left: 50%;
     }
-  
+
     .panelsContainer {
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr 2fr 1fr;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 2fr 1fr;
     }
-  
+
     .panel {
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      padding: 2.5rem 8%;
-      grid-column: 1 / 2;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 2.5rem 8%;
+        grid-column: 1 / 2;
     }
-  
+
     .rightPanel {
-      grid-row: 3 / 4;
+        grid-row: 3 / 4;
     }
-  
+
     .leftPanel {
-      grid-row: 1 / 2;
+        grid-row: 1 / 2;
     }
-  
+
     .panel .content {
-      padding-right: 15%;
-      transition: transform 0.9s ease-in-out;
-      transition-delay: 0.8s;
+        padding-right: 15%;
+        transition: transform 0.9s ease-in-out;
+        transition-delay: 0.8s;
     }
 
-  
+
     .transparent {
-      height: 35px;
-      font-size: 1rem;
+        height: 35px;
+        font-size: 1rem;
     }
-  
+
     .outer-container:before {
-      width: 1500px;
-      height: 1500px;
-      transform: translateX(-50%);
-      left: 30%;
-      bottom: 68%;
-      right: initial;
-      top: initial;
-      transition: 2s ease-in-out;
-      background: rgb(186,179,246); 
-      background: linear-gradient(318deg, rgba(186,179,246,1) 9%, rgba(45,86,157,1) 33%, rgba(22,41,75,1) 47%, rgba(17,24,39,1) 64%); 
+        width: 1500px;
+        height: 1500px;
+        transform: translateX(-50%);
+        left: 30%;
+        bottom: 68%;
+        right: initial;
+        top: initial;
+        transition: 2s ease-in-out;
+        background: rgb(186, 179, 246);
+        background: linear-gradient(318deg, rgba(186, 179, 246, 1) 9%, rgba(45, 86, 157, 1) 33%, rgba(22, 41, 75, 1) 47%, rgba(17, 24, 39, 1) 64%);
     }
 
     .outer-container.sign-up-mode:before {
-        background: rgb(45,86,157);
-        background: linear-gradient(180deg, rgba(45,86,157,1) 0%, rgba(22,41,75,1) 16%, rgba(17,24,39,1) 28%); 
+        background: rgb(45, 86, 157);
+        background: linear-gradient(180deg, rgba(45, 86, 157, 1) 0%, rgba(22, 41, 75, 1) 16%, rgba(17, 24, 39, 1) 28%);
     }
-  
+
     .outer-container.sign-up-mode:before {
-      transform: translate(-50%, 100%);
-      bottom: 30%;
-      right: initial;
+        transform: translate(-50%, 100%);
+        bottom: 30%;
+        right: initial;
     }
-  
+
     .outer-container.sign-up-mode .leftPanel .content {
-      transform: translateY(-300px);
+        transform: translateY(-300px);
     }
-  
+
     .outer-container.sign-up-mode .rightPanel .content {
-      transform: translateY(0px);
+        transform: translateY(0px);
     }
-  
+
 
     .rightPanel .content {
-      transform: translateY(300px);
+        transform: translateY(300px);
     }
-  
-    .outer-container.sign-up-mode .signInSignUp {
-      top: 5%;
-      transform: translate(-25%, 0);
-    }
-  }
 
-  @media (max-width: 570px) {
-    form {
-      padding: 0 1.5rem;
+    .outer-container.sign-up-mode .signInSignUp {
+        top: 5%;
+        transform: translate(-25%, 0);
     }
-  
-    
+}
+
+@media (max-width: 570px) {
+    form {
+        padding: 0 1.5rem;
+    }
+
+
     .panel .content {
-      padding: 0.5rem 1rem;
+        padding: 0.5rem 1rem;
     }
 
     .outer-container {
-      padding: 1.5rem;
+        padding: 1.5rem;
     }
-  
+
     .outer-container:before {
-      bottom: 72%;
-      left: 50%;
+        bottom: 72%;
+        left: 50%;
     }
-  
+
     .outer-container.sign-up-mode:before {
-      bottom: 20%;
-      left: 50%;
+        bottom: 20%;
+        left: 50%;
     }
-  }
+}

@@ -93,6 +93,7 @@
 .members {
     width: 100%;
     display: flex;
+    min-height: 40px;
     align-items: center;
     justify-content: flex-start;
 }

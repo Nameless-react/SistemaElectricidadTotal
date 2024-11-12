@@ -4,7 +4,7 @@ import { Input, Textarea } from "@nextui-org/input"
 import { useForm } from "react-hook-form";
 import { validateAppointmentClientSide, validateAppointmentParialClientSide } from "../../functions/validations/appointmentValidation";
 import { zodResolver } from "@hookform/resolvers/zod"
-import getDateTimeForms from "../../functions/others/dateTime";
+import { getDateTimeForms } from "../../functions/others/dateTime";
 import { Button } from "@nextui-org/button";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";

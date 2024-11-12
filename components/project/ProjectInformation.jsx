@@ -19,13 +19,13 @@ export default function ProjectInformation() {
             </div>
             <Tabs fullWidth aria-label="Options" classNames={{
                 tabList: "w-full px-6 bg-[#182237]",
-                tab: "font-bold"
+                tab: "font-bold text-white"
             }}>
                 <Tab key={"Información"} title="Información">
                     <ProjectDashboard />
                 </Tab>
                 <Tab key={"Configuración"} title="Configuración">
-                    <ConfigurationProject name={project.name} idProjects={project.idProjects} />
+                    <ConfigurationProject />
                 </Tab>
             </Tabs>
         </div>)

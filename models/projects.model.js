@@ -2,6 +2,8 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection'; 
 import Status from './status.model';
 import TeamProject from './team_project.model';
+import ExpensesProjects from './expenses_project.model';
+import ProjectBudget from './project_budget.model';
 
 class Project extends Model {}
 
@@ -20,13 +22,6 @@ Project.init({
     description: {
         type: DataTypes.TEXT,
         allowNull: false
-    },
-    budget: {
-        type: DataTypes.DECIMAL(15,2),
-        allowNull: false,
-        validate: {
-            min: 0
-        }
     },
     deleted: {
         type: DataTypes.BOOLEAN,
@@ -72,6 +67,23 @@ Project.belongsTo(TeamProject, {
         name: "id_team_project",
         allowNull: false,
         as: "idTeamProject"
+    }
+});
+
+
+Project.hasMany(ExpensesProjects, {
+    foreignKey: {
+        name: "id_project",
+        allowNull: false,
+        as: "idProject"
+    }
+});
+
+Project.hasMany(ProjectBudget, {
+    foreignKey: {
+        name: "id_project",
+        allowNull: false,
+        as: "idProject"
     }
 });
 

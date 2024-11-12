@@ -27,13 +27,4 @@ TeamProject.init({
 });
 
 
-
-// TeamProject.belongsTo(Project, {
-//     foreignKey: {
-//         name: "id_project",
-//         allowNull: false,
-//         as: "idProject"
-//     }
-// });
-
 export default TeamProject;

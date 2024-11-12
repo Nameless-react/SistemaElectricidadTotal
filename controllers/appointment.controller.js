@@ -3,6 +3,7 @@ import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
 import AppointmentService from "/services/appointments/appointment.service";
 import appointmentModel from "/models/appointment.model";
+import { Employee } from "../models";
 import appointmentConfirmationModel from "/models/appointment_confirmation.model"
 import MailService from "/services/appointments/mail.service";
 import { AppointmentConfirmationRepository, AppointmentRepository } from "/repositories/index";
@@ -11,7 +12,7 @@ import config from "/config/config"
 
 const mailService = new MailService(config.resend);
 const appointmentConfirmationRepository = new AppointmentConfirmationRepository(appointmentConfirmationModel, sequelize);
-const appointmentRepository = new AppointmentRepository(appointmentModel, sequelize);
+const appointmentRepository = new AppointmentRepository(appointmentModel, Employee, appointmentConfirmationModel, sequelize);
 const appointmentService = new AppointmentService(appointmentRepository, mailService,appointmentConfirmationRepository );
 
 
