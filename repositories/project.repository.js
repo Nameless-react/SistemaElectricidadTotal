@@ -72,7 +72,7 @@ export default class ProjectsRepository {
                 },
                 {
                     model: this.statusModel,
-                    attributes: ['name']
+                    attributes: ['name', "idStatus"]
                 },
                 {
                     model: this.taskModel,
@@ -81,7 +81,7 @@ export default class ProjectsRepository {
                     include: [
                         {
                             model: this.statusModel,
-                            attributes: ['name'],
+                            attributes: ['name', "idStatus"],
                             required: false
                         },
                         {
@@ -153,6 +153,7 @@ export default class ProjectsRepository {
         const formattedProject = {
             ...projectData,
             status: projectStatus?.name || 'Unknown',
+            idStatus: projectStatus?.idStatus,
             idTeamProject: teamProject?.idTeamProject,
             employees: teamProject?.teamProjectEmployees?.map(employee => ({
                 image: employee.employee.User.image,
@@ -165,6 +166,7 @@ export default class ProjectsRepository {
             tasks: tasks?.map(({ Status: taskStatus, taskAssignments, ...taskData }) => ({
                 ...taskData,
                 status: taskStatus?.name || 'Unknown',
+                idStatus: taskStatus?.idStatus,
                 assignedEmployees: taskAssignments?.map(taskResponsible => ({
                     idEmployee: taskResponsible.idEmployee,
                     image: taskResponsible.employee.User.image,

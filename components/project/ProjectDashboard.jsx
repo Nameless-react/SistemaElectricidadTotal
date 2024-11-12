@@ -12,7 +12,7 @@ import { ProjectContext } from "./context/ProjectContext";
 import { CircularProgress } from "@nextui-org/progress";
 import ExpensesModal from "./Expenses";
 import BudgetsModal from "./Budgets";
-import FormTask from "./CreateTaskModal";
+import CreateFormTask from "./CreateTaskModal";
 
 
 export default function ProjectDashboard() {
@@ -54,7 +54,7 @@ export default function ProjectDashboard() {
             <div className={style.tasksContainer}>
                 <div className={style.taskHeader}>
                     <h3>Tareas</h3>
-                    <FormTask modalTitle={"Agregar tarea"} />
+                    <CreateFormTask modalTitle={"Agregar tarea"} />
                 </div>
                 <div className={style.tasks}>
                     <div className={style.informationTasks}>

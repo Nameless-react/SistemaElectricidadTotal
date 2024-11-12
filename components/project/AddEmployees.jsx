@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar } from "@nextui-org/avatar";
@@ -8,34 +9,33 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { addTeamProjectEmployeeAction } from "/functions/fetches/employees/employeeActions";
+import { changeTeamProjectEmployeeAction } from "/functions/fetches/teams/teamActions";
 import ModalWrapper from "../others/ModalWrapper";
 
 
 
 export default function ModalAddEmployees() {
     const { project, employees } = useContext(ProjectContext);
-    const employeesNotAssigned = employees.filter(employee => project.employees.every(assignEmployee => assignEmployee.idEmployee !== employee.idEmployee));
 
 
     const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(validateTeamProjectClient),
         defaultValues: {
             idTeamProject: project.idTeamProject,
-            employees: new Set()
+            employees: new Set(project?.employees?.map(employee => String(employee.idEmployee))) || new Set()
         },
         mode: "onBlur"
     })
 
     const onSubmit = async (employeesFormData) => {
-        const { successMessage } = await addTeamProjectEmployeeAction(employeesFormData);
+        const { successMessage } = await changeTeamProjectEmployeeAction(employeesFormData);
         if (successMessage) {
             reset();
         }
     }
     return (
         <div>
-            <ModalWrapper modalTitle="Agregar Empleados">
+            <ModalWrapper modalTitle="Administrar Empleados">
                 {({ onClose }) => (
                     <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col">
                         <Controller
@@ -43,8 +43,9 @@ export default function ModalAddEmployees() {
                             name="employees"
                             render={({ field: { onChange, value, onBlur } }) => (
                                 <Select
-                                    items={employeesNotAssigned}
+                                    items={employees}
                                     isMultiline={true}
+                                    selectionMode="multiple"
                                     isInvalid={!!errors?.employees}
                                     errorMessage={errors?.employees?.message}
                                     classNames={{
@@ -53,17 +54,20 @@ export default function ModalAddEmployees() {
                                     }}
                                     aria-label="Seleccionar empleados para la tarea"
                                     placeholder="Seleccione los empleados"
-                                    selectionMode="multiple"
                                     selectedKeys={value}
-                                    defaultSelectedKeys={value}
-                                    onSelectionChange={onChange}
+                                    onSelectionChange={(selected) => {
+                                        onChange(new Set(selected));
+                                    }}
                                     onBlur={onBlur}
-                                    renderValue={(employees) => {
-                                        return (
-                                            <div className="flex gap-3 flex-wrap">
-                                                {employees.map(employee => <p className="bg-[#C78824] px-4 py-2 rounded-2xl">{employee.data.email}</p>)}
-                                            </div>
-                                        )
+                                    renderValue={(selectedEmployees) => {
+                                        return <div className="flex gap-3 flex-wrap">
+                                            {Array.from(selectedEmployees).map(employeeId => {
+                                                const employee = employees.find(emp => emp.idEmployee === parseInt(employeeId.data.idEmployee));
+                                                return (
+                                                    <p className="bg-[#C78824] px-4 py-2 rounded-2xl" key={employee?.idEmployee}>{employee?.email}</p>
+                                                );
+                                            })}
+                                        </div>
                                     }}
                                 >
                                     {(employee) => (

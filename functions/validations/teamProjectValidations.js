@@ -34,8 +34,8 @@ export const teamProjectValidation = z.object({
 
 
 
-export const validateTeamProject = (object) =>  teamProjectValidation.omit({ idTeamProject: true, idTeamProjectEmployee: true }).safeParse(object)
+export const validateTeamProject = (object) =>  teamProjectValidation.omit({ idTeamProject: true, name: true, idTeamProjectEmployee: true }).safeParse(object)
 export const validatePartialTeamProject = (object) =>  teamProjectValidation.partial().safeParse(object)
 export const validateIdTeamProject = (object) => teamProjectValidation.pick({ idTeamProject: true }).safeParse(object);
 export const validateIdTeamProjectEmployee = (object) => teamProjectValidation.pick({ idTeamProjectEmployee: true }).safeParse(object);
-export const validateTeamProjectClient = teamProjectValidation.omit({ name: true, idProjects: true });
+export const validateTeamProjectClient = teamProjectValidation.omit({ name: true, idProjects: true, idTeamProjectEmployee: true });

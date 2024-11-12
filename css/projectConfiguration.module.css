@@ -1,0 +1,32 @@
+.projectConfiguration {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.deleteProject, .changeProjectName {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    background-color: #182237;
+    border-radius: 30px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1.5rem;
+}
+
+.changeProjectName {
+    flex-direction: column;
+}
+
+.changeProjectName p {
+    align-self: flex-start;
+    font-size: 1.2rem;
+    font-weight: bold;
+}

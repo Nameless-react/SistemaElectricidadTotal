@@ -5,8 +5,8 @@ import { createContext, useState } from 'react';
 export const ProjectContext = createContext(null);
 
 export const ProjectProvider = ({ children, initialData }) => {
-    const [project, setProject] = useState(initialData.project);
-    const [employees, setEmployees] = useState(initialData.employees);
+    const [project, setProject] = useState(initialData?.project);
+    const [employees, setEmployees] = useState(initialData?.employees);
 
 
 

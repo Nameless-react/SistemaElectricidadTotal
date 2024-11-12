@@ -206,12 +206,12 @@
     cursor: pointer;
 }
 
-.employee, .informationEmployees {
+.employee {
     grid-template-columns: 40px repeat(3, minmax(100px, 1fr)) 15px;
 }
 
 .informationEmployees {
-    grid-template-columns: repeat(3, minmax(100px, 1fr));
+    grid-template-columns: 232px repeat(2, minmax(100px, 1fr)) 15px;
 }
 
 .informationEmployees h4, .informationTasks h4 {

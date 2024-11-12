@@ -50,8 +50,9 @@ class TaskController {
         const parseBody = await req.json();
 
         const updatedTask = await this.taskService.updateTask({ 
+            ...parseBody,
             idTasks: parseInt(id),
-            ...parseBody    
+            employees: new Set(parseBody.employees)
         });
 
         return NextResponse.json(updatedTask, { status: 200 })

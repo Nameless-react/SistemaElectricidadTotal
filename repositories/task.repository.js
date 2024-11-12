@@ -54,14 +54,19 @@ export default class TaskRepository {
     }
 
     async updateTask({ idTasks, ...newTaskData }) {
-        const result = await this.taskModel.update(newTaskData, {
-            where: {
-                idTasks
+        const result = await this.sequelize.query("CALL update_task_with_assignments(:p_id_tasks, :p_title, :p_deadline, :p_description, :p_id_projects, :p_id_status, ARRAY[:p_assign_employees])", {
+            replacements: {
+                p_id_tasks: idTasks,
+                p_title: newTaskData.title,
+                p_deadline: newTaskData.deadline,
+                p_description: newTaskData.description,
+                p_id_projects: newTaskData.idProjects,
+                p_id_status: newTaskData.idStatus,
+                p_assign_employees: newTaskData.employees
             },
-            returning: true,
-            plain: true
+            logging: console.log,
+            type: this.sequelize.QueryTypes.RAW
         });
-
-        return result[1];
+        return result;
     }
 }

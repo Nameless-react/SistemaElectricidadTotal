@@ -10,38 +10,42 @@ import { createTaskAction, updateTaskAction } from "/functions/fetches/projects/
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
+import { useContext, useMemo, useEffect } from "react";
 import { ProjectContext } from "./context/ProjectContext";
 import { Avatar } from "@nextui-org/avatar";
 import { getDateTask } from "/functions/others/dateTime";
 import { today, getLocalTimeZone } from "@internationalized/date";
-import { useMemo } from "react";
 
 
 
-export default function FormTask({ idTasks, title, deadline, description, idStatus, employees }) {
+export default function FormTask({ idTasks, title, deadline, description, idStatus, employees, isOpen, onClose }) {
     const { project } = useContext(ProjectContext);
-    const { register, handleSubmit, control, reset, formState: { errors, isSubmitting }, getValues } = useForm({
+    const { register, handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(idTasks ? validatePartialTaskClient : validateTaskClient),
         defaultValues: {
             title: title || "",
             description: description || "",
             deadline: getDateTask(deadline),
-            employees: new Set(employees.map(employee => String(employee.idEmployee))) || new Set(),
+            employees: new Set(employees?.map(employee => String(employee.idEmployee))) || new Set(),
             idStatus: idStatus || 2,
             idProjects: project.idProjects
         },
         mode: "onBlur"
     })
 
-    const assignedEmployeeIds = useMemo(() => new Set(employees.map(employee => employee.idEmployee)), [employees]);
+    useEffect(() => {
+        if (!isOpen) {
+            reset();
+        }
+    }, [isOpen, reset]);
 
 
     const onSubmit = async (taskFormData) => {
-        const resultAction = idTasks ? updateTaskAction(taskFormData) : createTaskAction(taskFormData);
+        const resultAction = idTasks ? updateTaskAction({ ...taskFormData, idTasks }) : createTaskAction(taskFormData);
         const { successMessage } = await resultAction;
         if (successMessage) {
-            // reset(); 
+            reset(); 
+            onClose()
         }
     }
 
@@ -97,12 +101,10 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
                         placeholder="Seleccione los empleados"
                         selectedKeys={value}
                         onSelectionChange={(selected) => {
-                            console.log(selected)
                             onChange(new Set(selected));
                         }}
                         onBlur={onBlur}
                         renderValue={(selectedEmployees) => {
-                            console.log(Array.from(selectedEmployees))
                           return  <div className="flex gap-3 flex-wrap">
                                 {Array.from(selectedEmployees).map(employeeId => {
                                     const employee = project.employees.find(emp => emp.idEmployee === parseInt(employeeId.data.idEmployee));
@@ -114,7 +116,7 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
                         }}
                     >
                         {(employee) => (
-                            <SelectItem key={employee.idEmployee} textValue={employee.name}>
+                            <SelectItem key={employee.idEmployee}>
                                 <div className="flex items-center gap-2">
                                     <Avatar
                                         alt={employee.name}

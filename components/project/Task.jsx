@@ -52,7 +52,7 @@ export default function Task({ idTasks, title, status, deadline, assignedEmploye
             </Dropdown>
 
             <UpdateTaskModal onOpenChange={onOpenChange} isOpen={isOpen}>
-                <FormTask title={title} deadline={deadline} description={description} idStatus={idStatus} employees={assignedEmployees} idTasks={idTasks} />
+                {({ onClose }) => <FormTask title={title} deadline={deadline} description={description} idStatus={idStatus} employees={assignedEmployees} idTasks={idTasks} onClose={onClose} />}
             </UpdateTaskModal>
         </div>
     )

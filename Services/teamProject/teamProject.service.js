@@ -22,10 +22,10 @@ export default class TeamProjectService {
         if (!deleted) throw new DeletionError("No se pudo eliminar el empleado del equipo");
     }
 
-    async addEmployee(teamProjectEmployees) {
+    async changeEmployees(teamProjectEmployees) {
         const validatedTeamProjectEmployee = validatePartialTeamProject(teamProjectEmployees);
         if (validatedTeamProjectEmployee.error) throw new ValidationFailureError(validatedTeamProjectEmployee.error);
       
-        await this.teamProjectRepository.addEmployee({ ...validatedTeamProjectEmployee.data, employees: [...validatedTeamProjectEmployee.data.employees] });
+        await this.teamProjectRepository.changeEmployees({ ...validatedTeamProjectEmployee.data, employees: [...validatedTeamProjectEmployee.data.employees] });
     }
 }

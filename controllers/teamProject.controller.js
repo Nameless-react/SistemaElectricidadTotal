@@ -40,11 +40,12 @@ class TeamProjectController {
         return NextResponse.json({ message: "El empleado se eliminó con éxito" }, { status: 200 });
     })
 
-    addEmployee = apiErrorWrapper(async (req, params) => {
+    changeEmployees = apiErrorWrapper(async (req, params) => {
+        const { id } = params.params;
         const parseBody = await req.json();
 
-        await this.teamService.addEmployee({ ...parseBody, employees: new Set([...parseBody.employees]) });
-        return NextResponse.json({ messaage: "El empleado se agregó con éxito" }, { status: 200 })
+        await this.teamService.changeEmployees({ idTeamProject: parseInt(id), employees: new Set(parseBody.employees) });
+        return NextResponse.json({ message: "Se actualizo con éxito la lista de empleados" }, { status: 200 });
     })
 }
 
