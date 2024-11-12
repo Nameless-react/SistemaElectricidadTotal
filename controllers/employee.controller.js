@@ -14,42 +14,41 @@ class EmployeeController {
     constructor(employeeService) {
         this.employeeService = employeeService
     }
-
+    
     getEmployee = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        const appointment = await this.employeeService.getAppointmentById(parseInt(id));
-        return NextResponse.json(appointment, { status: 200 })
-    })
-
+        const employee = await this.employeeService.getEmployeeById(parseInt(id));
+        return NextResponse.json(employee, { status: 200 });
+    });
+    
     getEmployees = apiErrorWrapper(async (req, res) => {
         const employees = await this.employeeService.getEmployees();
         return NextResponse.json(employees, { status: 200 })
     })
 
-    saveAppointment = apiErrorWrapper(async (req, res) => {
+    createEmployee = apiErrorWrapper(async (req, res) => {
         const parseBody = await req.json();
-        await this.employeeService.saveAppointment(parseBody);
-        return NextResponse.json({ message: "Su cita ha sido agendada con éxito. Por favor, revise su correo electrónico para confirmar la cita." }, { status: 201 });
-    })
-
+        await this.employeeService.createEmployee(parseBody);
+        return NextResponse.json({ message: "El empleado ha sido agregado con éxito." }, { status: 201 });
+    });
+    
     deleteEmployee = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
-        await this.employeeService.cancelAppointment(parseInt(id));
-        return NextResponse.json({ message: "la cita ha sido cancelada exitosamente" }, { status: 200 });
-    })
-    updateAppointment = apiErrorWrapper(async (req, params) => {
+        await this.employeeService.deleteEmployee(parseInt(id));
+        return NextResponse.json({ message: "El empleado ha sido eliminado de manera exitosa" }, { status: 200 });
+    });
+    
+    updateEmployee = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
         const parseBody = await req.json();
-
-        const updatedAppointment = await this.employeeService.updateAppointment({ 
-            idAppointment: parseInt(id),
+    
+        const updatedEmployee = await this.employeeService.updateEmployee({ 
+            idEmployees: parseInt(id),
             ...parseBody    
         });
-
-        return NextResponse.json(updatedAppointment, { status: 200 })
-    })
     
- 
+        return NextResponse.json(updatedEmployee, { status: 200 });
+    });
 }
 
 export default new EmployeeController(employeeService);

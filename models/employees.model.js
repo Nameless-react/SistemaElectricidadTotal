@@ -18,8 +18,8 @@ Employee.init({
     },
     joinAt: {
         type: DataTypes.DATE,
-        allowNull: false,
-        field: 'join_at'
+        field: 'join_at',
+        defaultValue: DataTypes.NOW
     },
     idUsers: {
         type: DataTypes.INTEGER,
