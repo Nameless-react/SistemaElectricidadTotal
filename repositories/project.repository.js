@@ -43,7 +43,7 @@ export default class ProjectsRepository {
             where: {
                 deleted: false
             },
-            attributes: ['idProjects', 'name', 'description', 'budget', 'percentage'],
+            attributes: ['idProjects', 'name', 'description', 'percentage'],
         });
         
         const formattedProjects = projects.map(project => {
