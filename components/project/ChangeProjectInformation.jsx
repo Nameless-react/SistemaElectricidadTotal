@@ -6,19 +6,18 @@ import style from "/css/projectConfiguration.module.css"
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Select, SelectItem } from "@nextui-org/select";
-import { projectPartialValidations } from "../../functions/validations/projectValidation";
+import { validatePartialProjectClient } from "/functions/validations/projectValidation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faPlay, faClock, faPause } from "@fortawesome/free-solid-svg-icons";
-
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { STATUS_DETAILS } from "/shared/status";
+import { updateProjectAction } from "/functions/fetches/projects/projectActions";
 
 
 export default function ChangeProjectName() {
     const { project } = useContext(ProjectContext);
-    console.log(project.idStatus)
 
-
-    const { handleSubmit, control, reset, formState: { errors, isSubmitting }, register } = useForm({
-        resolver: zodResolver(projectPartialValidations),
+    const { handleSubmit, control, reset, formState: { errors, isSubmitting }, register, getValues } = useForm({
+        resolver: zodResolver(validatePartialProjectClient),
         defaultValues: {
             name: project.name,
             description: project.description,
@@ -28,59 +27,61 @@ export default function ChangeProjectName() {
     })
 
 
-    
+
     const onSubmit = async (projectFormData) => {
-        const resultAction = updateProjectAction({ ...projectFormData, idProjects: project.idProjects });
+        const resultAction = await updateProjectAction({ ...projectFormData, idProjects: project.idProjects });
         const { successMessage } = await resultAction;
         if (successMessage) {
-            reset(); 
+            // reset();
         }
     }
 
 
 
     return (
-        <form className={style.changeProjectName} onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className={style.changeProjectName}>
             <p>Actualizar Proyecto</p>
             <div className="flex justify-center items-center w-full gap-6 flex-col">
-               <div className="flex items-center justify-center gap-4 w-full">
-                    <Input label="Nombre" {...register("name")} className="outline-none rounded-2x w-1/2" classNames={{ input: "bg-transparent", inputWrapper: "bg-[#1f2c47] hover:bg-[#2e4068] focus:bg-transparent active:bg-transparent"}} />
+                <div className="flex items-center justify-center gap-4 w-full">
+                    <Input label="Nombre" {...register("name")} isInvalid={errors?.name} errorMessage={errors?.name?.message} className="outline-none rounded-2x w-1/2" classNames={{ inputWrapper: "bg-[#1f2c47] dark:hover:bg-sky-900 dark:active:bg-sky-900 dark:focus:bg-sky-900 dark:focus-within:bg-sky-900" }} />
                     <Controller
                         control={control}
                         name="idStatus"
                         render={({ field: { onChange, value, onBlur } }) => (
                             <Select
+                                items={Object.entries(STATUS_DETAILS)}
                                 isInvalid={!!errors?.idStatus}
                                 errorMessage={errors?.idStatus?.message}
                                 classNames={{
-                                    popoverContent: "dark",
-                                    trigger: "min-h-12 py-2"
+                                    popoverContent: "dark bg-[#1f2c47]",
+                                    trigger: "min-h-12 py-2 bg-[#1f2c47] dark:hover:bg-sky-900",
                                 }}
                                 className="w-1/2"
                                 aria-label="Seleccionar el estado del proyecto"
                                 placeholder="Seleccione el estado del proyecto"
                                 selectedKeys={value}
-                                defaultSelectedKeys={value}
                                 onSelectionChange={onChange}
                                 onBlur={onBlur}
-                                renderValue={(selectedKey) => <p className="gap-2 flex text-[#FFD700]"><FontAwesomeIcon icon={faClock}/>Pendiente</p>}
+                                renderValue={(selectedKey) => {
+                                    const id = parseInt(selectedKey[0].key);
+                                    const [name, status] = Object.entries(STATUS_DETAILS)[id - 1]
+                                    return <p key={id} className={`gap-2 text-base font-bold items-center justify-center flex text-[${status.color}]`}><FontAwesomeIcon icon={status.icon}/>{name}</p>
+                                }}
                             >
-                                <SelectItem key={1} startContent={<FontAwesomeIcon icon={faClock}/>} className="text-[#FFD700]">Pendiente</SelectItem>
-                                <SelectItem key={2} startContent={<FontAwesomeIcon icon={faPlay}/>} className="text-[#FFA500]">En progreso</SelectItem>
-                                <SelectItem key={3} startContent={<FontAwesomeIcon icon={faCircleCheck}/>} className="text-[#32CD32]">Terminado</SelectItem>
-                                <SelectItem key={4} startContent={<FontAwesomeIcon icon={faPause}/>} className="text-[#FF4500]">En espera</SelectItem>
+                                {Object.entries(STATUS_DETAILS).map(([name, status], index) => (
+                                    <SelectItem key={index + 1} startContent={<FontAwesomeIcon icon={status.icon} />} className={`dark:hover:bg-sky-900 text-[${status.color}]`}>{name}</SelectItem>
+                                ))}
                             </Select>
                         )}
-                    />  
-               </div>
+                    />
+                </div>
+                <Textarea label="Descripción" className="w-full" classNames={{ inputWrapper: "dark:hover:bg-sky-900 dark:active:bg-sky-900 dark:focus:bg-sky-900 dark:focus-within:bg-sky-900 bg-[#1f2c47]" }} {...register("description")} isInvalid={errors?.description} errorMessage={errors?.description?.message} />
 
-               <Textarea label="Descripción" className="dark w-full" {...register("description")} isInvalid={errors?.description} errorMessage={errors?.description?.message} />
-                
-                <Button className="font-bold min-w-80" color="success" variant="ghost">
-                    {isSubmitting ? "Enviando..." : "Confirmar"}
-                    <FontAwesomeIcon className="text-xl" icon={faCircleCheck} />
-                </Button>
             </div>
+            <Button className="font-bold w-full outline-none" color="success" type="submit" variant="ghost">
+                {isSubmitting ? "Enviando..." : "Confirmar"}
+                <FontAwesomeIcon className="text-xl" icon={faCircleCheck} />
+            </Button>
         </form>
-    )    
+    )
 }

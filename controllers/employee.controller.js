@@ -17,6 +17,7 @@ class EmployeeController {
     
     getEmployee = apiErrorWrapper(async (req, params) => {
         const { id } = params.params;
+        console.log(id)
         const employee = await this.employeeService.getEmployeeById(parseInt(id));
         return NextResponse.json(employee, { status: 200 });
     });

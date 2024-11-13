@@ -15,7 +15,7 @@ import { ProjectContext } from "./context/ProjectContext";
 import { Avatar } from "@nextui-org/avatar";
 import { getDateTask } from "/functions/others/dateTime";
 import { today, getLocalTimeZone } from "@internationalized/date";
-
+import { STATUS_DETAILS } from "/shared/status";
 
 
 export default function FormTask({ idTasks, title, deadline, description, idStatus, employees, isOpen, onClose }) {
@@ -27,7 +27,7 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
             description: description || "",
             deadline: getDateTask(deadline),
             employees: new Set(employees?.map(employee => String(employee.idEmployee))) || new Set(),
-            idStatus: idStatus || 2,
+            idStatus: new Set(String(idStatus)) || new Set("2"),
             idProjects: project.idProjects
         },
         mode: "onBlur"
@@ -44,7 +44,7 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
         const resultAction = idTasks ? updateTaskAction({ ...taskFormData, idTasks }) : createTaskAction(taskFormData);
         const { successMessage } = await resultAction;
         if (successMessage) {
-            reset(); 
+            reset();
             onClose()
         }
     }
@@ -105,7 +105,7 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
                         }}
                         onBlur={onBlur}
                         renderValue={(selectedEmployees) => {
-                          return  <div className="flex gap-3 flex-wrap">
+                            return <div className="flex gap-3 flex-wrap">
                                 {Array.from(selectedEmployees).map(employeeId => {
                                     const employee = project.employees.find(emp => emp.idEmployee === parseInt(employeeId.data.idEmployee));
                                     return (
@@ -134,6 +134,39 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
                     </Select>
                 )}
             />
+
+
+            <Controller
+                control={control}
+                name="idStatus"
+                render={({ field: { onChange, value, onBlur } }) => (
+                    <Select
+                        items={Object.entries(STATUS_DETAILS)}
+                        isInvalid={!!errors?.idStatus}
+                        errorMessage={errors?.idStatus?.message}
+                        classNames={{
+                            popoverContent: "dark",
+                            trigger: "min-h-12 py-2"
+                        }}
+                        className="w-full"
+                        aria-label="Seleccionar el estado de la tarea"
+                        placeholder="Seleccione el estado de la tarea"
+                        selectedKeys={value}
+                        onSelectionChange={onChange}
+                        onBlur={onBlur}
+                        renderValue={(selectedKey) => {
+                            const id = parseInt(selectedKey[0].key);
+                            const [name, status] = Object.entries(STATUS_DETAILS)[id - 1]
+                            return <p key={id} className={`gap-2 text-base font-bold items-center justify-center flex text-[${status.color}]`}><FontAwesomeIcon icon={status.icon} />{name}</p>
+                        }}
+                    >
+                        {Object.entries(STATUS_DETAILS).map(([name, status], index) => (
+                            <SelectItem key={index + 1} startContent={<FontAwesomeIcon icon={status.icon} />} className={`text-[${status.color}]`}>{name}</SelectItem>
+                        ))}
+                    </Select>
+                )}
+            />
+
             <Textarea aria-label="Descripción de la tarea" label="Descripción" {...register("description")} isInvalid={errors?.description} errorMessage={errors?.description?.message} />
 
             <Button size="sm" className="bg-green-600 self-end text-sm text-white font-bold py-6 px-8 rounded-2xl mt-8" type="submit">

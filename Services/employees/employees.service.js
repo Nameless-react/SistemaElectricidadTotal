@@ -12,6 +12,7 @@ export default class EmployeeService {
     }
 
     async getEmployeeById(id) {
+        console.log(id)
         const validIdEmployee = validateIdEmployee({ idEmployees: id });
         if (validIdEmployee.error) throw new ValidationFailureError(validIdEmployee.error);
 

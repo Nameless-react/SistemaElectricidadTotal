@@ -1,15 +1,7 @@
-import { faPause, faPlay, faClock, faCheckCircle, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "/css/projects.module.css";
+import { STATUS_DETAILS, DEFAULT_STATUS } from "/shared/status";
 
-const STATUS_DETAILS = {
-    'En progreso': { className: 'inProgress', icon: faPlay },
-    'Pendiente': { className: 'pending', icon: faClock },
-    'En espera': { className: 'onHold', icon: faPause },
-    'Completado': { className: 'completed', icon: faCheckCircle },
-};
-
-const DEFAULT_STATUS = { className: '', icon: faQuestionCircle };
 
 export default function Status({ status, size }) {
     const { className, icon } = STATUS_DETAILS[status] || DEFAULT_STATUS;

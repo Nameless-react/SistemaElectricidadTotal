@@ -28,3 +28,23 @@ export const saveProjectAction = async () => {
         method: "POST"
     })
 }
+
+export const updateProjectAction = async (project) => {
+    try {
+        const response = await fetch(`http://${config.host}:3000/api/projects/${project.idProjects}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(project)
+        });
+
+
+        const result = await response.json();
+        if (result.error) return {errors: result.error}
+
+        return { successMessage: "Proyecto editado con éxito", data: {} }
+    } catch (e) {
+        return { errors: e }
+    }
+}
