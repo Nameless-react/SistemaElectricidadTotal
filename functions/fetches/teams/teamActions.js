@@ -1,6 +1,13 @@
 "use server"
+import { revalidateTag, revalidatePath } from "next/cache";
 import config from "/config/config";
+import { redirect } from "next/navigation";
 
+export const getTeamsProjectAction = async () => {
+    const response = await fetch(`http://${config.host}:3000/api/teams`);
+    const result = await response.json();
+    return result;
+}
 
 export const deleteTeamProjectEmployeeAction = async (id) => {
     try {
@@ -33,11 +40,11 @@ export const changeTeamProjectEmployeeAction = async (teamEmployees) => {
         });
         const result = await response.json();
 
-        // revalidatePath(`/proyectos/${task.idProjects}`)
         if (result.error) return {errors: result.error}
-
-        return { successMessage: "Se ha actualizado la lista de empleados del equipo con éxito", data: {} }
+        
     } catch (e) {
         return { errors: e }
     }
+    revalidateTag("project");
+    return { successMessage: "Se ha actualizado la lista de empleados del equipo con éxito", data: {} }
 }

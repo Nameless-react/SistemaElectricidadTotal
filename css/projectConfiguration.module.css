@@ -1,5 +1,5 @@
 .projectConfiguration {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
     margin-top: 2rem;
     display: flex;
@@ -27,6 +27,6 @@
 
 .changeProjectName > p {
     align-self: flex-start;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: bold;
 }

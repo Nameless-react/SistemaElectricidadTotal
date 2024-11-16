@@ -13,6 +13,13 @@ export const projectValidations = z.object({
     }).positive({
         message: "El número tiene que ser mayor a 0"
     })),
+    idTeamProject: z.preprocess(
+        value => value instanceof Set ?  [...value][0] : value,
+        z.coerce.number({
+        invalid_type_error: "El id del equipo del proyecto tiene que ser un número",
+    }).positive({
+        message: "El número tiene que ser mayor a 0"
+    })),
     description: z.string({
         invalid_type_error: "La descripción tiene que ser un texto",
         required_error: "La descripción es necesaria para un proyecto"

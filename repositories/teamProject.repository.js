@@ -5,6 +5,11 @@ export default class TeamProjectRepository {
         this.sequelize = sequelize;
     }
 
+
+    async getTeams() {
+        return await this.teamProjectModel.findAll();
+    }
+
     async changeEmployees(teamProjectEmployees) {
         const result = await this.sequelize.query("CALL update_team_project(:p_id_team_project, NULL, ARRAY[:p_employees])", {
             replacements: {

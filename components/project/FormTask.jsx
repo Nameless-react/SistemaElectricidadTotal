@@ -16,10 +16,25 @@ import { Avatar } from "@nextui-org/avatar";
 import { getDateTask } from "/functions/others/dateTime";
 import { today, getLocalTimeZone } from "@internationalized/date";
 import { STATUS_DETAILS } from "/shared/status";
+import SelectWrapper from "../others/SelectWrapper";
+
+
 
 
 export default function FormTask({ idTasks, title, deadline, description, idStatus, employees, isOpen, onClose }) {
-    const { project } = useContext(ProjectContext);
+    const { project, loadProjectData } = useContext(ProjectContext);
+    const selectStyles = {
+        popoverContent: "dark",
+        trigger: "min-h-12 py-2 dark"
+    }
+    const renderValueStatus = (selectedKey) => {
+        const id = parseInt(selectedKey[0].key);
+        const [name, status] = Object.entries(STATUS_DETAILS)[id - 1]
+        return <p key={id} className="gap-2 text-base font-bold items-center justify-center flex" style={{ color: status.color }}><FontAwesomeIcon icon={status.icon} />{name}</p>
+    }
+
+
+
     const { register, handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(idTasks ? validatePartialTaskClient : validateTaskClient),
         defaultValues: {
@@ -27,7 +42,7 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
             description: description || "",
             deadline: getDateTask(deadline),
             employees: new Set(employees?.map(employee => String(employee.idEmployee))) || new Set(),
-            idStatus: new Set(String(idStatus)) || new Set("2"),
+            idStatus: idStatus ? new Set(String(idStatus)) : new Set("2"),
             idProjects: project.idProjects
         },
         mode: "onBlur"
@@ -44,8 +59,9 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
         const resultAction = idTasks ? updateTaskAction({ ...taskFormData, idTasks }) : createTaskAction(taskFormData);
         const { successMessage } = await resultAction;
         if (successMessage) {
+            await loadProjectData(project?.idProjects)
             reset();
-            onClose()
+            onClose();
         }
     }
 
@@ -100,9 +116,7 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
                         aria-label="Seleccionar empleados para la tarea"
                         placeholder="Seleccione los empleados"
                         selectedKeys={value}
-                        onSelectionChange={(selected) => {
-                            onChange(new Set(selected));
-                        }}
+                        onSelectionChange={onChange}
                         onBlur={onBlur}
                         renderValue={(selectedEmployees) => {
                             return <div className="flex gap-3 flex-wrap">
@@ -135,37 +149,11 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
                 )}
             />
 
-
-            <Controller
-                control={control}
-                name="idStatus"
-                render={({ field: { onChange, value, onBlur } }) => (
-                    <Select
-                        items={Object.entries(STATUS_DETAILS)}
-                        isInvalid={!!errors?.idStatus}
-                        errorMessage={errors?.idStatus?.message}
-                        classNames={{
-                            popoverContent: "dark",
-                            trigger: "min-h-12 py-2"
-                        }}
-                        className="w-full"
-                        aria-label="Seleccionar el estado de la tarea"
-                        placeholder="Seleccione el estado de la tarea"
-                        selectedKeys={value}
-                        onSelectionChange={onChange}
-                        onBlur={onBlur}
-                        renderValue={(selectedKey) => {
-                            const id = parseInt(selectedKey[0].key);
-                            const [name, status] = Object.entries(STATUS_DETAILS)[id - 1]
-                            return <p key={id} className={`gap-2 text-base font-bold items-center justify-center flex text-[${status.color}]`}><FontAwesomeIcon icon={status.icon} />{name}</p>
-                        }}
-                    >
-                        {Object.entries(STATUS_DETAILS).map(([name, status], index) => (
-                            <SelectItem key={index + 1} startContent={<FontAwesomeIcon icon={status.icon} />} className={`text-[${status.color}]`}>{name}</SelectItem>
-                        ))}
-                    </Select>
-                )}
-            />
+           {idStatus && <SelectWrapper className="w-full" label="Seleccione el estado" control={control} name="idStatus" items={Object.entries(STATUS_DETAILS)} errors={errors} classNames={selectStyles} renderValue={renderValueStatus}>
+                {Object.entries(STATUS_DETAILS).map(([name, status], index) => (
+                    <SelectItem key={index + 1} startContent={<FontAwesomeIcon icon={status.icon} />} className="dark:hover:bg-sky-900" style={{ color: status.color }}>{name}</SelectItem>
+                ))}
+            </SelectWrapper>}
 
             <Textarea aria-label="Descripción de la tarea" label="Descripción" {...register("description")} isInvalid={errors?.description} errorMessage={errors?.description?.message} />
 

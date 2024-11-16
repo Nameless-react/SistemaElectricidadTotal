@@ -7,6 +7,11 @@ export default class TeamProjectService {
         this.teamProjectRepository = teamProjectRepository;
     }
 
+
+    async getTeams() {
+        return await this.teamProjectRepository.getTeams();
+    }
+
     async saveTeam(task) {
         const validatedTask = validateTeamProject(task);
         if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);

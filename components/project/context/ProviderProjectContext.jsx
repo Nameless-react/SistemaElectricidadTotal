@@ -3,10 +3,10 @@
 import { ProjectProvider } from "/components/project/context/ProjectContext";
 
 
-export default function ProviderProjectContext({ initialData, children }) {
+export default function ProviderProjectContext({ initialProject, initialEmployees, children }) {
     
     return (
-        <ProjectProvider initialData={initialData}>
+        <ProjectProvider initialProject={initialProject} initialEmployees={initialEmployees}>
             {children}
         </ProjectProvider>
     )

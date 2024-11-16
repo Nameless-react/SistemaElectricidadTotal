@@ -221,12 +221,15 @@
     font-size: 1rem;
 }
 
-.task p, .employee p {
+.task > p, .employee > p, .employee > a {
     font-weight: lighter;
     color: #eee;
     font-size: .9rem;
 }
 
+.employee > a {
+    text-decoration: underline;
+}
 
 .task:hover, .employee:hover {
     transform: translateY(-10%);

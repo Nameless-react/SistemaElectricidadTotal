@@ -11,19 +11,19 @@ import { ProjectContext } from "./context/ProjectContext";
 import UpdateTaskModal from "./UpdateTaskModal";
 import { useDisclosure } from "@nextui-org/modal"
 import FormTask from "./FormTask"
+import Status from "./Status";
+
+
 
 export default function Task({ idTasks, title, status, deadline, assignedEmployees, idStatus, description }) {
-    const { project, setProject } = useContext(ProjectContext);
+    const { project, loadProjectData } = useContext(ProjectContext);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
 
     const handleDelete = async (idTask) => {
         const result = await deleteTaskAction(idTask);
-        setProject((prevProject) => ({
-            ...prevProject,
-            tasks: prevProject.tasks.filter((task) => task.idTasks !== idTask),
-        }));
+        await loadProjectData(project?.idProjects)
     };
 
     
@@ -32,7 +32,8 @@ export default function Task({ idTasks, title, status, deadline, assignedEmploye
         <div className={style.task}>
             <h3>{title}</h3>
             <p>{format(deadline, "DD/MM/YYYY")}</p>
-            <p>{status}</p>
+            {/* <p>{status}</p> */}
+            <Status status={status} size="s" />
             <AvatarGroup isBordered>
                 {assignedEmployees.map((employee, index) => (
                     <Avatar size="sm" key={index} src={employee.image || "https://i.pravatar.cc/150"} />

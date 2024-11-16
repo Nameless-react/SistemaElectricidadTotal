@@ -21,7 +21,7 @@ export default function Employee({ idTeamProjectEmployee, image, name, job, emai
             <Avatar src={image}/>
             <h3>{name}</h3>
             <p>{job}</p>
-            <p>{email}</p>
+            <a href={`mailto:${email}`}>{email}</a>
             <Dropdown className="dark">
                 <DropdownTrigger>
                     <div className="w-full h-full flex items-center justify-center">

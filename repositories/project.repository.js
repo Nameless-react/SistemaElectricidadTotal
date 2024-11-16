@@ -154,6 +154,7 @@ export default class ProjectsRepository {
             ...projectData,
             status: projectStatus?.name || 'Unknown',
             idStatus: projectStatus?.idStatus,
+            teamProjectName: teamProject?.name,
             idTeamProject: teamProject?.idTeamProject,
             employees: teamProject?.teamProjectEmployees?.map(employee => ({
                 image: employee.employee.User.image,

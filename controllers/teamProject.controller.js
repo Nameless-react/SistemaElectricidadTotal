@@ -14,16 +14,10 @@ class TeamProjectController {
     constructor(teamService) {
         this.teamService = teamService
     }
-
-    getTeam = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
-        const task = await this.teamService.getTaskById(parseInt(id));
-        return NextResponse.json(task, { status: 200 });
-    })
     
     getTeams = apiErrorWrapper(async (req, res) => {
-        const tasks = await this.teamService.getTasks();
-        return NextResponse.json(tasks, { status: 200 });
+        const teams = await this.teamService.getTeams();
+        return NextResponse.json(teams, { status: 200 });
     })
    
 

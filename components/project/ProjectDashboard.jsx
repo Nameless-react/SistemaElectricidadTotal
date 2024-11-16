@@ -18,8 +18,8 @@ import CreateFormTask from "./CreateTaskModal";
 export default function ProjectDashboard() {
     const { project } = useContext(ProjectContext);
     const { percentage, employees, tasks, projectBudgets, expensesProjects } = project;
-    const expense = expensesProjects.reduce((acc, expense) => acc + expense.amount, 0);
-    const budget = projectBudgets.reduce((acc, earn) => acc + earn.amount, 0);
+    const expense = expensesProjects?.reduce((acc, expense) => acc + expense.amount, 0) ?? 0;
+    const budget = projectBudgets?.reduce((acc, earn) => acc + earn.amount, 0) ?? 0;
 
 
 
@@ -64,7 +64,7 @@ export default function ProjectDashboard() {
                         <p>Encargados</p>
                     </div>
                     <ScrollShadow className="w-full flex gap-5 flex-col">
-                        {!tasks || tasks.length === 0  ? <p className="font-bold">No hay tareas creadas</p> : tasks.map(task => (
+                        {!tasks || tasks.length === 0  ? <p className="font-bold text-center">No hay tareas creadas</p> : tasks.map(task => (
                             <Task {...task} />
                         ))}
                     </ScrollShadow>
@@ -86,7 +86,7 @@ export default function ProjectDashboard() {
                         <p>Correo</p>
                     </div>
                     <ScrollShadow className="w-full flex gap-5 flex-col">
-                        {!employees || employees.length === 0 ? <p className="font-bold">No hay empleados asignados</p> : employees.map(employee => (
+                        {!employees || employees.length === 0 ? <p className="font-bold text-center">No hay empleados asignados</p> : employees.map(employee => (
                             <Employee 
                                 {...employee}
                             />

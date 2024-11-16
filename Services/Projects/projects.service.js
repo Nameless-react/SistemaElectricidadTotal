@@ -1,5 +1,5 @@
 import { validateProject, validateIdProject, validatePartiaProject } from "/functions/validations/projectValidation";
-import { ValidationFailureError , NotFoundError} from "/errors/errors";
+import { ValidationFailureError , NotFoundError } from "/errors/errors";
 
 class ProjectsService {
     constructor(projectsRepository, projectsImagesService) {

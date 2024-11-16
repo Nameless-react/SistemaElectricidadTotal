@@ -9,12 +9,13 @@ export default function Status({ status, size }) {
     const containerStyle = {
         width: size === "s" ? "2%" : "35%",
         fontSize: size === "s" ? ".7rem" : ".8rem",
-        padding: size === "s" ? ".3rem 0" : ".5rem 0"
+        padding: size === "s" ? ".3rem 0" : ".5rem 0",
+        iconSize: size === "s" ? "text-md" : "text-2xl"
     };
 
     return (
         <div className={`${styles.status} ${styles[className]}`} style={containerStyle}>
-            <FontAwesomeIcon className="text-2xl" icon={icon} />
+            <FontAwesomeIcon className={`${containerStyle.iconSize}`} icon={icon} />
             <p>{status}</p>
         </div>
     );

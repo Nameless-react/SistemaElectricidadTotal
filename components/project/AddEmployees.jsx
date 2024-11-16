@@ -11,11 +11,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { changeTeamProjectEmployeeAction } from "/functions/fetches/teams/teamActions";
 import ModalWrapper from "../others/ModalWrapper";
+import { useRouter } from "next/navigation";
+import useProjectData from "/functions/hooks/useProjectData";
 
-
-
+//* Make the verification to make sure that there is assigned a team
+//* Dont validate the date in case of update, because its going to say the date must be after the current date
 export default function ModalAddEmployees() {
-    const { project, employees } = useContext(ProjectContext);
+    const router = useRouter();
+    const { project, loadProjectData, employees } = useContext(ProjectContext);
 
 
     const { handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
@@ -30,7 +33,9 @@ export default function ModalAddEmployees() {
     const onSubmit = async (employeesFormData) => {
         const { successMessage } = await changeTeamProjectEmployeeAction(employeesFormData);
         if (successMessage) {
+            await loadProjectData(project?.idProjects)
             reset();
+            // router.refresh()
         }
     }
     return (
