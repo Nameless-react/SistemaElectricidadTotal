@@ -1,3 +1,5 @@
+import logger from "../functions/others/logger";
+
 export default class ProjectsRepository {
     constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, expensesModel, budgetModel, sequelize) {
         this.projectModel = projectModel;
@@ -44,7 +46,11 @@ export default class ProjectsRepository {
                 deleted: false
             },
             attributes: ['idProjects', 'name', 'description', 'percentage'],
+            logging: (sql,queryObject) => {
+                logger.info(sql)
+            }
         });
+
         
         const formattedProjects = projects.map(project => {
             const { Status, teamProject, ...projectData } = project.get({ plain: true });

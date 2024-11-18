@@ -2,7 +2,7 @@
 import config from "/config/config";
 
 export const getEmployeesAction = async (id) => {
-    const response = await fetch(`http://${config.host}:3000/api/employees/${id}`);
+    const response = await fetch(`http://${config.host}:3000/api/employees/`);
     const result = await response.json();
     return result;
 }
