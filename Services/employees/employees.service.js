@@ -25,12 +25,7 @@ export default class EmployeeService {
     }
 
     async updateEmployee(employeeData) {
-        console.log(employeeData);
-        const validatedEmployee = validatePartialEmployee(employeeData);
-        if (validatedEmployee.error) throw new ValidationFailureError(validatedEmployee.error.message);
-    
-        await this.getEmployeeById(validatedEmployee.data.idEmployees);
-        return await this.employeeRepository.updateEmployee({ ...validatedEmployee.data });
+        return await this.employeeRepository.updateEmployee(employeeData);
     }
     
     async deleteEmployee(id) {
@@ -42,10 +37,7 @@ export default class EmployeeService {
     }
     
     async createEmployee(employeeData) {
-        const validatedEmployee = validateEmployee(employeeData);
-        if (validatedEmployee.error) throw new ValidationFailureError(validatedEmployee.error.message);
-    
-        return await this.employeeRepository.createEmployee(validatedEmployee.data);
+        return await this.employeeRepository.createEmployee(employeeData);
     }
     
 

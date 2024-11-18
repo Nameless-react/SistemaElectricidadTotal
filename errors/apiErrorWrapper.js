@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { BadRequestError, NotFoundError, ValidationFailureError, DeletionError, ConflictError } from './errors';
 import { Sequelize } from 'sequelize';
 import convertedZodErrors from './convertedZodErrors';
+import logger from '../functions/others/logger';
 
 const apiErrorWrapper = (func) => {
     const knownErrors = [BadRequestError, NotFoundError, DeletionError];
@@ -14,7 +15,7 @@ const apiErrorWrapper = (func) => {
         try {
             return await func(req, res);
         } catch (error) {
-            console.error('Error in API:', error);
+            logger.error(error);
 
             if (knownErrors.some(errorType => error instanceof errorType)) return NextResponse.json({ error: error.message }, { status: error.statusCode });
             else if (error instanceof ValidationFailureError) return NextResponse.json({ error: convertedZodErrors(error.error) }, { status: error.statusCode });

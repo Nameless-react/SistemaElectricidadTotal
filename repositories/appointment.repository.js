@@ -1,3 +1,5 @@
+import logger from "../functions/others/logger";
+
 export default class AppointmentRepository {
     constructor(appointmentModel, employeeModel, appointmentConfirmationModel, sequelize) {
         this.appointmentModel = appointmentModel;
@@ -17,7 +19,7 @@ export default class AppointmentRepository {
                 p_assign_employee: null,
                 p_confirmation_token: appointment.token
             },
-            logging: console.log,
+            logging: logger.info,
             type: this.sequelize.QueryTypes.RAW
         })
 
