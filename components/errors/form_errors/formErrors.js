@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 
 /**
  * Component that displays validation errors for a form field from the client side.
@@ -6,6 +7,7 @@
  * @returns {JSX.Element} A JSX element displaying the error messages for the specified field.
  */
 export const FormErrorsClient = ({ errors, errorName }) => {
+
     return (
         <>
             {errors[errorName] && (
@@ -13,7 +15,7 @@ export const FormErrorsClient = ({ errors, errorName }) => {
                     {errors[errorName]._errors.some(error =>
                         error === "Required" || error === "Invalid date"
                     ) ? (
-                        <p className="text-sm text-red-600 ml-2 mt-2">{`El ${errorName} es requerido`}</p>
+                        <p className="text-sm text-red-600 ml-2 mt-2">{`Este campo es requerido`}</p>
                     )
                         : (
                             errors[errorName]._errors.map((error, index) => (

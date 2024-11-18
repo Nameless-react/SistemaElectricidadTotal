@@ -37,6 +37,7 @@ ProjectBudget.init({
     },
     idUser: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         field: "id_user"
     }
 },
@@ -49,11 +50,9 @@ ProjectBudget.init({
 
 
 ProjectBudget.belongsTo(User, {
-    foreignKey: {
-        name: "id_user",
-        allowNull: false,
-        as: "idUser"
-    }
+    foreignKey: "idUser", 
+    targetKey: "id_users", 
+    as: "user" 
 });
 
 

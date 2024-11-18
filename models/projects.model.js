@@ -45,7 +45,13 @@ Project.init({
     idTeamProject: {
         type: DataTypes.INTEGER,
         field: "id_team_project"
-    }
+    },
+
+    idCompanyBudget: {
+        type: DataTypes.INTEGER,
+        field: "id_company_budget"
+    },
+
 }, {
     sequelize,
     tableName: 'projects',

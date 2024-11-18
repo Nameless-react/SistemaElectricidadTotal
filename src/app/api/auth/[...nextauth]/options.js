@@ -53,7 +53,7 @@ export const options = {
                         type: sequelze.QueryTypes.SELECT,
                     }
                 );
-                console.log(foundUser);
+                
                 // Extract only the name or id of the roles
                 const userRoles = roles.map(role => role.rol);  // ['Administrador', 'Empleado', 'Usuario']
 

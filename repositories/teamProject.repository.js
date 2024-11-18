@@ -48,6 +48,14 @@ export default class TeamProjectRepository {
         return result;
     }
 
+    async getTeamByProject(idProject) {
+        return await this.sequelize.query("Select *from Users_By_Project_View where projectId = :p_id_project", {
+            replacements: {
+                p_id_project: idProject
+            },
+            type: this.sequelize.QueryTypes.SELECT
+        });
+    }
 
     // * In case of separate the query of getProject
     async getTeamProjectEmployees() {
@@ -71,6 +79,6 @@ export default class TeamProjectRepository {
             }
         })
         return employees;
-    
+
     }
 }
