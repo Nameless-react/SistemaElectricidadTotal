@@ -13,19 +13,20 @@ import { CircularProgress } from "@nextui-org/progress";
 import ExpensesModal from "./Expenses";
 import BudgetsModal from "./Budgets";
 import CreateFormTask from "./CreateTaskModal";
-
+import { useSession } from "next-auth/react";
 
 
 //* Make the verification to make sure that there is assigned a team
 //* Dont validate the date in case of update, because its going to say the date must be after the current date
 //* Investigate an test very well how to update the data in the dashboard
 export default function ProjectDashboard() {
+    const { data: session } = useSession();
     const { project } = useContext(ProjectContext);
     const { percentage, employees, tasks, projectBudgets, expensesProjects } = project;
     const expense = expensesProjects?.reduce((acc, expense) => acc + expense.amount, 0) ?? 0;
     const budget = projectBudgets?.reduce((acc, earn) => acc + earn.amount, 0) ?? 0;
 
-
+    console.log(session)
 
     return (
         <div className={style.container}>
@@ -58,7 +59,7 @@ export default function ProjectDashboard() {
             <div className={style.tasksContainer}>
                 <div className={style.taskHeader}>
                     <h3>Tareas</h3>
-                    <CreateFormTask modalTitle={"Agregar tarea"} />
+                   {session?.user.roles.includes("Administrador") && <CreateFormTask modalTitle={"Agregar tarea"} />}
                 </div>
                 <div className={style.tasks}>
                     <div className={style.informationTasks}>
@@ -81,7 +82,7 @@ export default function ProjectDashboard() {
             <div className={style.employeesContainer}>
                 <div className={style.employeeHeader}>
                     <h3>Empleados Asignados</h3>
-                    <ModalAddEmployees />
+                    {session?.user.roles.includes("Administrador") && <ModalAddEmployees />}
                 </div>
                 <div className={style.employees}>
                     <div className={style.informationEmployees}>

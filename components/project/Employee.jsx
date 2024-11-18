@@ -7,10 +7,11 @@ import { Dropdown, DropdownItem, DropdownTrigger, DropdownMenu } from "@nextui-o
 import { deleteTeamProjectEmployeeAction } from "/functions/fetches/teams/teamActions"
 import { ProjectContext } from "./context/ProjectContext";
 import { useContext } from "react";
-
+import { useSession } from "next-auth/react";
 
 export default function Employee({ idTeamProjectEmployee, image, name, job, email }) {
-    const { setEmployees } = useContext(ProjectContext)
+    const { setEmployees } = useContext(ProjectContext);
+    const { data: session } = useSession();
 
     const handleDelete = async (idTeamProjectEmployee) => {
         const result = await deleteTeamProjectEmployeeAction(idTeamProjectEmployee);
@@ -23,7 +24,7 @@ export default function Employee({ idTeamProjectEmployee, image, name, job, emai
             <h3>{name}</h3>
             <p>{job}</p>
             <a href={`mailto:${email}`}>{email}</a>
-            <Dropdown className="dark">
+            {session?.user.roles.includes("Administrador") && <Dropdown className="dark">
                 <DropdownTrigger>
                     <div className="w-full h-full flex items-center justify-center">
                         <FontAwesomeIcon icon={faEllipsisVertical} />
@@ -32,7 +33,7 @@ export default function Employee({ idTeamProjectEmployee, image, name, job, emai
                 <DropdownMenu aria-label="Static Actions">
                     <DropdownItem onClick={() => handleDelete(idTeamProjectEmployee)} key="delete" className="text-danger outline-none">Eliminar</DropdownItem>
                 </DropdownMenu>
-            </Dropdown>
+            </Dropdown>}
         </div>
     )
 }

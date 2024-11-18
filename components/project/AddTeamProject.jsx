@@ -58,7 +58,7 @@ export default function AddTeamProject({ onModalClose }) {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center py-9 px-5 flex-col">
             <Input label="Nombre del equipo" {...register("name")} isInvalid={errors?.name} errorMessage={errors?.name?.message} classNames={{ inputWrapper: "bg-[#1f2c47] dark:hover:bg-sky-900 dark:active:bg-sky-900 dark:focus:bg-sky-900 dark:focus-within:bg-sky-900" }}/>
             <SelectWrapper control={control} name="employees" items={employees} isMultiline={true} selectionMode="multiple" errors={errors} className="w-full" classNames={selectStyles} label="Seleccione los empleados" renderValue={renderValuesEmployees}>
                 {(employee) => <SelectItem key={employee.idEmployee}><EmployeeSelect {...employee} /></SelectItem>}

@@ -36,7 +36,7 @@ export const projectValidations = z.object({
 })
 
 
-export const validateProject = (object) =>  projectValidations.omit({ idProjects: true }).safeParse(object)
+export const validateProject = (object) =>  projectValidations.omit({ idProjects: true, images: true }).safeParse(object)
 export const validatePartiaProject = (object) =>  projectValidations.partial().safeParse(object);
 export const validateIdProject = (object) => projectValidations.pick({ idProjects: true }).safeParse(object);
 export const validatePartialProjectClient = projectValidations.omit({ images: true, idProjects: true });

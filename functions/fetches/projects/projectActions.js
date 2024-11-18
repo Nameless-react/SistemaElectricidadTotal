@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import config from "/config/config";
 
 export const getProjectsAction = async () => {
@@ -24,10 +25,25 @@ export const deleteProjectAction = async (id) => {
 }
 
 export const saveProjectAction = async (project) => {
-    const response = await fetch(`http://${config.host}:3000/api/projects/`, {
-        method: "POST",
-        body: JSON.stringify(project)
-    })
+    console.log(project)
+    try {
+        const response = await fetch(`http://${config.host}:3000/api/projects/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(project)
+        })
+
+        const result = await response.json();
+        if (result.error) return {errors: result.error}
+        
+    } catch (e) {
+        return { errors: e }
+    }
+    revalidatePath("/proyectos")
+    return { successMessage: "Proyecto creado con éxito", data: {} }
+    
 }
 
 export const updateProjectAction = async (project) => {
@@ -44,8 +60,8 @@ export const updateProjectAction = async (project) => {
         const result = await response.json();
         if (result.error) return {errors: result.error}
 
-        return { successMessage: "Proyecto editado con éxito", data: {} }
     } catch (e) {
         return { errors: e }
     }
+    return { successMessage: "Proyecto editado con éxito", data: {} }
 }

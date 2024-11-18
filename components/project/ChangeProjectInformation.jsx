@@ -15,10 +15,12 @@ import { updateProjectAction, saveProjectAction } from "/functions/fetches/proje
 import { getTeamsProjectAction } from "/functions/fetches/teams/teamActions";
 import AddTeamProject from "./AddTeamProject";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { useRouter } from "next/navigation";
 
 
-
+//* Add to the form of create the field to add images or files
 export default function ChangeProjectInformation({ project, loadProjectData }) {
+    const router = useRouter();
     const [teams, setTeams] = useState([]);
     const [isModalClose, setModalClose] = useState(true)
 
@@ -28,13 +30,13 @@ export default function ChangeProjectInformation({ project, loadProjectData }) {
         trigger: "min-h-12 py-2 bg-[#1f2c47] dark:hover:bg-sky-900"
     }
 
-    const { handleSubmit, control, formState: { errors, isSubmitting }, register } = useForm({
+    const { handleSubmit, control, formState: { errors, isSubmitting }, register, getValues } = useForm({
         resolver: zodResolver(validatePartialProjectClient),
         defaultValues: {
             name: project?.name || "",
             description: project?.description || "",
             idStatus: project?.idStatus ? new Set(String(project?.idStatus)) : new Set("2"),
-            idTeamProject: project?.idTeamProject ? new Set(String(project.idTeamProject)) : new Set()
+            idTeamProject: project?.idTeamProject ? new Set([project.idTeamProject.toString()]) : new Set()
         },
         mode: "onBlur"
     })
@@ -61,7 +63,8 @@ export default function ChangeProjectInformation({ project, loadProjectData }) {
         const { successMessage } = await resultAction;
         if (successMessage) {
             // reset();
-            await loadProjectData(project.idProjects)
+            if (!project) router.push("/proyectos")
+            else await loadProjectData(project.idProjects)
         }
     }
 
@@ -71,21 +74,21 @@ export default function ChangeProjectInformation({ project, loadProjectData }) {
         return <p key={id} className="gap-2 text-base font-bold items-center justify-center flex" style={{ color: status.color }}><FontAwesomeIcon icon={status.icon} />{name}</p>
     }
 
-    const renderValueTeam = (selectedKeys) => (
-        selectedKeys.map(selectedKey => (
+    const renderValueTeam = (selectedKeys) => {
+        console.log(selectedKeys);
+        return selectedKeys.map(selectedKey => (
             <p key={selectedKey.data.idTeamProject} className="gap-2 text-base font-bold items-center justify-center flex">
                 {selectedKey.data.name}
             </p>
         ))
-    );
+    };
 
-    const handleOnModalClose = () => {
-        setModalClose(prevValue => !prevValue);
-    }
+    const handleOnModalClose = () => setModalClose(prevValue => !prevValue);
 
 
     return (
-        <div className="flex align-center justify-center gap-8 flex-col">
+        <div className="flex align-center justify-center gap-8 flex-col w-full">
+            {console.log(getValues())}
             <form onSubmit={handleSubmit(onSubmit)} className={style.changeProjectName}>
                 <p>{project ? "Actualizar Proyecto" : "Crear Proyecto"}</p>
                 <div className="flex justify-center items-center w-full gap-6 flex-col">

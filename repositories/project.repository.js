@@ -191,12 +191,13 @@ export default class ProjectsRepository {
 
     async createProject(project) {
         const result = await this.sequelize.query(
-            `Call create_project_with_images(:p_name ,:p_description, :p_id_status , ARRAY[:p_images_url]);`, {
+            `Call create_project_with_images(:p_name ,:p_description, :p_id_status, :p_id_team_project, ARRAY[:p_images_url]);`, {
             replacements: {
                 p_name: project.name,
                 p_description: project.description,
                 p_id_status: project.idStatus,
-                p_images_url: project.images
+                p_id_team_project: project.idTeamProject,
+                p_images_url: project.images || ["https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"]
             },
             type: this.sequelize.QueryTypes.RAW,
             logging: console.log,

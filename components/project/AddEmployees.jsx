@@ -59,7 +59,7 @@ export default function ModalAddEmployees() {
             <ModalWrapper modalTitle="Administrar Empleados">
                 {({ onClose }) => (
                     <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col">
-                        <SelectWrapper control={control} name="employees" items={project.employees} isMultiline={true} selectionMode="multiple" errors={errors} className="w-full" classNames={selectStyles} label="Seleccione los empleados" renderValue={renderValuesEmployees}>
+                        <SelectWrapper control={control} name="employees" items={employees} isMultiline={true} selectionMode="multiple" errors={errors} className="w-full" classNames={selectStyles} label="Seleccione los empleados" renderValue={renderValuesEmployees}>
                             {(employee) => <SelectItem key={employee.idEmployee}><EmployeeSelect {...employee} /></SelectItem>}
                         </SelectWrapper>
 

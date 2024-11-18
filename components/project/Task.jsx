@@ -12,11 +12,12 @@ import UpdateTaskModal from "./UpdateTaskModal";
 import { useDisclosure } from "@nextui-org/modal"
 import FormTask from "./FormTask"
 import Status from "./Status";
-
+import { useSession } from "next-auth/react";
 
 
 export default function Task({ idTasks, title, status, deadline, assignedEmployees, idStatus, description }) {
     const { project, loadProjectData } = useContext(ProjectContext);
+    const { data: session } = useSession();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -40,7 +41,7 @@ export default function Task({ idTasks, title, status, deadline, assignedEmploye
                 ))}
             </AvatarGroup>
 
-            <Dropdown className="dark" isOpen={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+            {session?.user.roles.includes("Administrador") && <Dropdown className="dark" isOpen={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                 <DropdownTrigger>
                     <div className="w-full h-full flex items-center justify-center">
                         <FontAwesomeIcon icon={faEllipsisVertical} />
@@ -50,7 +51,7 @@ export default function Task({ idTasks, title, status, deadline, assignedEmploye
                     <DropdownItem onPress={onOpen} key="update" className="text-blue-600 outline-none font-bold">Editar</DropdownItem>
                     <DropdownItem onClick={() => handleDelete(idTasks)} key="delete" className="text-danger outline-none font-bold">Eliminar</DropdownItem>
                 </DropdownMenu>
-            </Dropdown>
+            </Dropdown>}
 
             <UpdateTaskModal onOpenChange={onOpenChange} isOpen={isOpen}>
                 {({ onClose }) => <FormTask title={title} deadline={deadline} description={description} idStatus={idStatus} employees={assignedEmployees} idTasks={idTasks} onClose={onClose} />}
