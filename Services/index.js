@@ -13,7 +13,7 @@ import ValidationUserProfileService from "./users/validations/validationUserProf
 import ProjectsService from "./projects/projects.service";
 //import ProjectsImagesService from "./projects/projectsImages.service";
 import EmployeeService from "./employees/employees.service";
-
+import ValidationEmployeeFormService from "./employees/Validations/validationEmployeeForm.service";
 export {
     CategoryService,
     MaintenanceNotesService,
@@ -28,6 +28,8 @@ export {
     ValidationUserService,
     ValidationUserProfileService,
     EmployeeService,
-    ProjectsService
+    ProjectsService,
+    ValidationEmployeeFormService
+
 
 }

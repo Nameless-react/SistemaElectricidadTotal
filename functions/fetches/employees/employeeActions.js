@@ -1,7 +1,7 @@
 "use server";
 import config from "/config/config";
 
-export const getEmployeeAction = async (id) => {
+export const getEmployeesAction = async (id) => {
     const response = await fetch(`http://${config.host}:3000/api/employees/${id}`);
     const result = await response.json();
     return result;

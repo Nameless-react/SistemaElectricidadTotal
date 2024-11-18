@@ -5,16 +5,25 @@ export default class EmployeeRepository {
         this.sequelize = sequelize;
     }
 
-    async createEmployee(employee) {
-        const result = await this.sequelize.query("CALL create_employee_withEmail(:p_email, :p_job);", {
-            replacements: {
-                p_email: employee.email,
-                p_job: employee.job
-            },
-            logging: console.log,
-            type: this.sequelize.QueryTypes.RAW
-        })
-        return result ;
+    async createEmployee(formData) {
+        try {
+            const result = await this.sequelize.query(
+                "CALL create_employee_withId(:p_id_users, :p_job, :p_join_at);",
+                {
+                    replacements: {
+                        p_id_users: formData.userId,
+                        p_job: formData.job,
+                        p_join_at: formData.joinAt,
+                    },
+                    logging: console.log,
+                    type: this.sequelize.QueryTypes.RAW,
+                }
+            );
+            return result;
+        } catch (error) {
+            console.error("Error al crear empleado:", error);
+            throw new Error("Error al crear empleado.");
+        }
     }
 
     async getEmployeeById(idEmployees) {
@@ -57,15 +66,19 @@ export default class EmployeeRepository {
         return employees;
     }
 
-    async updateEmployee({idEmployees, ...newEmployeesData}){
-        const result = await  this.employeeModel.update(newEmployeesData,{
-            where: {
-                idEmployees
-            },
-            returning: true,
-            plain: true
-        });
-
-        return result;
+    async updateEmployee(formData) {
+        try {
+            const result = await this.sequelize.query("CALL update_employee_job_withId(:p_id_users, :p_job);",
+                {
+                    replacements: {
+                        p_id_users: formData.userId,
+                        p_job: formData.job,
+                    },
+                    logging: console.log, type: this.sequelize.QueryTypes.RAW,
+                }); return result;
+        } catch (error) {
+            console.error("Error al actualizar el trabajo del empleado:", error);
+            throw new Error("Error al actualizar el trabajo del empleado.");
+        }
     }
 }
