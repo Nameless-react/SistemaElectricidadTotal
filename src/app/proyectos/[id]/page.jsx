@@ -15,7 +15,7 @@ export default async function Project({ params }) {
 
     return (
         <Suspense fallback={<SkeletonProjectDashboard />}>
-            <ProviderProjectContext initialData={{ project, employees: responseEmployees }}>
+            <ProviderProjectContext initialProject={project} initialEmployees={responseEmployees}>
                 <ProjectInformation />
             </ProviderProjectContext>
         </Suspense>

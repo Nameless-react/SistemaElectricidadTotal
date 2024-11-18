@@ -1,17 +1,16 @@
 "use client"
-import { createContext, useState } from 'react';
-
+import { createContext, useCallback } from 'react';
+import useProjectData from '/functions/hooks/useProjectData';
 
 export const ProjectContext = createContext(null);
 
-export const ProjectProvider = ({ children, initialData }) => {
-    const [project, setProject] = useState(initialData.project);
-    const [employees, setEmployees] = useState(initialData.employees);
+export const ProjectProvider = ({ children, initialProject, initialEmployees }) => {
+    const { project, employees, loading, loadProjectData } = useProjectData(initialProject, initialEmployees);
 
 
 
     return (
-        <ProjectContext.Provider value={{ project, setProject, employees, setEmployees }}>
+        <ProjectContext.Provider value={{ project, employees, loading, loadProjectData }}>
             {children}
         </ProjectContext.Provider>
     );

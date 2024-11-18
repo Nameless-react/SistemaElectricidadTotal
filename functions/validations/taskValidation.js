@@ -36,11 +36,13 @@ export const taskValidations = z.object({
     }).positive({
         message: "El id del proyecto tiene que ser un número positivo"
     }),
-    idStatus: z.coerce.number({
-        invalid_type_error: "El correo tiene que ser un texto"
+    idStatus: z.preprocess(
+        value => value instanceof Set ?  [...value][0] : value,
+        z.coerce.number({
+        invalid_type_error: "El estado tiene que ser un número",
     }).positive({
-        message: "El id de estatus tiene que ser un número positivo"
-    }),
+        message: "El número tiene que ser mayor a 0"
+    })),
     employees: z.set(
         z.coerce.number({
             invalid_type_error: "El id del empleado tiene que ser un número"

@@ -11,7 +11,7 @@ export default function UpdateTaskModal({ children, onOpenChange, isOpen }) {
                         <>
                             <ModalHeader className="flex flex-col gap-1 font-bold px-12">Actualizar tarea</ModalHeader>
                             <ModalBody className="p-12 pt-6">
-                               {children}
+                               {children({ onClose })}
                             </ModalBody>
                         </>
                     )}

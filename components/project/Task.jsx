@@ -11,19 +11,20 @@ import { ProjectContext } from "./context/ProjectContext";
 import UpdateTaskModal from "./UpdateTaskModal";
 import { useDisclosure } from "@nextui-org/modal"
 import FormTask from "./FormTask"
+import Status from "./Status";
+import { useSession } from "next-auth/react";
+
 
 export default function Task({ idTasks, title, status, deadline, assignedEmployees, idStatus, description }) {
-    const { project, setProject } = useContext(ProjectContext);
+    const { project, loadProjectData } = useContext(ProjectContext);
+    const { data: session } = useSession();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
 
     const handleDelete = async (idTask) => {
         const result = await deleteTaskAction(idTask);
-        setProject((prevProject) => ({
-            ...prevProject,
-            tasks: prevProject.tasks.filter((task) => task.idTasks !== idTask),
-        }));
+        await loadProjectData(project?.idProjects)
     };
 
     
@@ -32,14 +33,15 @@ export default function Task({ idTasks, title, status, deadline, assignedEmploye
         <div className={style.task}>
             <h3>{title}</h3>
             <p>{format(deadline, "DD/MM/YYYY")}</p>
-            <p>{status}</p>
+            {/* <p>{status}</p> */}
+            <Status status={status} size="s" />
             <AvatarGroup isBordered>
                 {assignedEmployees.map((employee, index) => (
                     <Avatar size="sm" key={index} src={employee.image || "https://i.pravatar.cc/150"} />
                 ))}
             </AvatarGroup>
 
-            <Dropdown className="dark" isOpen={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+            {session?.user.roles.includes("Administrador") && <Dropdown className="dark" isOpen={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                 <DropdownTrigger>
                     <div className="w-full h-full flex items-center justify-center">
                         <FontAwesomeIcon icon={faEllipsisVertical} />
@@ -49,10 +51,10 @@ export default function Task({ idTasks, title, status, deadline, assignedEmploye
                     <DropdownItem onPress={onOpen} key="update" className="text-blue-600 outline-none font-bold">Editar</DropdownItem>
                     <DropdownItem onClick={() => handleDelete(idTasks)} key="delete" className="text-danger outline-none font-bold">Eliminar</DropdownItem>
                 </DropdownMenu>
-            </Dropdown>
+            </Dropdown>}
 
             <UpdateTaskModal onOpenChange={onOpenChange} isOpen={isOpen}>
-                <FormTask title={title} deadline={deadline} description={description} idStatus={idStatus} employees={assignedEmployees} idTasks={idTasks} />
+                {({ onClose }) => <FormTask title={title} deadline={deadline} description={description} idStatus={idStatus} employees={assignedEmployees} idTasks={idTasks} onClose={onClose} />}
             </UpdateTaskModal>
         </div>
     )

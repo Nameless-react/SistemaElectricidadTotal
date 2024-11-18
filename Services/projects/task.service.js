@@ -54,6 +54,6 @@ export default class TaskService {
         if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
 
         await this.getTaskById(validatedTask.data.idTasks);
-        return await this.taskRepository.updateTask(validatedTask.data);
+        return await this.taskRepository.updateTask({ ...validatedTask.data, employees: [...validatedTask.data.employees]});
     }
 }

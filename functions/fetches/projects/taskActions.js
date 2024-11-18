@@ -1,5 +1,5 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { revalidateTag } from "next/cache";
 import config from "/config/config";
 
 export const createTaskAction = async (task) => {
@@ -16,14 +16,14 @@ export const createTaskAction = async (task) => {
         })
 
 
-        const result = await response.json();
-        // revalidatePath(`/proyectos/${task.idProjects}`)
         if (result.error) return {errors: result.error}
-
-        return { successMessage: "Tarea creada con éxito", data: {} }
+        
+        const result = await response.json();
     } catch (e) {
         return { errors: e }
     }
+    revalidateTag("project")
+    return { successMessage: "Tarea creada con éxito", data: {} }
 }
 
 export const updateTaskAction = async (task) => {
@@ -38,16 +38,17 @@ export const updateTaskAction = async (task) => {
                 employees: [...task.employees]
             })
         })
-
-
+        
+        
         const result = await response.json();
         // revalidatePath(`/proyectos/${task.idProjects}`)
         if (result.error) return {errors: result.error}
-
-        return { successMessage: "Tarea se actualizó con éxito", data: {} }
+        
     } catch (e) {
         return { errors: e }
     }
+    revalidateTag("project")
+    return { successMessage: "Tarea se actualizó con éxito", data: {} }
 }
 
 export const deleteTaskAction = async (idTask) => {
@@ -57,11 +58,12 @@ export const deleteTaskAction = async (idTask) => {
             method: "DELETE"
         });
         const result = await response.json();
-
+        
         if (result.error) return {errors: result.error}
         
-        return { successMessage: "Tarea eliminada con éxito", data: {} }
     } catch (e) {
         return { errors: e }
     }
+    revalidateTag("project")
+    return { successMessage: "Tarea eliminada con éxito", data: {} }
 }

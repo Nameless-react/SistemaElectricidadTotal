@@ -5,24 +5,40 @@ export default class EmployeeRepository {
         this.sequelize = sequelize;
     }
 
-    async saveEmployee(employee) {
-        const result = await this.sequelize.query("CALL save_employee(:p_id_user_author, :p_message, :p_id_conversation)", {
-            replacements: {
-                p_id_user_author: message.idUserAuthor,
-                p_message: message.message,
-                p_id_conversation: message.idConversation
-            },
-            logging: console.log,
-            type: this.sequelize.QueryTypes.RAW
-        })
-
-        return result;
+    async createEmployee(formData) {
+        try {
+            const result = await this.sequelize.query(
+                "CALL create_employee_withId(:p_id_users, :p_job, :p_join_at);",
+                {
+                    replacements: {
+                        p_id_users: formData.userId,
+                        p_job: formData.job,
+                        p_join_at: formData.joinAt,
+                    },
+                    logging: console.log,
+                    type: this.sequelize.QueryTypes.RAW,
+                }
+            );
+            return result;
+        } catch (error) {
+            console.error("Error al crear empleado:", error);
+            throw new Error("Error al crear empleado.");
+        }
     }
 
-    async deleteEmployee(id) {
+    async getEmployeeById(idEmployees) {
+        return await this.employeeModel.findOne({
+            where: {
+                idEmployees
+            }
+        })
+    }
+
+
+    async deleteEmployee(idEmployees) {
         return await this.employeeModel.destroy({
             where: {
-                idMessage: id
+                idEmployees
             }
         })
     }
@@ -48,6 +64,21 @@ export default class EmployeeRepository {
             }
         })
         return employees;
-    
+    }
+
+    async updateEmployee(formData) {
+        try {
+            const result = await this.sequelize.query("CALL update_employee_job_withId(:p_id_users, :p_job);",
+                {
+                    replacements: {
+                        p_id_users: formData.userId,
+                        p_job: formData.job,
+                    },
+                    logging: console.log, type: this.sequelize.QueryTypes.RAW,
+                }); return result;
+        } catch (error) {
+            console.error("Error al actualizar el trabajo del empleado:", error);
+            throw new Error("Error al actualizar el trabajo del empleado.");
+        }
     }
 }

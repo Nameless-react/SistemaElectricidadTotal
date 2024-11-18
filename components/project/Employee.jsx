@@ -4,16 +4,18 @@ import { Avatar } from "@nextui-org/avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownItem, DropdownTrigger, DropdownMenu } from "@nextui-org/dropdown";
-import { deleteTeamProjectEmployeeAction } from "/functions/fetches/employees/employeeActions"
+import { deleteTeamProjectEmployeeAction } from "/functions/fetches/teams/teamActions"
 import { ProjectContext } from "./context/ProjectContext";
 import { useContext } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Employee({ idTeamProjectEmployee, image, name, job, email }) {
-    const { project, employee, setEmployee } = useContext(ProjectContext)
+    const { setEmployees } = useContext(ProjectContext);
+    const { data: session } = useSession();
 
     const handleDelete = async (idTeamProjectEmployee) => {
         const result = await deleteTeamProjectEmployeeAction(idTeamProjectEmployee);
-        setEmployees(prevEmployee => prevEmployee.filter(employee => employee.idEmployee !== idTeamProjectEmployee));
+        setEmployees(prevEmployee => prevEmployee.filter(employee => employee.idTeamProjectEmployee !== idTeamProjectEmployee));
     }
 
     return (
@@ -21,8 +23,8 @@ export default function Employee({ idTeamProjectEmployee, image, name, job, emai
             <Avatar src={image}/>
             <h3>{name}</h3>
             <p>{job}</p>
-            <p>{email}</p>
-            <Dropdown className="dark">
+            <a href={`mailto:${email}`}>{email}</a>
+            {session?.user.roles.includes("Administrador") && <Dropdown className="dark">
                 <DropdownTrigger>
                     <div className="w-full h-full flex items-center justify-center">
                         <FontAwesomeIcon icon={faEllipsisVertical} />
@@ -31,7 +33,7 @@ export default function Employee({ idTeamProjectEmployee, image, name, job, emai
                 <DropdownMenu aria-label="Static Actions">
                     <DropdownItem onClick={() => handleDelete(idTeamProjectEmployee)} key="delete" className="text-danger outline-none">Eliminar</DropdownItem>
                 </DropdownMenu>
-            </Dropdown>
+            </Dropdown>}
         </div>
     )
 }

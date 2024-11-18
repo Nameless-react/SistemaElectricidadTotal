@@ -6,11 +6,13 @@ import styles from "/css/projectPage.module.css";
 import Status from "./Status";
 import { useContext } from "react";
 import { ProjectContext } from "./context/ProjectContext";
-
+import { useSession } from "next-auth/react";
 
 export default function ProjectInformation() {
     const { project } = useContext(ProjectContext);
-    
+    const { data: session } = useSession();
+
+
     return (
         project && (<div className={styles.projectContainer}>
             <div className={styles.optionsProjects}>
@@ -24,9 +26,9 @@ export default function ProjectInformation() {
                 <Tab key={"Información"} title="Información">
                     <ProjectDashboard />
                 </Tab>
-                <Tab key={"Configuración"} title="Configuración">
+                {session?.user.roles.includes("Administrador") && <Tab key={"Configuración"} title="Configuración">
                     <ConfigurationProject />
-                </Tab>
+                </Tab>}
             </Tabs>
         </div>)
     )

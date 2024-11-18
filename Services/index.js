@@ -12,7 +12,10 @@ import UserService from "./users/user.service";
 import ValidationUserService from "./users/validations/validationUser.service";
 import TaskService from "./Projects/task.service";
 import ValidationUserProfileService from "./users/validations/validationUserProfile.service";
+//import ProjectsImagesService from "./projects/projectsImages.service";
 import ProjectsService from "./Projects/projects.service";
+import EmployeeService from "./employees/employees.service";
+import ValidationEmployeeFormService from "./employees/Validations/validationEmployeeForm.service";
 import ProjectsImagesService from "./Projects/projectsImages.service";
 import ExpensesProjectsService from "./expenses_projects/expensesProjects.service";
 import ExpensesService from "./expenses/expenses.service";
@@ -25,28 +28,31 @@ import IncomeService from "./income/income.service";
 import ValidationIncomeCategoryService from "./income_category/validations/validationIncomeCategory.service";
 export {
     CategoryService,
-    MaintenanceNotesService,
-    ProviderService,
-    ToolService,
-    MaterialService,
-    ValidationMaintenanceNotesService,
-    ValidationToolsService,
-    ValidationMaterialService,
-    ImageService,
-    UserService,
-    ValidationUserService,
-    ValidationUserProfileService,
-    ValidationExpenseProjectService,
-    ProjectsService,
-    ProjectsImagesService,
-    TaskService,
+    EmployeeService,
+    ExpenseCategoryService,
     ExpensesProjectsService,
     ExpensesService,
-    ExpenseCategoryService,
-    ProjectBudgetService,
-    ValidationExpenseCategoryService,
-    ValidationProjectBudgetService,
+    ImageService,
     IncomeCategoryService,
     IncomeService,
-    ValidationIncomeCategoryService
+    MaintenanceNotesService,
+    MaterialService,
+    ProjectBudgetService,
+    ProjectsImagesService,
+    ProjectsService,
+    ProviderService,
+    TaskService,
+    ToolService,
+    UserService,
+    ValidationEmployeeFormService,
+    ValidationExpenseCategoryService,
+    ValidationExpenseProjectService,
+    ValidationIncomeCategoryService,
+    ValidationMaintenanceNotesService,
+    ValidationMaterialService,
+    ValidationProjectBudgetService,
+    ValidationToolsService,
+    ValidationUserProfileService,
+    ValidationUserService
 };
+

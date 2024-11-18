@@ -15,6 +15,7 @@ import TaskAssignmentsModel from "../models/taskAssignments.model";
 import ExpensesProjectsModel from "../models/expenses_project.model"
 import ProjectBudgetModel from "../models/project_budget.model"
 
+
 ProjectModel.hasMany(TaskModel, {
     foreignKey: 'idProjects',
     sourceKey: 'idProjects',

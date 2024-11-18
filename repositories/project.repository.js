@@ -1,3 +1,5 @@
+import logger from "../functions/others/logger";
+
 export default class ProjectsRepository {
     constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, expensesModel, budgetModel, sequelize) {
         this.projectModel = projectModel;
@@ -43,8 +45,12 @@ export default class ProjectsRepository {
             where: {
                 deleted: false
             },
-            attributes: ['idProjects', 'name', 'description',  'percentage'],
+            attributes: ['idProjects', 'name', 'description', 'percentage'],
+            logging: (sql,queryObject) => {
+                logger.info(sql)
+            }
         });
+
         
         const formattedProjects = projects.map(project => {
             const { Status, teamProject, ...projectData } = project.get({ plain: true });
@@ -73,7 +79,7 @@ export default class ProjectsRepository {
                 },
                 {
                     model: this.statusModel,
-                    attributes: ['name']
+                    attributes: ['name', "idStatus"]
                 },
                 {
                     model: this.taskModel,
@@ -82,7 +88,7 @@ export default class ProjectsRepository {
                     include: [
                         {
                             model: this.statusModel,
-                            attributes: ['name'],
+                            attributes: ['name', "idStatus"],
                             required: false
                         },
                         {
@@ -154,6 +160,8 @@ export default class ProjectsRepository {
         const formattedProject = {
             ...projectData,
             status: projectStatus?.name || 'Unknown',
+            idStatus: projectStatus?.idStatus,
+            teamProjectName: teamProject?.name,
             idTeamProject: teamProject?.idTeamProject,
             employees: teamProject?.teamProjectEmployees?.map(employee => ({
                 image: employee.employee.User.image,
@@ -166,6 +174,7 @@ export default class ProjectsRepository {
             tasks: tasks?.map(({ Status: taskStatus, taskAssignments, ...taskData }) => ({
                 ...taskData,
                 status: taskStatus?.name || 'Unknown',
+                idStatus: taskStatus?.idStatus,
                 assignedEmployees: taskAssignments?.map(taskResponsible => ({
                     idEmployee: taskResponsible.idEmployee,
                     image: taskResponsible.employee.User.image,
@@ -183,13 +192,13 @@ export default class ProjectsRepository {
 
     async createProject(project) {
         const result = await this.sequelize.query(
-            `Call create_project_with_images(:p_name ,:p_description, :p_budget , :p_id_status , ARRAY[:p_images_url]);`, {
+            `Call create_project_with_images(:p_name ,:p_description, :p_id_status, :p_id_team_project, ARRAY[:p_images_url]);`, {
             replacements: {
                 p_name: project.name,
                 p_description: project.description,
-                p_budget: project.budget,
                 p_id_status: project.idStatus,
-                p_images_url: project.images
+                p_id_team_project: project.idTeamProject,
+                p_images_url: project.images || ["https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg"]
             },
             type: this.sequelize.QueryTypes.RAW,
             logging: console.log,

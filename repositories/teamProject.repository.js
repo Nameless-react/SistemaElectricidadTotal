@@ -5,8 +5,26 @@ export default class TeamProjectRepository {
         this.sequelize = sequelize;
     }
 
-    async addEmployee(teamProjectEmployees) {
-        const result = await this.sequelize.query("CALL add_employees_team(:p_id_team_project, ARRAY[:p_employees])", {
+
+    async getTeams() {
+        return await this.teamProjectModel.findAll();
+    }
+
+    async saveTeam(team) {
+        const result = await this.sequelize.query("CALL save_team(:p_name, ARRAY[:p_employees])", {
+            replacements: {
+                p_name: team.name,
+                p_employees: team.employees
+            },
+            logging: console.log,
+            type: this.sequelize.QueryTypes.RAW
+        })
+
+        return result;
+    }
+
+    async changeEmployees(teamProjectEmployees) {
+        const result = await this.sequelize.query("CALL update_team_project(:p_id_team_project, NULL, ARRAY[:p_employees])", {
             replacements: {
                 p_id_team_project: teamProjectEmployees.idTeamProject,
                 p_employees: teamProjectEmployees.employees
@@ -19,11 +37,15 @@ export default class TeamProjectRepository {
     }
 
     async deleteEmployee(idTeamProjectEmployee) {
-        return await this.teamProjectEmployeeModel.destroy({
-            where: {
-                idTeamProjectEmployee
-            }
+        const result = await this.sequelize.query("CALL delete_employee_from_team_project(:p_id_team_project_employee)", {
+            replacements: {
+                p_id_team_project_employee: idTeamProjectEmployee,
+            },
+            logging: console.log,
+            type: this.sequelize.QueryTypes.RAW
         })
+
+        return result;
     }
 
     async getTeamByProject(idProject) {

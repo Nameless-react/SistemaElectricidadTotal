@@ -17,7 +17,7 @@ export default function MyProjects() {
             <div className="space-y-4">
                 {projects.map(project => (
                     <div key={project.id} className="">
-                        <Link hr className="bg-gray-700 hover:bg-gray-600 transition duration-300 ease-in-out text-white p-4 rounded-lg shadow-md flex justify-between items-center" href={`/portal-clientes/mis-proyectos/proyecto`} key={project.id}>
+                        <Link className="bg-gray-700 hover:bg-gray-600 transition duration-300 ease-in-out text-white p-4 rounded-lg shadow-md flex justify-between items-center" href={`/portal-clientes/mis-proyectos/proyecto`} key={project.id}>
                             <div className="flex items-center">
                                 <FontAwesomeIcon icon={faProjectDiagram} className="text-blue-400 text-2xl mr-4" />
                                 <h2 className="text-xl font-semibold">{project.name}</h2>

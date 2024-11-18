@@ -1,5 +1,5 @@
 import { validateProject, validateIdProject, validatePartiaProject } from "/functions/validations/projectValidation";
-import { ValidationFailureError , NotFoundError} from "/errors/errors";
+import { ValidationFailureError , NotFoundError } from "/errors/errors";
 
 class ProjectsService {
     constructor(projectsRepository, projectsImagesService) {
@@ -27,7 +27,7 @@ class ProjectsService {
         const validatedProject = validateProject(projectData);
         if (validatedProject.error) throw new ValidationFailureError(validatedProject.error.message);
 
-        return await this.projectsRepository.createProject(validatedProject.data );
+        return await this.projectsRepository.createProject(validatedProject.data);
     }
 
 
