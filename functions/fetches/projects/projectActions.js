@@ -23,9 +23,10 @@ export const deleteProjectAction = async (id) => {
     return result;
 }
 
-export const saveProjectAction = async () => {
+export const saveProjectAction = async (project) => {
     const response = await fetch(`http://${config.host}:3000/api/projects/`, {
-        method: "POST"
+        method: "POST",
+        body: JSON.stringify(project)
     })
 }
 

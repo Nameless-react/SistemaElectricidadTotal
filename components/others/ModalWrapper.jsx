@@ -14,7 +14,7 @@ export default function ModalWrapper({ children, modalTitle, buttonComponent, mo
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1 font-bold px-12">{modalTitle}</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1 font-bold px-12 pt-8 text-2xl">{modalTitle}</ModalHeader>
                             <ModalBody className="p-12 pt-6">
                                 {children({ onClose, isOpen })}
                             </ModalBody>

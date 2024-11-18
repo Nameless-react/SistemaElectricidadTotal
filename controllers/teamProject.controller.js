@@ -23,9 +23,8 @@ class TeamProjectController {
 
     saveTeam = apiErrorWrapper(async (req, res) => {
         const parseBody = await req.json();
-        
-        await this.teamService.saveTask({ ...parseBody, employees: new Set(parseBody.employees) });
-        return NextResponse.json({ message: "Tarea guardada con éxito" }, { status: 201 });
+        await this.teamService.saveTeam({ ...parseBody, employees: new Set(parseBody.employees) });
+        return NextResponse.json({ message: "Equipo guardado con éxito" }, { status: 201 });
     })
 
     deleteEmployee = apiErrorWrapper(async (req, params) => {

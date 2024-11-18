@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
 import { Select } from "@nextui-org/select";
 
-export default function SelectWrapper({ name, control, items = [], errors = {}, classNames = {}, className = '', label, renderValue, children }) {
+export default function SelectWrapper({ name, control, isMultiline = false, selectionMode = "single", items = [], errors = {}, classNames = {}, className = '', label, renderValue, children }) {
     return (
         <div className={`flex flex-col gap-2 font-bold ${className}`}>
             {label && <label htmlFor={name}>{label}</label>}
@@ -13,6 +13,8 @@ export default function SelectWrapper({ name, control, items = [], errors = {}, 
                         id={name}
                         items={items}
                         isInvalid={!!errors[name]}
+                        isMultiline={isMultiline}
+                        selectionMode={selectionMode}
                         errorMessage={errors[name]?.message}
                         classNames={classNames}
                         aria-label={label}

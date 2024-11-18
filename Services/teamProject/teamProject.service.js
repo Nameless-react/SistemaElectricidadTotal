@@ -12,11 +12,11 @@ export default class TeamProjectService {
         return await this.teamProjectRepository.getTeams();
     }
 
-    async saveTeam(task) {
-        const validatedTask = validateTeamProject(task);
-        if (validatedTask.error) throw new ValidationFailureError(validatedTask.error.message);
-
-        return await this.teamProjectRepository.saveTask(validatedTask.data);
+    async saveTeam(team) {
+        const validatedTeamProject = validateTeamProject(team);
+        if (validatedTeamProject.error) throw new ValidationFailureError(validatedTeamProject.error.message);
+        console.log(validatedTeamProject.data)
+        return await this.teamProjectRepository.saveTeam({ ...validatedTeamProject.data, employees: [...validatedTeamProject.data.employees] });
     }
     
     async deleteEmployee(idTeamProjectEmployee) {

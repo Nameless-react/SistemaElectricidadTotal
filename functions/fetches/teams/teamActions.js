@@ -1,13 +1,34 @@
 "use server"
 import { revalidateTag, revalidatePath } from "next/cache";
 import config from "/config/config";
-import { redirect } from "next/navigation";
 
 export const getTeamsProjectAction = async () => {
     const response = await fetch(`http://${config.host}:3000/api/teams`);
     const result = await response.json();
     return result;
 }
+
+export const addTeamWithEmployeesAction = async (team) => {
+    try {
+        console.log(team)
+        const response = await fetch(`http://${config.host}:3000/api/teams/`, {
+            method: "POST",
+            body: JSON.stringify({
+                ...team,
+                employees: [...team.employees]
+            })
+        });
+        const result = await response.json();
+    
+        // revalidatePath(`/proyectos/${task.idProjects}`)
+        if (result.error) return {errors: result.error}
+    
+        return { successMessage: "El equipo se creó con éxito", data: {} }
+    } catch (e) {
+        return { errors: e }
+    }
+}
+
 
 export const deleteTeamProjectEmployeeAction = async (id) => {
     try {

@@ -27,7 +27,7 @@ class ProjectsService {
         const validatedProject = validateProject(projectData);
         if (validatedProject.error) throw new ValidationFailureError(validatedProject.error.message);
 
-        return await this.projectsRepository.createProject(validatedProject.data );
+        return await this.projectsRepository.createProject(validatedProject.data);
     }
 
 

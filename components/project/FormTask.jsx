@@ -1,7 +1,7 @@
 "use client"
 import { Input, Textarea } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { Select, SelectItem } from "@nextui-org/select";
+import { SelectItem } from "@nextui-org/select";
 import { DatePicker } from "@nextui-org/date-picker";
 import { I18nProvider } from "@react-aria/i18n";
 import { useForm, Controller } from "react-hook-form";
@@ -10,14 +10,13 @@ import { createTaskAction, updateTaskAction } from "/functions/fetches/projects/
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useMemo, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { ProjectContext } from "./context/ProjectContext";
-import { Avatar } from "@nextui-org/avatar";
 import { getDateTask } from "/functions/others/dateTime";
 import { today, getLocalTimeZone } from "@internationalized/date";
 import { STATUS_DETAILS } from "/shared/status";
 import SelectWrapper from "../others/SelectWrapper";
-
+import EmployeeSelect from "./EmployeeSelect";
 
 
 
@@ -27,13 +26,6 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
         popoverContent: "dark",
         trigger: "min-h-12 py-2 dark"
     }
-    const renderValueStatus = (selectedKey) => {
-        const id = parseInt(selectedKey[0].key);
-        const [name, status] = Object.entries(STATUS_DETAILS)[id - 1]
-        return <p key={id} className="gap-2 text-base font-bold items-center justify-center flex" style={{ color: status.color }}><FontAwesomeIcon icon={status.icon} />{name}</p>
-    }
-
-
 
     const { register, handleSubmit, control, reset, formState: { errors, isSubmitting } } = useForm({
         resolver: zodResolver(idTasks ? validatePartialTaskClient : validateTaskClient),
@@ -65,6 +57,30 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
         }
     }
 
+    const renderValuesEmployees = (selectedEmployees) => {
+        return (
+            <div className="flex gap-3 flex-wrap">
+                {Array.from(selectedEmployees).map(employeeId => {
+                    const employee = project.employees.find(emp => emp.idEmployee === parseInt(employeeId.data.idEmployee));
+                    return (
+                        <p className="bg-[#C78824] px-4 py-2 rounded-2xl" key={employee?.idEmployee}>{employee?.email}</p>
+                    );
+                })}
+            </div>
+        )
+    }
+
+
+    const renderValueStatus = (selectedKey) => {
+        const id = parseInt(selectedKey[0].key);
+        const [name, status] = Object.entries(STATUS_DETAILS)[id - 1]
+        return (
+            <p key={id} className="gap-2 text-base font-bold items-center justify-center flex" style={{ color: status.color }}>
+                <FontAwesomeIcon icon={status.icon} />
+                {name}
+            </p>
+        )
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col">
@@ -99,57 +115,14 @@ export default function FormTask({ idTasks, title, deadline, description, idStat
                     />
                 </I18nProvider>
             </div>
-            <Controller
-                control={control}
-                name="employees"
-                render={({ field: { onChange, value, onBlur } }) => (
-                    <Select
-                        items={project.employees}
-                        isMultiline={true}
-                        selectionMode="multiple"
-                        isInvalid={!!errors?.employees}
-                        errorMessage={errors?.employees?.message}
-                        classNames={{
-                            popoverContent: "dark",
-                            trigger: "min-h-12 py-2"
-                        }}
-                        aria-label="Seleccionar empleados para la tarea"
-                        placeholder="Seleccione los empleados"
-                        selectedKeys={value}
-                        onSelectionChange={onChange}
-                        onBlur={onBlur}
-                        renderValue={(selectedEmployees) => {
-                            return <div className="flex gap-3 flex-wrap">
-                                {Array.from(selectedEmployees).map(employeeId => {
-                                    const employee = project.employees.find(emp => emp.idEmployee === parseInt(employeeId.data.idEmployee));
-                                    return (
-                                        <p className="bg-[#C78824] px-4 py-2 rounded-2xl" key={employee?.idEmployee}>{employee?.email}</p>
-                                    );
-                                })}
-                            </div>
-                        }}
-                    >
-                        {(employee) => (
-                            <SelectItem key={employee.idEmployee}>
-                                <div className="flex items-center gap-2">
-                                    <Avatar
-                                        alt={employee.name}
-                                        className="flex-shrink-0"
-                                        size="sm"
-                                        src={employee.image}
-                                    />
-                                    <div className="flex flex-col">
-                                        <span>{employee.name}</span>
-                                        <span className="text-default-500 text-tiny">({employee.email})</span>
-                                    </div>
-                                </div>
-                            </SelectItem>
-                        )}
-                    </Select>
-                )}
-            />
 
-           {idStatus && <SelectWrapper className="w-full" label="Seleccione el estado" control={control} name="idStatus" items={Object.entries(STATUS_DETAILS)} errors={errors} classNames={selectStyles} renderValue={renderValueStatus}>
+
+            <SelectWrapper control={control} name="employees" items={project.employees} isMultiline={true} selectionMode="multiple" errors={errors} className="w-full" classNames={selectStyles} label="Seleccione los empleados" renderValue={renderValuesEmployees}>
+                {(employee) => <SelectItem key={employee.idEmployee}><EmployeeSelect {...employee} /></SelectItem>}
+            </SelectWrapper>
+
+
+            {idStatus && <SelectWrapper className="w-full" label="Seleccione el estado" control={control} name="idStatus" items={Object.entries(STATUS_DETAILS)} errors={errors} classNames={selectStyles} renderValue={renderValueStatus}>
                 {Object.entries(STATUS_DETAILS).map(([name, status], index) => (
                     <SelectItem key={index + 1} startContent={<FontAwesomeIcon icon={status.icon} />} className="dark:hover:bg-sky-900" style={{ color: status.color }}>{name}</SelectItem>
                 ))}

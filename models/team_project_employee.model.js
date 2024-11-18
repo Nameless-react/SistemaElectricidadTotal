@@ -16,7 +16,6 @@ TeamProjectEmployee.init({
     },
     idTeamProject: {
         type: DataTypes.STRING,
-        allowNull: false,
         field: "id_team_project"
     },
     idEmployee: {

@@ -15,6 +15,10 @@ import BudgetsModal from "./Budgets";
 import CreateFormTask from "./CreateTaskModal";
 
 
+
+//* Make the verification to make sure that there is assigned a team
+//* Dont validate the date in case of update, because its going to say the date must be after the current date
+//* Investigate an test very well how to update the data in the dashboard
 export default function ProjectDashboard() {
     const { project } = useContext(ProjectContext);
     const { percentage, employees, tasks, projectBudgets, expensesProjects } = project;

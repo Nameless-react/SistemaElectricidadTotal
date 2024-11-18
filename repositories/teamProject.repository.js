@@ -10,6 +10,19 @@ export default class TeamProjectRepository {
         return await this.teamProjectModel.findAll();
     }
 
+    async saveTeam(team) {
+        const result = await this.sequelize.query("CALL save_team(:p_name, ARRAY[:p_employees])", {
+            replacements: {
+                p_name: team.name,
+                p_employees: team.employees
+            },
+            logging: console.log,
+            type: this.sequelize.QueryTypes.RAW
+        })
+
+        return result;
+    }
+
     async changeEmployees(teamProjectEmployees) {
         const result = await this.sequelize.query("CALL update_team_project(:p_id_team_project, NULL, ARRAY[:p_employees])", {
             replacements: {

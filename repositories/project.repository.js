@@ -185,11 +185,10 @@ export default class ProjectsRepository {
 
     async createProject(project) {
         const result = await this.sequelize.query(
-            `Call create_project_with_images(:p_name ,:p_description, :p_budget , :p_id_status , ARRAY[:p_images_url]);`, {
+            `Call create_project_with_images(:p_name ,:p_description, :p_id_status , ARRAY[:p_images_url]);`, {
             replacements: {
                 p_name: project.name,
                 p_description: project.description,
-                p_budget: project.budget,
                 p_id_status: project.idStatus,
                 p_images_url: project.images
             },

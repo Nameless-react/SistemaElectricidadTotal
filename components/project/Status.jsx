@@ -10,7 +10,8 @@ export default function Status({ status, size }) {
         width: size === "s" ? "2%" : "35%",
         fontSize: size === "s" ? ".7rem" : ".8rem",
         padding: size === "s" ? ".3rem 0" : ".5rem 0",
-        iconSize: size === "s" ? "text-md" : "text-2xl"
+        iconSize: size === "s" ? "text-md" : "text-2xl",
+        minWidth: size === "s" ? "130px" : "170px"
     };
 
     return (

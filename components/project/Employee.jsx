@@ -8,8 +8,9 @@ import { deleteTeamProjectEmployeeAction } from "/functions/fetches/teams/teamAc
 import { ProjectContext } from "./context/ProjectContext";
 import { useContext } from "react";
 
+
 export default function Employee({ idTeamProjectEmployee, image, name, job, email }) {
-    const { project, employee, setEmployees } = useContext(ProjectContext)
+    const { setEmployees } = useContext(ProjectContext)
 
     const handleDelete = async (idTeamProjectEmployee) => {
         const result = await deleteTeamProjectEmployeeAction(idTeamProjectEmployee);
