@@ -12,6 +12,7 @@ ExpenseCategory.init({
     },
 
     name: {
+        
         type: DataTypes.STRING(255),
         allowNull: false
     },
@@ -22,7 +23,7 @@ ExpenseCategory.init({
     },
 
     status:{
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.STRING(50),
         allowNull: false,
         defaultValue: true
     }

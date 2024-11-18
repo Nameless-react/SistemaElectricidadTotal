@@ -13,6 +13,9 @@ import TaskRepository from "./task.repository.js";
 import ExpensesRepository from "./expensesRepository.js";
 import ExpensesProjectsRepository from "./exprensesProjects.repository.js";
 import ExpenseCategoryRepository from "./expenseCategory.repository.js";
+import ProjectBudgetRepository from "./projectBudget.repository.js";
+import IncomeCategoryRepository from "./incomeCategory.repository.js";
+import IncomeRepository from "./income.repository.js";
 export {
     AppointmentRepository,
     AppointmentConfirmationRepository,
@@ -28,5 +31,8 @@ export {
     UserRepository,
     ExpensesProjectsRepository,
     ExpensesRepository,
-    ExpenseCategoryRepository
+    ExpenseCategoryRepository,
+    ProjectBudgetRepository,
+    IncomeCategoryRepository,
+    IncomeRepository
 }

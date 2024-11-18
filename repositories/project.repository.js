@@ -58,8 +58,9 @@ export default class ProjectsRepository {
         return formattedProjects;
     }
     
-    
+
     async getProjectById(id) {
+        console.log( "the id is",id);
         const result = await this.projectModel.findByPk(id, {
             include: [
                 {
@@ -114,7 +115,7 @@ export default class ProjectsRepository {
                         {
                             model: this.teamProjectEmployeeModel,
                             attributes: {
-                                exclude: ["idTeamProjectEmployee", "idEmployee", "id_team_project"]
+                                exclude: ["idEmployee", "id_team_project"]
                             },
                             required: false,
                             include: [
@@ -159,19 +160,22 @@ export default class ProjectsRepository {
                 email: employee.employee.User.email,
                 name: employee.employee.User.name,
                 job: employee.employee.job,
-                idEmployee: employee.id_employee
+                idEmployee: employee.id_employee,
+                idTeamProjectEmployee: employee.idTeamProjectEmployee
             })) || [],
             tasks: tasks?.map(({ Status: taskStatus, taskAssignments, ...taskData }) => ({
                 ...taskData,
                 status: taskStatus?.name || 'Unknown',
                 assignedEmployees: taskAssignments?.map(taskResponsible => ({
                     idEmployee: taskResponsible.idEmployee,
-                    image: taskResponsible.employee.User.image
+                    image: taskResponsible.employee.User.image,
+                    email: taskResponsible.employee.User.email,
+                    name: taskResponsible.employee.User.name
                 })) || []
             })) || []
             
         };
-
+        console.log(formattedProject);
         return formattedProject;
 
     }

@@ -26,6 +26,30 @@ export const createTaskAction = async (task) => {
     }
 }
 
+export const updateTaskAction = async (task) => {
+    try {
+        const response = await fetch(`http://${config.host}:3000/api/tasks/${task.idTasks}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ...task,
+                employees: [...task.employees]
+            })
+        })
+
+
+        const result = await response.json();
+        // revalidatePath(`/proyectos/${task.idProjects}`)
+        if (result.error) return {errors: result.error}
+
+        return { successMessage: "Tarea se actualizó con éxito", data: {} }
+    } catch (e) {
+        return { errors: e }
+    }
+}
+
 export const deleteTaskAction = async (idTask) => {
     try {
         

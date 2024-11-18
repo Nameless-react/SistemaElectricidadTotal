@@ -48,11 +48,7 @@ ExpensesProjects.init({
         allowNull: false,
         field: "id_expense_category"
     },
-    idProjectBudget: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        field: "id_project_budget"
-    }
+
 },
 {
     sequelize: sequelize,    
@@ -70,8 +66,6 @@ ExpensesProjects.belongsTo(User, {
     }
 });
 
-
-
 ExpensesProjects.belongsTo(ExpenseCategory,{
     foreignKey: {
         name: "id_expense_category",
@@ -79,14 +73,5 @@ ExpensesProjects.belongsTo(ExpenseCategory,{
         as: "idExpenseCategory"
     }
 });
-
-ExpensesProjects.belongsTo(ProjectBudget,{
-    foreignKey:{
-        name: "id_project_budget",
-        allowNull: false,
-        as: "idProjectBudget"
-    }
-});
-
 
 export default ExpensesProjects;

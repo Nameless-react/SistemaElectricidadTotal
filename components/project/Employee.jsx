@@ -8,12 +8,12 @@ import { deleteTeamProjectEmployeeAction } from "/functions/fetches/employees/em
 import { ProjectContext } from "./context/ProjectContext";
 import { useContext } from "react";
 
-export default function Employee({ idEmployee, image, name, job, email }) {
+export default function Employee({ idTeamProjectEmployee, image, name, job, email }) {
     const { project, employee, setEmployee } = useContext(ProjectContext)
 
-    const handleDelete = async (idEmployee) => {
-        const result = await deleteTeamProjectEmployeeAction(idEmployee);
-        setEmployee(prevEmployee => prevEmployee.filter(employee => employee.idEmployee === idEmployee));
+    const handleDelete = async (idTeamProjectEmployee) => {
+        const result = await deleteTeamProjectEmployeeAction(idTeamProjectEmployee);
+        setEmployees(prevEmployee => prevEmployee.filter(employee => employee.idEmployee !== idTeamProjectEmployee));
     }
 
     return (
@@ -29,7 +29,7 @@ export default function Employee({ idEmployee, image, name, job, email }) {
                     </div>
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem onClick={() => handleDelete(idEmployee)} key="delete" className="text-danger outline-none">Eliminar</DropdownItem>
+                    <DropdownItem onClick={() => handleDelete(idTeamProjectEmployee)} key="delete" className="text-danger outline-none">Eliminar</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
         </div>

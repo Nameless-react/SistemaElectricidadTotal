@@ -14,7 +14,37 @@ import User from "./user.model";
 import Task from "./task.model";
 import Employee from "./employees.model";
 import ExpensesProjects from "./expenses_project.model";
+import TeamProject from "./team_project.model";
+import TeamProjectEmployee from "./team_project_employee.model";
 import Project from "./projects.model";
+import ProjectBudget from "./project_budget.model";
+import IncomeCategory from "./income_category.model";
+import Income from "./income.model";
+
+
+Income.belongsTo(IncomeCategory, {
+    foreignKey: {
+        name: "idIncomeCategory",
+        allowNull: false,
+        as: "idIncomeCategory"
+    }
+});
+
+Income.belongsTo(Project, {
+    foreignKey: {
+        name: "idProject",
+        allowNull: false,
+        as: "idProject"
+    }
+});
+
+Income.belongsTo(User, {
+    foreignKey: {
+        name: "idUser",
+        allowNull: false,
+        as: "idUser"
+    }
+});
 
 ExpensesProjects.belongsTo(Project, {
     foreignKey: {
@@ -40,7 +70,12 @@ export {
     Provider,
     Task,
     ToolProvider,
+    TeamProject,
+    TeamProjectEmployee,
     Tool,
     Project,
-    User
+    ProjectBudget,
+    User,
+    IncomeCategory,
+    Income
 }
