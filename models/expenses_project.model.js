@@ -62,7 +62,6 @@ ExpensesProjects.belongsTo(User, {
     foreignKey: {
         name: "id_user",
         allowNull: false,
-        as: "idUser"
     }
 });
 

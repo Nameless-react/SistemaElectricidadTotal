@@ -27,7 +27,6 @@ export default function ProjectDashboard() {
     const expense = expensesProjects?.reduce((acc, expense) => acc + expense.amount, 0) ?? 0;
     const budget = projectBudgets?.reduce((acc, earn) => acc + earn.amount, 0) ?? 0;
 
-    console.log(session)
 
     return (
         <div className={style.container}>

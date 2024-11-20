@@ -50,7 +50,6 @@ export default function ChatMessages() {
 
     return (
         <>
-        {console.log(session)}
             {session && (
                 <div className={styles.messagesContainer}>
                     {componentsMessages}
