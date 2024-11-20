@@ -1,6 +1,9 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
 import User from './user.model';
+import ProjectBudget from './project_budget.model';
+import Project from './projects.model';
+import ExpenseCategory from './expense_category.model';
 
 class ExpensesProjects extends Model {}
 
@@ -30,7 +33,7 @@ ExpensesProjects.init({
         allowNull: false,
         defaultValue: DataTypes.NOW
     },
-    idProject: {
+    idProjects: {
         type: DataTypes.INTEGER,
         allowNull: false,
         field: "id_project"
@@ -38,7 +41,14 @@ ExpensesProjects.init({
     idUser: {
         type: DataTypes.INTEGER,
         field: "id_user"
-    }
+    },
+
+    idExpenseCategory: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: "id_expense_category"
+    },
+
 },
 {
     sequelize: sequelize,    
@@ -56,5 +66,12 @@ ExpensesProjects.belongsTo(User, {
     }
 });
 
+ExpensesProjects.belongsTo(ExpenseCategory,{
+    foreignKey: {
+        name: "id_expense_category",
+        allowNull: false,
+        as: "idExpenseCategory"
+    }
+});
 
 export default ExpensesProjects;

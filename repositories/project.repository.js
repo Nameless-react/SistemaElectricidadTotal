@@ -121,8 +121,9 @@ export default class ProjectsRepository {
         return formattedProjects;
     }
     
-    
+
     async getProjectById(id) {
+        console.log( "the id is",id);
         const result = await this.projectModel.findByPk(id, {
             include: [
                 {
@@ -259,7 +260,7 @@ export default class ProjectsRepository {
                 email: User.email
             }))
         };
-
+        console.log(formattedProject);
         return formattedProject;
 
     }

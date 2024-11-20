@@ -27,6 +27,10 @@ export default class TeamProjectService {
         if (!deleted) throw new DeletionError("No se pudo eliminar el empleado del equipo");
     }
 
+    async getTeamByProject(id) {
+        return await this.teamProjectRepository.getTeamByProject(id);
+    }
+
     async changeEmployees(teamProjectEmployees) {
         const validatedTeamProjectEmployee = validatePartialTeamProject(teamProjectEmployees);
         if (validatedTeamProjectEmployee.error) throw new ValidationFailureError(validatedTeamProjectEmployee.error);

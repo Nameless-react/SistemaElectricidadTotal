@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const validateMaterialsForm = (formData) => {
-    console.log(formData);
+
     const parsedData = {
         ...formData,
         cost: parseFloat(formData.cost) || 0,

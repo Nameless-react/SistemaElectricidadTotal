@@ -15,7 +15,7 @@ export default async function Page() {
    
     return (
         <div className="flex flex-col justify-center items-center min-h-screen p-4 bg-gray-900">
-            <Image width={300} height={300} src="/logo2.png" />
+            <Image alt="image" width={300} height={300} src="/logo2.png" />
             <h1 className="text-center text-4xl font-semibold text-slate-200">Portal  Clientes</h1>
             <h2 className="mt-16 text-xl text-slate-300">Bienvenido {session?.user?.name}</h2>
 

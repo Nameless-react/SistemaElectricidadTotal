@@ -29,7 +29,6 @@ export const handleDropdownChange = (keys, setSelectedKeys, setFormData, atribut
     setErrors(updatedErrors);
 };
 
-
 export const handleImageChange = (e, formData, setFormData, setImagePreview, SetErrors, errors) => {
     const selectedFile = e.target.files[0];
 
@@ -63,9 +62,43 @@ export const handleImageRemove = (formData, setFormData, setImagePreview) => {
     setImagePreview(null);
 }
 
+export const handleSubmit = async (e, id = null, formData, setErrors, setServerError, urlFetch, urlRedirect,validateDataFunction, router) => {
+    e.preventDefault();
+ 
+    const { success: formSuccess, error: formErrors, data: cleanData } = validateDataFunction(formData);
+   
+    if (!formSuccess) {
+        setErrors(formErrors);
+        return;
+    }
+ 
+    try {
+        const response = await fetch(urlFetch, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: id ? 'PUT' : 'POST',
+            body: JSON.stringify(cleanData),
+        });
+
+        if (response.ok) {
+            setErrors([]);
+    
+            const data = await response.json();
+            router.push(`${urlRedirect}${id ? `?updateSuccess=true` : '?createSuccess=true'}`);
+        } else {
+
+            const error = await response.json();
+            //console.error(error);
+            setServerError(error);
+        }
+    } catch (error) {
+        console.error(error);
+        setServerError(error);
+    }
+};
 
 export const handleDelete = async (id, urlToFetch, urlToRedirect, setServerError) => {
-
     try {
         const response = await fetch(`${urlToFetch}?id=${id}`, {
             method: 'DELETE',

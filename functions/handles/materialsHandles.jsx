@@ -17,7 +17,6 @@ export const handleDelete = async (id, router) => {
         console.log(error);
         alert("Error al eliminar el equipo");
     }
-
 };
 
 export const handleSubmit = async (e, id = null, formData, setErrors, setServerError, urlFetch, urlRedirect, router) => {
