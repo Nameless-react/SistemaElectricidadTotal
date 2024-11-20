@@ -15,7 +15,8 @@ import BudgetsModal from "./Budgets";
 import CreateFormTask from "./CreateTaskModal";
 import { useSession } from "next-auth/react";
 
-
+//* Change the color of red to #dc2626
+//* Make the trigger for the percentage
 //* Make the verification to make sure that there is assigned a team
 //* Dont validate the date in case of update, because its going to say the date must be after the current date
 //* Investigate an test very well how to update the data in the dashboard
@@ -69,8 +70,8 @@ export default function ProjectDashboard() {
                         <p>Encargados</p>
                     </div>
                     <ScrollShadow className="w-full flex gap-5 flex-col">
-                        {!tasks || tasks.length === 0  ? <p className="font-bold text-center">No hay tareas creadas</p> : tasks.map(task => (
-                            <Task {...task} />
+                        {!tasks || tasks.length === 0  ? <p className="font-bold text-center">No hay tareas creadas</p> : tasks.map((task, index) => (
+                            <Task key={index} {...task} />
                         ))}
                     </ScrollShadow>
                 </div>
@@ -91,10 +92,8 @@ export default function ProjectDashboard() {
                         <p>Correo</p>
                     </div>
                     <ScrollShadow className="w-full flex gap-5 flex-col">
-                        {!employees || employees.length === 0 ? <p className="font-bold text-center">No hay empleados asignados</p> : employees.map(employee => (
-                            <Employee 
-                                {...employee}
-                            />
+                        {!employees || employees.length === 0 ? <p className="font-bold text-center">No hay empleados asignados</p> : employees.map((employee, index) => (
+                            <Employee key={index} {...employee} />
                         ))}
                     </ScrollShadow>
                 </div>

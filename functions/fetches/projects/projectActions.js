@@ -8,11 +8,17 @@ export const getProjectsAction = async () => {
     return result;
 }
 
+export const getMyProjectsAction = async (id) => {
+    const response = await fetch(`http://${config.host}:3000/api/projects/my-projects/${id}`);
+    const result = await response.json();
+    return result;
+}
+
 export const getProjectAction = async (id) => {
     const response = await fetch(`http://${config.host}:3000/api/projects/${id}`, { next: { tags: ["project"] } });
     const result = await response.json();
     // Delay to see the skeleton
-    // await new Promise((resolve) => setTimeout(resolve, 10000));
+    // await new Promise((resolve) => setTimeout(resolve, 3000));
     return result;
 }
 

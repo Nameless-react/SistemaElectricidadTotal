@@ -11,6 +11,10 @@ class ProjectsService {
         return await this.projectsRepository.getProjects();
     }
 
+    async getMyProjects(idUser) {
+        return await this.projectsRepository.getMyProjects(idUser);
+    }
+
     async getProjectById(id) {
         const validIdProject = validateIdProject({ idProjects: id });
         if (validIdProject.error) throw new ValidationFailureError(validIdProject.error);

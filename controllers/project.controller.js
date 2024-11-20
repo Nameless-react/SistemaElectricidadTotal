@@ -14,7 +14,7 @@ import UserModel from "../models/user.model";
 import TaskAssignmentsModel from "../models/taskAssignments.model";
 import ExpensesProjectsModel from "../models/expenses_project.model"
 import ProjectBudgetModel from "../models/project_budget.model"
-
+import ProjectUser from "../models/project_user.model";
 
 ProjectModel.hasMany(TaskModel, {
     foreignKey: 'idProjects',
@@ -25,12 +25,16 @@ TeamProjectModel.hasMany(TeamProjectEmployeeModel, {
     foreignKey: 'id_team_project',
 });
 
+ProjectModel.hasMany(ProjectUser, {
+    foreignKey: "id_project"
+})
+
 TaskModel.hasMany(TaskAssignmentsModel, {
     foreignKey: "id_task"
 })
 
 
-const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, TaskModel, TeamProjectModel, TeamProjectEmployeeModel, UserModel, TaskAssignmentsModel, ExpensesProjectsModel, ProjectBudgetModel, sequelize);
+const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, TaskModel, TeamProjectModel, TeamProjectEmployeeModel, UserModel, TaskAssignmentsModel, ExpensesProjectsModel, ProjectBudgetModel, ProjectUser, sequelize);
 const projectsService= new ProjectsService(projectsRepository);
 
 
@@ -47,6 +51,11 @@ class ProjectController {
 
     getProjects = apiErrorWrapper(async (req, res) => {
         const projects = await this.projectsService.getProjects();
+        return NextResponse.json(projects, { status: 200 })
+    })
+    getMyProjects = apiErrorWrapper(async (req, params) => {
+        const { id } = params.params;
+        const projects = await this.projectsService.getMyProjects(parseInt(id));
         return NextResponse.json(projects, { status: 200 })
     })
 

@@ -1,6 +1,6 @@
 import { Avatar } from "@nextui-org/avatar"
 
-export default function EmployeeSelect({ idEmployee, name, image, email }) {
+export default function EmployeeSelect({ name, image, email }) {
     return (
         <div className="flex items-center gap-2">
             <Avatar

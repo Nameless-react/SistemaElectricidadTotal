@@ -11,10 +11,10 @@ export default class TeamProjectRepository {
     }
 
     async saveTeam(team) {
-        const result = await this.sequelize.query("CALL save_team(:p_name, ARRAY[:p_employees])", {
+        const result = await this.sequelize.query("CALL save_team(:p_name, :p_employees)", {
             replacements: {
                 p_name: team.name,
-                p_employees: team.employees
+                p_employees: team.employees && team.employees.length > 0 ? team.employees : null
             },
             logging: console.log,
             type: this.sequelize.QueryTypes.RAW

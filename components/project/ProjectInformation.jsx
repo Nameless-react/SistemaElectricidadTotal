@@ -26,7 +26,7 @@ export default function ProjectInformation() {
                 <Tab key={"Información"} title="Información">
                     <ProjectDashboard />
                 </Tab>
-                {session?.user.roles.includes("Administrador") && <Tab key={"Configuración"} title="Configuración">
+                {session?.user.roles.includes(["Administrador"]) && <Tab key={"Configuración"} title="Configuración">
                     <ConfigurationProject />
                 </Tab>}
             </Tabs>

@@ -9,14 +9,13 @@ import { Input } from "@nextui-org/input"
 import EmployeeSelect from "./EmployeeSelect"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { ProjectContext } from "./context/ProjectContext"
 import { SelectItem } from "@nextui-org/select"
 
 
 
 export default function AddTeamProject({ onModalClose }) {
-    const { project, loadProjectData } = useContext(ProjectContext);
     const selectStyles = {
         popoverContent: "dark  bg-[#1f2c47]",
         trigger: "min-h-12 py-2 bg-[#1f2c47] dark:hover:bg-sky-900"

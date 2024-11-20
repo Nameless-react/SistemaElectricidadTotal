@@ -1,7 +1,7 @@
 import logger from "../functions/others/logger";
 
 export default class ProjectsRepository {
-    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, expensesModel, budgetModel, sequelize) {
+    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, expensesModel, budgetModel, projectUserModel, sequelize) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
         this.employeeModel = employeeModel;
@@ -13,6 +13,7 @@ export default class ProjectsRepository {
         this.userModel = userModel;
         this.expensesModel = expensesModel;
         this.budgetModel = budgetModel;
+        this.projectUserModel = projectUserModel;
     }
 
     async getProjects() {
@@ -46,7 +47,7 @@ export default class ProjectsRepository {
                 deleted: false
             },
             attributes: ['idProjects', 'name', 'description', 'percentage'],
-            logging: (sql,queryObject) => {
+            logging: (sql, queryObject) => {
                 logger.info(sql)
             }
         });
@@ -63,6 +64,62 @@ export default class ProjectsRepository {
         
         return formattedProjects;
     }
+
+    async getMyProjects(idUser) {
+        const projects = await this.projectModel.findAll({
+            include: [
+                {
+                    model: this.projectUserModel,
+                    attributes: ["idUser"],
+                    where: {
+                        idUser
+                    }
+                },
+                {
+                    model: this.statusModel,
+                    attributes: ['name']
+                },
+                {
+                    model: this.teamProjectModel,
+                    include: [
+                        {
+                            model: this.teamProjectEmployeeModel,
+                            required: false,
+                            include: [
+                                {
+                                    model: this.employeeModel,
+                                    include: [
+                                        {
+                                            model: this.userModel
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            where: {
+                deleted: false,
+            },
+            attributes: ['idProjects', 'name', 'description', 'percentage'],
+            logging: (sql,queryObject) => {
+                logger.info(sql)
+            }
+        });
+
+        
+        const formattedProjects = projects.map(project => {
+            const { Status, projectUsers, teamProject, ...projectData } = project.get({ plain: true });
+            return {
+                ...projectData,
+                status: Status.name || 'Unknown',
+                employees: teamProject?.teamProjectEmployees.map(employee => employee.employee.User.image)
+            }; 
+        });
+        
+        return formattedProjects;
+    }
     
     
     async getProjectById(id) {
@@ -70,11 +127,23 @@ export default class ProjectsRepository {
             include: [
                 {
                     model: this.budgetModel,
-                    attributes: ["description", "amount", "date", "idUser"]
+                    attributes: ["description", "amount", "date"],
+                    include: [
+                        {
+                            model: this.userModel,
+                            attributes: ["email"]
+                        }
+                    ]
                 },
                 {
                     model: this.expensesModel,
-                    attributes: ["description", "amount", "date", "idUser"]
+                    attributes: ["description", "amount", "date"],
+                    include: [
+                        {
+                            model: this.userModel,
+                            attributes: ["email"]
+                        }
+                    ]
                 },
                 {
                     model: this.statusModel,
@@ -180,8 +249,15 @@ export default class ProjectsRepository {
                     email: taskResponsible.employee.User.email,
                     name: taskResponsible.employee.User.name
                 })) || []
-            })) || []
-            
+            })) || [],
+            projectBudgets: projectData.projectBudgets.map(({User, ...budget}) => ({
+                ...budget,
+                email: User.email
+            })),
+            expensesProjects: projectData.expensesProjects.map(({User, ...expense}) => ({
+                ...expense,
+                email: User.email
+            }))
         };
 
         return formattedProject;

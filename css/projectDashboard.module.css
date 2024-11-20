@@ -14,7 +14,7 @@
 }
 
 
-.containerSkeleton .container > div:not(:first-child), .headerSkeleton, .containerSkeleton .container div:first-child .overviewProject > div {
+.containerSkeleton .container > div:not(:first-child), .headerSkeleton {
     background: linear-gradient(180deg, #182237 25%, #1f2c47 50%, #182237 75%);
     background-size: 100% 200%;
     animation: skeleton-loading 10s infinite ease-in-out;
@@ -29,7 +29,9 @@
     }
   }
   
-
+.overviewProject > div > div:nth-child(2) {
+    min-width: 110px;
+}
 
 /* -------------------------------------------------------------------------------------------- */
 
@@ -95,7 +97,7 @@
 }
 
 .overviewProject > div:nth-child(2) p, .overviewProject > div:nth-child(2) svg {
-    color: #f00;
+    color: #dc2626;
 }
 
 .overviewProject > div:not(:nth-child(2)), .overviewProject > div:not(:nth-child(2)) button  {
@@ -155,13 +157,6 @@
     padding: 0 1rem;
 }
 
-.taskHeader a, .employeeHeader a {
-    color: #fff;
-    background-color: #15803d;
-    font-size: 1.8rem;
-    padding: .01em 1em;
-    border-radius: 20px;
-}
 
 .tasks, .employees {
     display: flex;
@@ -299,7 +294,8 @@
 
 .expense, .expensesHeader, .budgetsHeader, .budget {
     display: grid;
-    grid-template-columns: repeat(4, minmax(90px, 1fr));
+    width: 100%;
+    grid-template-columns: minmax(90px, 1fr) minmax(300px, 1fr) 130px 1fr;
     gap: 1rem;
     background-color: #182237;
     border-radius: 20px;
@@ -307,16 +303,28 @@
     font-weight: lighter;
 }
 
+.budget a, .expense a {
+    text-decoration: underline;
+}
+
+.budget p, .expense p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
 .budget h4 {
     color: #16e972;
     font-weight: bold;
 }
 
 .expense h4 {
-    color: #f00;
+    color: #dc2626;
     font-weight: bold;
 }
 
 .expensesHeader, .budgetsHeader {
     font-weight: bold;
 }
+

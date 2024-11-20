@@ -9,7 +9,7 @@ export default function Budget({ amount, description, date, email }) {
             <h4>{formatNumberToColones(amount)}</h4>
             <p>{description}</p>
             <p>{format(date, "DD/MM/YYYY HH:mm")}</p>
-            <p>{email}</p>
+            <a href={`mailto:${email}`}>{email}</a>
         </div>
     )
 }

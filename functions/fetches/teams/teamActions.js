@@ -10,7 +10,6 @@ export const getTeamsProjectAction = async () => {
 
 export const addTeamWithEmployeesAction = async (team) => {
     try {
-        console.log(team)
         const response = await fetch(`http://${config.host}:3000/api/teams/`, {
             method: "POST",
             body: JSON.stringify({

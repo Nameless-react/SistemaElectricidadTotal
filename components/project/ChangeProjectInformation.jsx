@@ -88,7 +88,6 @@ export default function ChangeProjectInformation({ project, loadProjectData }) {
 
     return (
         <div className="flex align-center justify-center gap-8 flex-col w-full">
-            {console.log(getValues())}
             <form onSubmit={handleSubmit(onSubmit)} className={style.changeProjectName}>
                 <p>{project ? "Actualizar Proyecto" : "Crear Proyecto"}</p>
                 <div className="flex justify-center items-center w-full gap-6 flex-col">
