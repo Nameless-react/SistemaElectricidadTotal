@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { FormErrorsClient, FormErrorsServer } from "../../../errors/form_errors/formErrors";
+import { useIncomeForm } from "../../income/Compound_Components/contexts/incomeFormContext";
 
 
 export const IncomeCategoryFormContainer = ({
@@ -15,7 +16,7 @@ export const IncomeCategoryFormContainer = ({
         form: ""
     }
 }) => {
-    const { id, formData, setErrors, setServerErrors,  validateIncomeCategoryForm ,handleSubmit, router } = useIncomeCategoryForm();
+    const { id, formData, setErrors, setServerErrors,  validateIncomeCategoryForm ,handleSubmit, router } = useIncomeForm();
     return (
         <div className={classNames.base}>
             <form
