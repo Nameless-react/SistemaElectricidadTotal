@@ -39,10 +39,7 @@ export const ExpensesFromDescription = ({
 }) => {
 
     const { formData, handleChange, id, errors, setErrors, setFormData, serverErrors } = useExpensesForm();
-    useEffect(() => {
-        console.log(formData);
-    }
-        , [formData]);
+
     return (
         id ? (
             null

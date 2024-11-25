@@ -5,7 +5,7 @@ import { z } from "zod";
 import { validateUser } from "../functions/validations/userValidation";
 import { validateProfileUpdate } from "../functions/validations/profileValidation";
 import { ExpenseCategoryRepository, ExpensesRepository, ExpensesProjectsRepository, ToolRepository, CategoryRepository, ProviderRepository, MaintenanceNotesRepository, MaterialRepository, UserRepository, ProjectBudgetRepository, IncomeCategoryRepository, IncomeRepository } from "../repositories";
-import { ValidationExpenseProjectService, ValidationExpenseCategoryService, ExpenseCategoryService, ExpensesService, ExpensesProjectsService, ValidationUserProfileService, ValidationUserService, ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService, UserService, ProjectBudgetService, ValidationProjectBudgetService, ProjectsService, ProjectsImagesService, IncomeCategoryService, IncomeService, ValidationIncomeCategoryService} from "../Services";
+import { ValidationIncomeService ,ValidationExpenseProjectService, ValidationExpenseCategoryService, ExpenseCategoryService, ExpensesService, ExpensesProjectsService, ValidationUserProfileService, ValidationUserService, ValidationMaterialService, MaintenanceNotesService, MaterialService, CategoryService, ProviderService, ImageService, ToolService, ValidationMaintenanceNotesService, ValidationToolsService, UserService, ProjectBudgetService, ValidationProjectBudgetService, ProjectsService, ProjectsImagesService, IncomeCategoryService, IncomeService, ValidationIncomeCategoryService} from "../Services";
 import { ExpenseCategoryController, ExprensesController, SignUpController, ToolController, MaterialController, UserController, appointmentController, BudgetController, IncomeCategoryController, IncomeController } from "../controllers";
 import sequelze from "../config/databaseConnection";
 import { Income, ProjectBudget, Category, Provider, Tool, MaintenanceNotes, Material, ExpensesProjects, TeamProjectEmployee, TeamProject, Task, Employee, Project, IncomeCategory } from "../models";
@@ -23,6 +23,7 @@ import Status from "../models/status.model";
 import ProjectImagesRepository from "../repositories/projectImages.repository";
 import { validateProjectExpenseForm } from "../functions/validations/projectExpensesValidation";
 import { validateIncomeCategoryForm } from "../functions/validations/incomeCategoryValidation";
+import { validateIncomeForm } from "../functions/validations/incomeValidation";
 
 /**
  * Creates an instance of ToolController.
@@ -160,9 +161,14 @@ export const createIncomeCategoryController = () => {
 
 export const createIncomeController = () => {
     const errorHandler = new ErrorHandler();
+    const userRepository = new UserRepository(User, sequelze);
+    const incomeCategoryRepository = new IncomeCategoryRepository(IncomeCategory, sequelze);
+    const validationIncomeService = new ValidationIncomeService(validateIncomeForm);
+    const userService = new UserService(userRepository);
+    const incomeCategoryService = new IncomeCategoryService(incomeCategoryRepository);
     const incomeRepository = new IncomeRepository(Income);
     const incomeService = new IncomeService(incomeRepository);
-    return new IncomeController(incomeService, errorHandler);
+    return new IncomeController(incomeService, validationIncomeService, incomeCategoryService, userService ,errorHandler);
 }
 
 

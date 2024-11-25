@@ -45,10 +45,6 @@ export const BudgetFormProvider = ({ children, projectBudget, projects }) => {
         }
     }, [id]);
 
-    useEffect(() => {
-        console.log("selectedProject", selectedProject);
-        console.log("formDa", formData);
-    }, [formData]);
     return (
         <BudgetFormContext.Provider value={{
             router,

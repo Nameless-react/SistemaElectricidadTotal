@@ -26,6 +26,8 @@ import ValidationExpenseProjectService from "./expenses_projects/validations/val
 import IncomeCategoryService from "./income_category/incomeCategory.service";
 import IncomeService from "./income/income.service";
 import ValidationIncomeCategoryService from "./income_category/validations/validationIncomeCategory.service";
+import ValidationIncomeService from "./income/validations/incomeValidation.service";
+
 export {
     CategoryService,
     EmployeeService,
@@ -53,6 +55,7 @@ export {
     ValidationProjectBudgetService,
     ValidationToolsService,
     ValidationUserProfileService,
-    ValidationUserService
+    ValidationUserService,
+    ValidationIncomeService
 };
 
