@@ -1,22 +1,16 @@
 import { NextResponse } from "next/server";
-import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
-import TaskService from "/services/projects/task.service";
-import { Task } from "/models/index";
-import { TaskRepository } from "/repositories/index";
+import IoCContainer from "/functions/others/IoCContainer"
 
 
-const taskRepository = new TaskRepository(Task, sequelize);
-const taskService = new TaskService(taskRepository);
-
-
+const taskService = await IoCContainer.get('TaskService');
 class TaskController {
     constructor(taskService) {
         this.taskService = taskService
     }
 
     getTask = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+        const { id } = await params.params;
         const task = await this.taskService.getTaskById(parseInt(id));
         return NextResponse.json(task, { status: 200 });
     })
@@ -27,7 +21,7 @@ class TaskController {
     })
     
     getTasksByProject = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+        const { id } = await params.params;
         const tasksByProject = await this.taskService.getTasksByProject({ idProjects: id });
         return NextResponse.json(tasksByProject, { status: 200 });
     })
@@ -40,13 +34,13 @@ class TaskController {
     })
 
     deleteTask = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+        const { id } = await params.params;
         await this.taskService.deleteTask(parseInt(id));
         return NextResponse.json({ message: "La tarea se eliminó con éxito" }, { status: 200 });
     })
 
     updateTask = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+        const { id } = await params.params;
         const parseBody = await req.json();
 
         const updatedTask = await this.taskService.updateTask({ 

@@ -1,7 +1,5 @@
-import logger from "../functions/others/logger";
-
 export default class ProjectsRepository {
-    constructor(projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, expensesModel, budgetModel, projectUserModel, sequelize) {
+    constructor({ projectModel, statusModel, employeeModel, taskModel, teamProjectModel, teamProjectEmployeeModel, userModel, taskAssignmentModel, expensesModel, budgetModel, projectUserModel, sequelize }) {
         this.projectModel = projectModel;
         this.sequelize = sequelize;
         this.employeeModel = employeeModel;
@@ -46,10 +44,7 @@ export default class ProjectsRepository {
             where: {
                 deleted: false
             },
-            attributes: ['idProjects', 'name', 'description', 'percentage'],
-            logging: (sql, queryObject) => {
-                logger.info(sql)
-            }
+            attributes: ['idProjects', 'name', 'description', 'percentage']
         });
 
         
@@ -102,10 +97,7 @@ export default class ProjectsRepository {
             where: {
                 deleted: false,
             },
-            attributes: ['idProjects', 'name', 'description', 'percentage'],
-            logging: (sql,queryObject) => {
-                logger.info(sql)
-            }
+            attributes: ['idProjects', 'name', 'description', 'percentage']
         });
 
         

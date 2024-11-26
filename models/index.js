@@ -20,6 +20,33 @@ import Project from "./projects.model";
 import ProjectBudget from "./project_budget.model";
 import IncomeCategory from "./income_category.model";
 import Income from "./income.model";
+import CustomerSatisfaction from "./customer_satisfaction.model";
+import Log from "./log.model";
+import TaskAssignments from "./taskAssignments.model";
+import Status from "./status.model"
+import ProjectImages from "./projectsImages.model";
+import ProjectUser from "./project_user.model";
+import ExpenseCategory from "./expense_category.model";
+
+
+
+// Relaciones
+Project.hasMany(Task, {
+    foreignKey: 'idProjects',
+    sourceKey: 'idProjects',
+});
+
+TeamProject.hasMany(TeamProjectEmployee, {
+    foreignKey: 'id_team_project',
+});
+
+Project.hasMany(ProjectUser, {
+    foreignKey: "id_project"
+})
+
+Task.hasMany(TaskAssignments, {
+    foreignKey: "id_task"
+})
 
 
 Income.belongsTo(IncomeCategory, {
@@ -77,5 +104,12 @@ export {
     ProjectBudget,
     User,
     IncomeCategory,
-    Income
+    Income,
+    ProjectImages,
+    ProjectUser,
+    ExpenseCategory,
+    Log,
+    Status,
+    CustomerSatisfaction,
+    TaskAssignments
 }

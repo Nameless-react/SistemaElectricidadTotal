@@ -16,8 +16,6 @@ import CreateFormTask from "./CreateTaskModal";
 import { useSession } from "next-auth/react";
 
 //* Change the color of red to #dc2626
-//* Make the trigger for the percentage
-//* Make the verification to make sure that there is assigned a team
 //* Dont validate the date in case of update, because its going to say the date must be after the current date
 //* Investigate an test very well how to update the data in the dashboard
 export default function ProjectDashboard() {

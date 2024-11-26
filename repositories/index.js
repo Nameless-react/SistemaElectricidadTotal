@@ -1,21 +1,29 @@
-import CategoryRepository from "./category.repository.js";
-import MaintenanceNotesRepository from "./maintenanceNotes.repository.js";
-import ProviderRepository from "./providers.repository.js";
-import ToolRepository from "./tool.Repository.js";
 import AppointmentRepository from "./appointment.repository";
 import AppointmentConfirmationRepository from "./appointmentConfirmations.repository";
-import MaterialRepository from "./material.repository.js";
-import UserRepository from "./userRepository.js";
-import MessageRepository from "./message.repository.js";
-import ConversationRepository from "./conversation.repository.js";
-import ConversationParticipantsRepository from "./conversation_participants.js";
-import TaskRepository from "./task.repository.js";
-import ExpensesRepository from "./expensesRepository.js";
-import ExpensesProjectsRepository from "./exprensesProjects.repository.js";
-import ExpenseCategoryRepository from "./expenseCategory.repository.js";
-import ProjectBudgetRepository from "./projectBudget.repository.js";
-import IncomeCategoryRepository from "./incomeCategory.repository.js";
-import IncomeRepository from "./income.repository.js";
+import CategoryRepository from "./category.repository";
+import ConversationParticipantsRepository from "./conversation_participants";
+import ConversationRepository from "./conversation.repository";
+import EmployeeRepository from "./employee.repository";
+import ExpenseCategoryRepository from "./expenseCategory.repository";
+import ExpensesProjectsRepository from "./exprensesProjects.repository";
+import ExpensesRepository from "./expensesRepository";
+import IncomeRepository from "./income.repository";
+import IncomeCategoryRepository from "./incomeCategory.repository";
+import LogRepository from "./log.repository";
+import MaintenanceNotesRepository from "./maintenanceNotes.repository";
+import MaterialRepository from "./material.repository";
+import MessageRepository from "./message.repository";
+import ProjectsRepository from "./project.repository";
+import ProjectBudgetRepository from "./projectBudget.repository";
+import ProjectImagesRepository from "./projectImages.repository";
+import ProviderRepository from "./providers.repository";
+import TaskRepository from "./task.repository";
+import TeamProjectRepository from "./teamProject.repository";
+import ToolRepository from "./tool.Repository";
+import UserRepository from "./userRepository";
+
+
+
 export {
     AppointmentRepository,
     AppointmentConfirmationRepository,
@@ -34,5 +42,10 @@ export {
     ExpenseCategoryRepository,
     ProjectBudgetRepository,
     IncomeCategoryRepository,
-    IncomeRepository
+    IncomeRepository,
+    EmployeeRepository,
+    LogRepository,
+    ProjectsRepository,
+    ProjectImagesRepository,
+    TeamProjectRepository
 }

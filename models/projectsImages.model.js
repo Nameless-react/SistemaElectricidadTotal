@@ -17,7 +17,7 @@ ProjectImages.init({
     },
     idProject: {
         type: DataTypes.INTEGER,
-        field: id_project,
+        field: "id_project",
         allowNull: false
     }
 }, {
@@ -28,11 +28,11 @@ ProjectImages.init({
 });
 
 
-ProjectImages.belongsTo(Projects, {
-    foreignKey: {
-        name: "id_projects",
-        allowNull: false,
-        as: "idProjects"
-    }
-});
+// ProjectImages.belongsTo(Projects, {
+//     foreignKey: {
+//         name: "id_projects",
+//         allowNull: false,
+//         as: "idProjects"
+//     }
+// });
 export default ProjectImages;

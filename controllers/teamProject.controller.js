@@ -1,14 +1,9 @@
 import { NextResponse } from "next/server";
-import sequelize from "/config/databaseConnection";
+import IoCContainer from "/functions/others/IoCContainer"
 import apiErrorWrapper from "/errors/apiErrorWrapper";
-import TeamService from "/services/teamProject/teamProject.service";
-import { TeamProject, TeamProjectEmployee } from "/models/index";
-import TeamProjectRepository from "../repositories/teamProject.repository";
 
 
-const teamRepository = new TeamProjectRepository(TeamProject, TeamProjectEmployee, sequelize);
-const teamService = new TeamService(teamRepository);
-
+const teamService = await IoCContainer.get('TeamProjectService');
 
 class TeamProjectController {
     constructor(teamService) {
