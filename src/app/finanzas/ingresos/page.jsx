@@ -1,6 +1,7 @@
 import { createIncomeController, createIncomeCategoryController } from "../../../../controllers/factory";
 import { ExpensesManagmentTable } from "../../../../components/finances/expensesManagmentTable";
 import { FinancialFlow } from "../../../../components/finances/financialFlow";
+import PassSucessModal from "../../../../components/modals/passSucessModal";
 export default async function Page() {
     const incomeService = createIncomeController().incomeService;
     const incomeCategoryService = createIncomeCategoryController().incomeCategoryService;
@@ -16,7 +17,7 @@ export default async function Page() {
         const date = new Date(income.incomeDate);
 
 
-        income.incomeDate = date.toLocaleDateString(); // Formato local de fecha (ej. "18/11/2024" en España)
+        income.incomeDate = date.toLocaleDateString();
 
 
         delete income.idIncome;
@@ -34,12 +35,12 @@ export default async function Page() {
 
         <div className="flex-1 min-h-screen sm:px-4 sm:pt-4 ">
             <div className="bg-gray-800 bg-opacity-10 rounded-lg shadow-lg p-6 min-h-full overflow-auto">
-                {/* <PassSucessModal
+                <PassSucessModal
                 titles={{
-                    create: "Presupuesto de proyecto creado",
-                    update: "Presupuesto de proyecto actualizado",
-                    delete: "Presupuesto de proyecto eliminado",
-                    createEquipment: "Agregar Material"
+                    create: "Ingreso de proyecto creado",
+                    update: "Ingreso de proyecto actualizado",
+                    delete: "Ingreso de proyecto eliminado",
+                    createEquipment: "Material creado"
                 }}
                  messages={{
                     created: "Presupuesto del proyecto guardado exitosamente",
@@ -49,12 +50,13 @@ export default async function Page() {
                  }}
                     
                 />
-                 */}
+
                 <FinancialFlow data={[]} title={"Ingresos de la Empresa"} />
                 <ExpensesManagmentTable actionConfig={{
-                    action: "Agregar Presupuesto Adicional",
-                    link: "/finanzas/presupuestos/gestionar",
-
+                    action: "Agregar Ingreso",
+                    link: "/finanzas/ingresos/gestionar",
+                    linkToDelete: "/api/finance/income",
+                    urlToRedirectDelete: "/finanzas/ingresos"
                 }} columnHeaders={columns} rows={incomes} detailsLink={"example"} />
                 {/* <ProjectBudgetFlow projectBudgets={projectBudgetFlow}   /> */}
             </div>
