@@ -7,7 +7,7 @@ class ExpenseCategoryController {
 
     getExpensesCategories = async (req, res) => {
         try {
-            const expensesCategories = await this.expensesCategoryService.getExpensesCategories();
+            const expensesCategories = await this.expenseCategoryService.getExpensesCategories();
             if (!expensesCategories) {
                 return this.errorHandler.sendError(res, 'No se encontraron categorias de gastos', 'not_found', 404);
             }

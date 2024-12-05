@@ -8,7 +8,7 @@ import { faCircleCheck } from "@fortawesome/free-solid-svg-icons"
 import { useSession } from "next-auth/react"
 import SelectWrapper from "../others/SelectWrapper"
 import { useEffect, useState } from "react"
-import { getExpensesCategories } from "/functions/fetches/expensesCategories/expensesCategory" 
+// import { getExpensesCategories } from "/functions/fetches/expensesCategories/expensesCategory" 
 
 
 export default function AddExpense() {

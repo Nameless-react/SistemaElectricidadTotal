@@ -7,11 +7,11 @@ import navBarLinks from "/shared/links";
 import { useSession } from "next-auth/react";
 import { Logout } from "@/app/test/logut";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faBell } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, } from "@nextui-org/dropdown";
 import { Avatar } from "@nextui-org/avatar";
 import Image from "next/image";
-
+import NotificationBell from "./NotificationBell";
 /**
  * The main navbar component, it will be displayed in the top of the page.
  * This component will handle the different states of the navbar, such as the
@@ -80,8 +80,8 @@ export default function NavbarApp() {
                                     </Button>
                                 </DropdownTrigger>
                                 <DropdownMenu color="warning" style={{ backgroundColor: "#171717", borderRadius: "8px" }} aria-label="Static Actions">
-                                    <DropdownItem className="transition duration-200 ease-in-out" href={"/proyectos"}  key="proyectos">Gestion de Proyectos</DropdownItem>
-                                    <DropdownItem className="transition duration-200 ease-in-out" key="finanzas">Gestion Financiera</DropdownItem>
+                                    <DropdownItem className="transition duration-200 ease-in-out" href="/proyectos" key="proyectos">Gestión de Proyectos</DropdownItem>
+                                    <DropdownItem className="transition duration-200 ease-in-out" key="finanzas">Gestión Financiera</DropdownItem>
                                     <DropdownItem className="transition duration-200 ease-in-out" key="reportes">Reportes y Analisis</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
@@ -137,12 +137,7 @@ export default function NavbarApp() {
                     )}
                     {session && (
                         <NavbarItem className="mr-4">
-                            <div className="relative">
-                                <FontAwesomeIcon href="/portal-clientes/perfil/notificaciones" icon={faBell} height={20} width={20} className="text-lg ml-2" />
-                                <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-600 hover:bg-red-700 transition duration-300 ease-in-out text-white px-1.5 mt-1  rounded-full shadow-md hover:shadow-lg flex items-center justify-center">
-                                    <p className="text-xs font-semibold">3</p>
-                                </div>
-                            </div>
+                            <NotificationBell />
                         </NavbarItem>
                     )}
                     {!session && (
@@ -161,12 +156,12 @@ export default function NavbarApp() {
                 <NavbarItem className="flex flex-col items-center mt-6 mb-2">
                     <Dropdown placement="bottom">
                         <DropdownTrigger>
-                            <Avatar size="lg" isBordered color="warning" as="button" className="transition-transform" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" />
+                            <Avatar size="lg" isBordered color="warning" as="button" className="transition-transform" src={session?.user?.image} />
                         </DropdownTrigger>
                         <DropdownMenu aria-label="Profile Actions" variant="flat" style={{ backgroundColor: "#171717", borderRadius: "8px" }}>
                             <DropdownItem key="profile" className="h-14 gap-2 ">
                                 <p className="font-semibold">Signed in as</p>
-                                <p className="font-semibold">zoey@example.com</p>
+                                <p className="font-semibold">{session?.user?.email}</p>
                             </DropdownItem>
                             <DropdownItem key="settings">My Settings</DropdownItem>
                             <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
@@ -186,9 +181,9 @@ export default function NavbarApp() {
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu color="warning" style={{ backgroundColor: "#171717", borderRadius: "8px" }} aria-label="Static Actions">
-                            <DropdownItem className="transition duration-200 ease-in-out" href="/proyectos" key="equipos"><Link href="/proyectos">Gestion de Proyectos</Link></DropdownItem>
-                            <DropdownItem className="transition duration-200 ease-in-out" key="finanzas"><Link href="/finanzas">Gestion de Finanzas</Link></DropdownItem>
-                            <DropdownItem className="transition duration-200 ease-in-out" href="/reportes" key="reportes"><Link href="/reportes">Gestion de Reportes</Link></DropdownItem>
+                            <DropdownItem className="transition duration-200 ease-in-out" href="/proyectos" key="equipos">Gestión de Proyectos</DropdownItem>
+                            <DropdownItem className="transition duration-200 ease-in-out" key="finanzas" href="/finanzas">Gestión de Finanza</DropdownItem>
+                            <DropdownItem className="transition duration-200 ease-in-out" href="/reportes" key="reportes">Gestión de Reportes</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
                 </NavbarMenuItem>
@@ -196,7 +191,7 @@ export default function NavbarApp() {
                     <Dropdown isOpen={isInvDropdownOpen} onOpenChange={handleInvOpenChange}>
                         <DropdownTrigger>
                             <Button variant="flat" className="bg-blue-600  h-14 px-2  text-white font-semibold rounded-xl">
-                                Gestion de Inventarios
+                                Gestión de Inventarios
                                 <FontAwesomeIcon icon={faCaretDown} className={`ml-1 transition-transform duration-200 ${isAdmDropdownOpen && "rotate-180"}`} />
                             </Button>
                         </DropdownTrigger>

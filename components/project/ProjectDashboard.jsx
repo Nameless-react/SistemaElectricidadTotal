@@ -14,8 +14,11 @@ import ExpensesModal from "./Expenses";
 import BudgetsModal from "./Budgets";
 import CreateFormTask from "./CreateTaskModal";
 import { useSession } from "next-auth/react";
+import UploadFileProject from "./UploadFileProject";
+import ProjectFileContainer from "./ProjectFileContainer";
 
-//* Change the color of red to #dc2626
+
+
 //* Dont validate the date in case of update, because its going to say the date must be after the current date
 //* Investigate an test very well how to update the data in the dashboard
 export default function ProjectDashboard() {
@@ -74,7 +77,22 @@ export default function ProjectDashboard() {
                 </div>
             </div>
             <div className={style.projectFiles}>
-
+                <ProjectFileContainer files={[
+                    { name: "Historias de usuario.pdf", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }]}/>
+                <UploadFileProject />
             </div>
 
             <div className={style.employeesContainer}>

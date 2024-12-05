@@ -38,15 +38,15 @@ export default function ExpensesModal({ expense, formatNumberToColones }) {
                 {(onClose) => (
                     <Tabs color="primary" classNames={{ tabContent: "text-white font-bold outline-none", cursor: "w-full bg-[#C78824]", panel: "max-h-[320px]" }}>
                         <Tab key="Desglose" title="Desglose" className="flex gap-4 flex-col items-center justify-center">
-                            <ScrollShadow className="w-full flex gap-5 flex-col">
+                            <ScrollShadow key="ScrollShadowExpenses" className="w-full flex gap-5 flex-col">
                                 <div className={style.expensesHeader}>
                                     <p>Monto</p>
                                     <p>Descripción</p>
                                     <p>Fecha</p>
                                     <p>Encargado</p>
                                 </div>
-                                {project.expensesProjects.map(expense => (
-                                    <Expense {...expense} />
+                                {project.expensesProjects.map((expense, index) => (
+                                    <Expense key={index} {...expense} />
                                 ))}
                             </ScrollShadow>
                         </Tab>

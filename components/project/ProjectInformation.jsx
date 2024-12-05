@@ -7,6 +7,9 @@ import Status from "./Status";
 import { useContext } from "react";
 import { ProjectContext } from "./context/ProjectContext";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProjectInformation() {
     const { project } = useContext(ProjectContext);
@@ -16,6 +19,7 @@ export default function ProjectInformation() {
     return (
         project && (<div className={styles.projectContainer}>
             <div className={styles.optionsProjects}>
+                <Link href="/proyectos"><FontAwesomeIcon icon={faArrowLeft} /></Link>
                 <h1>{project.name}</h1>
                 <Status size="s" status={project.status} />
             </div>

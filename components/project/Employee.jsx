@@ -2,7 +2,7 @@
 import style from "/css/projectDashboard.module.css"
 import { Avatar } from "@nextui-org/avatar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown, DropdownItem, DropdownTrigger, DropdownMenu } from "@nextui-org/dropdown";
 import { deleteTeamProjectEmployeeAction } from "/functions/fetches/teams/teamActions"
 import { ProjectContext } from "./context/ProjectContext";
@@ -26,12 +26,12 @@ export default function Employee({ idTeamProjectEmployee, image, name, job, emai
             <a href={`mailto:${email}`}>{email}</a>
             {session?.user.roles.includes("Administrador") && <Dropdown className="dark">
                 <DropdownTrigger>
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className="w-full h-full flex items-center justify-center cursor-pointer">
                         <FontAwesomeIcon icon={faEllipsisVertical} />
                     </div>
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Static Actions">
-                    <DropdownItem onClick={() => handleDelete(idTeamProjectEmployee)} key="delete" className="text-danger outline-none">Eliminar</DropdownItem>
+                    <DropdownItem onClick={() => handleDelete(idTeamProjectEmployee)} key="delete" className="text-danger outline-none"><FontAwesomeIcon icon={faTrash}/> Eliminar</DropdownItem>
                 </DropdownMenu>
             </Dropdown>}
         </div>

@@ -1,6 +1,12 @@
 
 import sequelize from "/config/databaseConnection";
-import { ProjectsService, ProjectsImagesService, TaskService, TeamProjectService } from "/services";
+import { 
+    ProjectsService,
+    ProjectsImagesService, 
+    TaskService, 
+    TeamProjectService, 
+    NotificationService
+} from "/services";
 
 import {
     AppointmentRepository,
@@ -25,7 +31,8 @@ import {
     LogRepository,
     ProjectsRepository,
     ProjectImagesRepository,
-    TeamProjectRepository
+    TeamProjectRepository,
+    NotificationRepository
 } from "/repositories";
 
 import {
@@ -57,7 +64,8 @@ import {
     Log,
     Status,
     CustomerSatisfaction,
-    TaskAssignments
+    TaskAssignments,
+    Notification
 } from "/models";
 
 
@@ -171,6 +179,7 @@ class IoCContainer {
         this.register('StatusModel', () => Status);
         this.register('CustomerSatisfactionModel', () => CustomerSatisfaction);
         this.register('TaskAssignmentsModel', () => TaskAssignments);
+        this.register("NotificationModel", () => Notification);
         this.register('sequelize', () => sequelize);
 
         // Registrar Repositorios
@@ -194,7 +203,7 @@ class IoCContainer {
 
         this.register("TaskRepository", (TaskModel, sequelize) => new TaskRepository(TaskModel, sequelize), ["TaskModel", "sequelize"]);
         this.register("TeamProjectRepository", (TeamProjectModel, TeamProjectEmployeeModel, sequelize) => new TeamProjectRepository(TeamProjectModel, TeamProjectEmployeeModel, sequelize), ["TeamProjectModel", "TeamProjectEmployeeModel", "sequelize"])
-
+        this.register("NotificationRepository", (NotificationModel, sequelize) => new NotificationRepository(NotificationModel, sequelize), ["NotificationModel", "sequelize"]);
 
 
 
@@ -209,8 +218,9 @@ class IoCContainer {
             []
         );
 
-        this.register("TaskService", (taskRepository) => new TaskService(taskRepository), ["TaskRepository"])
-        this.register("TeamProjectService", (teamProjectRepository) => new TeamProjectService(teamProjectRepository), ["TeamProjectRepository"])
+        this.register("TaskService", (taskRepository) => new TaskService(taskRepository), ["TaskRepository"]);
+        this.register("TeamProjectService", (teamProjectRepository) => new TeamProjectService(teamProjectRepository), ["TeamProjectRepository"]);
+        this.register("NotificationService", (notificationRepository) => new NotificationService(notificationRepository), ["NotificationRepository"]);
     }
 }
 

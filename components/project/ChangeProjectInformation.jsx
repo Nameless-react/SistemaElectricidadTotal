@@ -89,7 +89,7 @@ export default function ChangeProjectInformation({ project, loadProjectData }) {
     return (
         <div className="flex align-center justify-center gap-8 flex-col w-full">
             <form onSubmit={handleSubmit(onSubmit)} className={style.changeProjectName}>
-                <p>{project ? "Actualizar Proyecto" : "Crear Proyecto"}</p>
+                <h3>{project ? "Actualizar Proyecto" : "Crear Proyecto"}</h3>
                 <div className="flex justify-center items-center w-full gap-6 flex-col">
                     <Input label="Nombre" {...register("name")} isInvalid={errors?.name} errorMessage={errors?.name?.message} className="outline-none rounded-2x w-full" classNames={{ inputWrapper: "bg-[#1f2c47] dark:hover:bg-sky-900 dark:active:bg-sky-900 dark:focus:bg-sky-900 dark:focus-within:bg-sky-900" }} />
                     <div className="flex items-center justify-center gap-2 w-full">

@@ -21,7 +21,7 @@ import TaskRepository from "./task.repository";
 import TeamProjectRepository from "./teamProject.repository";
 import ToolRepository from "./tool.Repository";
 import UserRepository from "./userRepository";
-
+import NotificationRepository from "./notification.repository";
 
 
 export {
@@ -47,5 +47,6 @@ export {
     LogRepository,
     ProjectsRepository,
     ProjectImagesRepository,
-    TeamProjectRepository
+    TeamProjectRepository,
+    NotificationRepository
 }

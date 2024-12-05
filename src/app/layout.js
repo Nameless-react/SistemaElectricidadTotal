@@ -30,14 +30,16 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
+
   return (
     <html lang="en" className="bg-gray-900 text-white">
       <body className={montserrat.className}>
         <Providers>
-            <NavbarApp/> 
+          <NavbarApp />
+          <main className="dark text-foreground">
             {children}
-            <Footer/>
+          </main>
+          <Footer />
         </Providers>
       </body>
     </html>

@@ -27,7 +27,7 @@ import Status from "./status.model"
 import ProjectImages from "./projectsImages.model";
 import ProjectUser from "./project_user.model";
 import ExpenseCategory from "./expense_category.model";
-
+import Notification from "./notification.model";
 
 
 // Relaciones
@@ -48,6 +48,12 @@ Task.hasMany(TaskAssignments, {
     foreignKey: "id_task"
 })
 
+Notification.belongsTo(User, {
+    foreignKey: {
+        name: "id_users",
+        allowNull: false
+    }
+});
 
 Income.belongsTo(IncomeCategory, {
     foreignKey: {
@@ -111,5 +117,6 @@ export {
     Log,
     Status,
     CustomerSatisfaction,
-    TaskAssignments
+    TaskAssignments,
+    Notification
 }

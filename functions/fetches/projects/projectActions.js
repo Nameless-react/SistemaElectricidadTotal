@@ -10,7 +10,7 @@ export const getMyProjectsAction = async (id) => getHandler("projects/my-project
 export const getProjectAction = async (id) => {
     const result = getHandler("projects/", id, {}, { next: { tags: ["project"] } });
     // Delay to see the skeleton
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     return result;
 }
 
