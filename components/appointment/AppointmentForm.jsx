@@ -12,6 +12,9 @@ import { useEffect } from "react";
 import { updateAppointmentAction, createAppointmentAction } from "../../functions/fetches/appointments/appointmentActions";
 
 export default function AppointmentForm({ appointment }) {
+    const inputBackground = {
+        inputWrapper: "bg-[#1f2c47]"
+    }
     const { date, time } = getDateTimeForms(appointment?.appointmentDate, appointment?.appointmentTime);
 
     const { register, handleSubmit, control, reset, formState: { errors, isSubmitting }, watch, unregister, getValues, clearErrors } = useForm({
@@ -53,12 +56,12 @@ export default function AppointmentForm({ appointment }) {
 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col w-2/3 mx-auto mt-28 rounded-2xl bg-opacity-40 py-12 px-8 mb-44 bg-neutral-950">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex justify-center gap-10 items-center flex-col w-2/3 mx-auto mt-28 rounded-2xl bg-opacity-40 py-12 px-8 mb-44 bg-[#182237]">
             <h1 className="text-5xl font-bold">{appointment?.email ? "Editar Cita" : "Agendar Cita"}</h1>
             {/* Implementation to show the email when the user is not login */}
-            {!appointment?.email && <Input isClearable type="email" label="Correo" className="dark w-2/3" {...register("email")} isInvalid={errors?.email} errorMessage={errors?.email?.message} />}
+            {!appointment?.email && <Input isClearable type="email" label="Correo" className="dark w-2/3" classNames={inputBackground} {...register("email")} isInvalid={errors?.email} errorMessage={errors?.email?.message} />}
             <DateAppointment errors={errors} control={control} />
-            {!isInOfficeWatch && <Textarea label="Dirección" className="dark w-2/3"{...register("address")} isInvalid={errors?.address} errorMessage={errors?.address?.message} />}
+            {!isInOfficeWatch && <Textarea label="Dirección" className="dark w-2/3" classNames={inputBackground} {...register("address")} isInvalid={errors?.address} errorMessage={errors?.address?.message} />}
             <div className="flex items-center mt-4">
                 <p className="text-sm">¿Desea agendar la cita en las oficinas de Electricidad Total?</p>
                 <input type="checkbox" className="dark ml-2 h-4 w-4" {...register("isInOffice")} />

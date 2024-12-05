@@ -5,7 +5,7 @@ import { format, parse } from "@formkit/tempo";
 
 export default async function Cancelar({ params }) {
     let appointment;
-    const { id } = params;
+    const { id } = await params;
     if (parseInt(id)) appointment = await getAppointmentAction(parseInt(id));
 
 

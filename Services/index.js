@@ -10,13 +10,12 @@ import MaterialService from "./materials/material.service";
 import ValidationMaterialService from "./materials/validations/validationMaterial.service";
 import UserService from "./users/user.service";
 import ValidationUserService from "./users/validations/validationUser.service";
-import TaskService from "./Projects/task.service";
+import TaskService from "./projects/task.service";
 import ValidationUserProfileService from "./users/validations/validationUserProfile.service";
-//import ProjectsImagesService from "./projects/projectsImages.service";
-import ProjectsService from "./Projects/projects.service";
+import ProjectsService from "./projects/projects.service";
 import EmployeeService from "./employees/employees.service";
 import ValidationEmployeeFormService from "./employees/Validations/validationEmployeeForm.service";
-import ProjectsImagesService from "./Projects/projectsImages.service";
+import ProjectsImagesService from "./projects/projectsImages.service";
 import ExpensesProjectsService from "./expenses_projects/expensesProjects.service";
 import ExpensesService from "./expenses/expenses.service";
 import ExpenseCategoryService from "./expenses_categories/expenseCategory.service";
@@ -26,7 +25,9 @@ import ValidationExpenseProjectService from "./expenses_projects/validations/val
 import IncomeCategoryService from "./income_category/incomeCategory.service";
 import IncomeService from "./income/income.service";
 import ValidationIncomeCategoryService from "./income_category/validations/validationIncomeCategory.service";
+import TeamProjectService from "./teamProject/teamProject.service";
 import ValidationIncomeService from "./income/validations/incomeValidation.service";
+import NotificationService from "./notifications/notification.service";
 
 export {
     CategoryService,
@@ -44,6 +45,7 @@ export {
     ProjectsService,
     ProviderService,
     TaskService,
+    TeamProjectService,
     ToolService,
     UserService,
     ValidationEmployeeFormService,
@@ -56,6 +58,7 @@ export {
     ValidationToolsService,
     ValidationUserProfileService,
     ValidationUserService,
-    ValidationIncomeService
+    ValidationIncomeService,
+    NotificationService
 };
 

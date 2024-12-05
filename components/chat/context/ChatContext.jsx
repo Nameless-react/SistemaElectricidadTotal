@@ -21,7 +21,6 @@ export const ChatProvider = ({ children }) => {
             const conversations = await getConversationsAction(session.user?.id)
             const idConversation = conversations.length > 0 ? conversations[0].idConversation : null
             const messages = idConversation ? await getChatAction(idConversation) : [];
-            console.log(messages)
 
             setConversations(conversations);
             setMessagesConversation(messages);

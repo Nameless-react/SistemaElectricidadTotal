@@ -12,7 +12,7 @@ export default async function Projects() {
     const session = await getServerSession(options)
     return (
         <>
-            {session && <div className="w-1/2 ml-auto flex justify-end px-11">
+            {session?.user.roles.includes(["Administrador"]) && <div className="w-1/2 ml-auto flex justify-end px-11">
                 <Link href="/proyectos/crear" className="bg-green-600 rounded-2xl text-white font-bold py-2 px-8 mt-4 text-xl">+</Link>
             </div>}
             <div className={styles.projectsContainer}>

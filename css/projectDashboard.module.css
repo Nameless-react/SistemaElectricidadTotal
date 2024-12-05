@@ -14,7 +14,7 @@
 }
 
 
-.containerSkeleton .container > div:not(:first-child), .headerSkeleton, .containerSkeleton .container div:first-child .overviewProject > div {
+.containerSkeleton .container > div:not(:first-child), .headerSkeleton {
     background: linear-gradient(180deg, #182237 25%, #1f2c47 50%, #182237 75%);
     background-size: 100% 200%;
     animation: skeleton-loading 10s infinite ease-in-out;
@@ -29,7 +29,6 @@
     }
   }
   
-
 
 /* -------------------------------------------------------------------------------------------- */
 
@@ -75,7 +74,7 @@
     font-size: 1.2rem;
 }
 
-.overviewProject > div, .overviewProject > div:nth-child(2) > div, .overviewProject > div button {
+.overviewProject > div, .overviewProject > div button {
     width: 100%;
     min-height: 50px;
     display: flex;
@@ -95,7 +94,7 @@
 }
 
 .overviewProject > div:nth-child(2) p, .overviewProject > div:nth-child(2) svg {
-    color: #f00;
+    color: #dc2626;
 }
 
 .overviewProject > div:not(:nth-child(2)), .overviewProject > div:not(:nth-child(2)) button  {
@@ -140,6 +139,11 @@
 .projectFiles {
     grid-column: 3;
     grid-row: span 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 1.5rem 0;
 }
 
 .employeesContainer {
@@ -155,13 +159,6 @@
     padding: 0 1rem;
 }
 
-.taskHeader a, .employeeHeader a {
-    color: #fff;
-    background-color: #15803d;
-    font-size: 1.8rem;
-    padding: .01em 1em;
-    border-radius: 20px;
-}
 
 .tasks, .employees {
     display: flex;
@@ -203,7 +200,6 @@
     border-radius: 20px;
     transition: transform .5s ease;
     font-size: 1.5rem;
-    cursor: pointer;
 }
 
 .employee {
@@ -211,8 +207,15 @@
 }
 
 .informationEmployees {
-    grid-template-columns: 232px repeat(2, minmax(100px, 1fr)) 15px;
+    grid-template-columns: 40px repeat(3, minmax(100px, 1fr)) 15px;;
 }
+.informationEmployees p:nth-child(2) {
+    grid-column: 3;
+} 
+
+.informationEmployees p:nth-child(3) {
+    grid-column: 4;
+} 
 
 .informationEmployees h4, .informationTasks h4 {
     justify-self: flex-start;
@@ -299,7 +302,8 @@
 
 .expense, .expensesHeader, .budgetsHeader, .budget {
     display: grid;
-    grid-template-columns: repeat(4, minmax(90px, 1fr));
+    width: 100%;
+    grid-template-columns: minmax(90px, 1fr) minmax(300px, 1fr) 130px 1fr;
     gap: 1rem;
     background-color: #182237;
     border-radius: 20px;
@@ -307,16 +311,143 @@
     font-weight: lighter;
 }
 
+.budget a, .expense a {
+    text-decoration: underline;
+}
+
+.budget p, .expense p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
 .budget h4 {
     color: #16e972;
     font-weight: bold;
 }
 
 .expense h4 {
-    color: #f00;
+    color: #dc2626;
     font-weight: bold;
 }
 
 .expensesHeader, .budgetsHeader {
     font-weight: bold;
 }
+
+.projectFileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 1rem 1rem;
+    max-height: 750px;
+}
+
+.projectFileContainer > h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    align-self: flex-start;
+}
+
+.projectFile, .projectFileHeader {
+    display: grid;
+    background-color: #1f2c47;
+    padding: .5rem 1rem;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    justify-items: flex-start;
+    grid-template-columns: 50px minmax(100px, 1fr) minmax(82px, 1fr) 15px;
+    gap: .5rem;
+    font-size: 1rem;
+    border-radius: 20px;
+} 
+
+.projectFile p {
+    font-weight: lighter;
+}
+.projectFile svg {
+    font-size: 1.5rem;
+}
+
+.projectFile span {
+    background-color: #182237;
+    padding: .5rem .8rem;
+    border-radius: 10px;
+    font-size: .8rem;
+}
+.projectFileHeader {
+    grid-template-columns: 50px minmax(100px, 1fr) minmax(82px, 1fr) 15px;
+    font-weight: bold;
+}
+
+.projectFileHeader h4:first-child {
+    grid-column: span 2;
+}
+.projectFileHeader p:nth-child(2) {
+    grid-column: 3;
+}
+
+
+.uploadImageContainer {
+    width: 100%;
+    max-height: 550px;
+    height: 550px;
+    padding: .8rem;
+    border-radius: 20px;
+    outline: 3px dashed #243760;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+.uploadImageContainer > p {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.uploadImageContainer > p:nth-child(4) {
+    font-weight: lighter;
+    margin-top: -18px;
+    font-size: 1rem;
+}
+
+.uploadImageContainer > svg {
+    font-size: 3rem;
+}
+
+.uploadImageContainer.focusImage {
+    background-color: #1f2c4750;
+    outline-offset: 6px;
+    border-radius: 20px;
+    animation: pulseOffset 1.5s infinite ease-in-out;
+}
+
+.uploadImageContainer.focusImage.imageAccepted {
+    outline-color: #15803d;
+}
+
+.uploadImageContainer.focusImage.imageRejected {
+    outline-color: #dc2626;
+}
+
+@keyframes pulseOffset {
+    0% {
+      outline-offset: 6px;
+    }
+    50% {
+      outline-offset: 10px;
+    }
+    100% {
+      outline-offset: 6px;
+    }
+  }

@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
-import Project from './projects.model';
 
 
 class TeamProject extends Model {}

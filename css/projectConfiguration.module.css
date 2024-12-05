@@ -9,7 +9,7 @@
     gap: 1.5rem;
 }
 
-.deleteProject, .changeProjectName {
+.deleteProject, .changeProjectName, .addUsersProject {
     width: 100%;
     box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
     background-color: #182237;
@@ -21,12 +21,18 @@
     gap: 1.5rem;
 }
 
-.changeProjectName {
+.changeProjectName, .addUsersProject {
     flex-direction: column;
 }
 
-.changeProjectName > p {
+.changeProjectName > h3, .addUsersProject > h3 {
     align-self: flex-start;
     font-size: 1.6rem;
     font-weight: bold;
 }
+
+/* .addUsersProject {
+    border-radius: 20px;
+    padding: 1.5rem;
+    background-color: #182237;
+} */

@@ -1,13 +1,17 @@
-"use client"
+"use server"
 import { faCalendarDay, faChalkboardUser, faCircleInfo, faGear, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import Notifications from "/components/navigation/Notifications";
-import { useSession } from "next-auth/react";
-export default function Page() {
+import { getServerSession } from 'next-auth';
+import { options } from '../api/auth/[...nextauth]/options';
 
-    const { data: session } = useSession();
+
+
+
+export default async function Page() {
+    const session = await getServerSession(options)
    
     return (
         <div className="flex flex-col justify-center items-center min-h-screen p-4 bg-gray-900">

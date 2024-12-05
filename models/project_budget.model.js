@@ -51,8 +51,7 @@ ProjectBudget.init({
 
 ProjectBudget.belongsTo(User, {
     foreignKey: "idUser", 
-    targetKey: "id_users", 
-    as: "user" 
+    targetKey: "id_users"
 });
 
 

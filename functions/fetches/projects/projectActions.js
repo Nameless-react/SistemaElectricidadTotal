@@ -1,67 +1,31 @@
 "use server";
+import { deleteHandler, getAllHandler, getHandler, patchHandler, postHandler } from "../../handles/handleFetch";
 import { revalidatePath } from "next/cache";
-import config from "/config/config";
 
-export const getProjectsAction = async () => {
-    const response = await fetch(`http://${config.host}:3000/api/projects`);
-    const result = await response.json();
-    return result;
-}
+export const getProjectsAction = async () => getAllHandler("projects/")
+
+export const getMyProjectsAction = async (id) => getHandler("projects/my-projects/", id);
+
 
 export const getProjectAction = async (id) => {
-    const response = await fetch(`http://${config.host}:3000/api/projects/${id}`, { next: { tags: ["project"] } });
-    const result = await response.json();
+    const result = getHandler("projects/", id, {}, { next: { tags: ["project"] } });
     // Delay to see the skeleton
-    // await new Promise((resolve) => setTimeout(resolve, 10000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     return result;
 }
 
-export const deleteProjectAction = async (id) => {
-    const response = await fetch(`http://${config.host}:3000/api/projects/${id}`, {
-        method: "DELETE"
-    });
-    const result = await response.json();
-    return result;
-}
+export const deleteProjectAction = async (id) => deleteHandler("projects/", id);
+
 
 export const saveProjectAction = async (project) => {
-    console.log(project)
-    try {
-        const response = await fetch(`http://${config.host}:3000/api/projects/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(project)
-        })
+    const result = postHandler("projects/", project);
 
-        const result = await response.json();
-        if (result.error) return {errors: result.error}
-        
-    } catch (e) {
-        return { errors: e }
-    }
     revalidatePath("/proyectos")
     return { successMessage: "Proyecto creado con éxito", data: {} }
     
 }
 
 export const updateProjectAction = async (project) => {
-    try {
-        const response = await fetch(`http://${config.host}:3000/api/projects/${project.idProjects}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(project)
-        });
-
-
-        const result = await response.json();
-        if (result.error) return {errors: result.error}
-
-    } catch (e) {
-        return { errors: e }
-    }
+    const result = patchHandler("projects/", project.idProjects, project);
     return { successMessage: "Proyecto editado con éxito", data: {} }
 }

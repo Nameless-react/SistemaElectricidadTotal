@@ -14,9 +14,11 @@ import ExpensesModal from "./Expenses";
 import BudgetsModal from "./Budgets";
 import CreateFormTask from "./CreateTaskModal";
 import { useSession } from "next-auth/react";
+import UploadFileProject from "./UploadFileProject";
+import ProjectFileContainer from "./ProjectFileContainer";
 
 
-//* Make the verification to make sure that there is assigned a team
+
 //* Dont validate the date in case of update, because its going to say the date must be after the current date
 //* Investigate an test very well how to update the data in the dashboard
 export default function ProjectDashboard() {
@@ -26,7 +28,6 @@ export default function ProjectDashboard() {
     const expense = expensesProjects?.reduce((acc, expense) => acc + expense.amount, 0) ?? 0;
     const budget = projectBudgets?.reduce((acc, earn) => acc + earn.amount, 0) ?? 0;
 
-    console.log(session)
 
     return (
         <div className={style.container}>
@@ -69,14 +70,29 @@ export default function ProjectDashboard() {
                         <p>Encargados</p>
                     </div>
                     <ScrollShadow className="w-full flex gap-5 flex-col">
-                        {!tasks || tasks.length === 0  ? <p className="font-bold text-center">No hay tareas creadas</p> : tasks.map(task => (
-                            <Task {...task} />
+                        {!tasks || tasks.length === 0  ? <p className="font-bold text-center">No hay tareas creadas</p> : tasks.map((task, index) => (
+                            <Task key={index} {...task} />
                         ))}
                     </ScrollShadow>
                 </div>
             </div>
             <div className={style.projectFiles}>
-
+                <ProjectFileContainer files={[
+                    { name: "Historias de usuario.pdf", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" },
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }, 
+                    { name: "primero.jpg", modifiedAt: "10/07/2024" }]}/>
+                <UploadFileProject />
             </div>
 
             <div className={style.employeesContainer}>
@@ -91,10 +107,8 @@ export default function ProjectDashboard() {
                         <p>Correo</p>
                     </div>
                     <ScrollShadow className="w-full flex gap-5 flex-col">
-                        {!employees || employees.length === 0 ? <p className="font-bold text-center">No hay empleados asignados</p> : employees.map(employee => (
-                            <Employee 
-                                {...employee}
-                            />
+                        {!employees || employees.length === 0 ? <p className="font-bold text-center">No hay empleados asignados</p> : employees.map((employee, index) => (
+                            <Employee key={index} {...employee} />
                         ))}
                     </ScrollShadow>
                 </div>

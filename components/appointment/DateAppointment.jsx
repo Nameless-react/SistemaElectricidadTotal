@@ -11,7 +11,7 @@ export default function DateAppointment({ errors, control }) {
         <div className="w-2/3 flex justify-center gap-4 items-center">
             <div className="dark w-1/2 justify-center">
                 <I18nProvider locale="cr">
-                <Controller
+                    <Controller
                         control={control}
                         name="appointmentDate"
                         render={({ field: { onChange, onBlur, value } }) => (
@@ -21,43 +21,46 @@ export default function DateAppointment({ errors, control }) {
                                 isRequired
                                 dateInputClassNames={{
                                     input: "items-center",
+                                    inputWrapper: "bg-[#1f2c47]",
+
                                 }}
                                 minValue={today(getLocalTimeZone())}
                                 className="items-center"
                                 classNames={{
                                     calendar: "dark",
-                                    popoverContent: "dark",
+                                    popoverContent: "dark"
                                 }}
                                 onChange={onChange}
                                 onBlur={onBlur}
-                                defaultValue={value} 
-                                isInvalid={!!errors?.appointmentDate} 
+                                defaultValue={value}
+                                isInvalid={!!errors?.appointmentDate}
                                 errorMessage={errors?.appointmentDate?.message}
                             />
                         )}
                     />
                 </I18nProvider>
             </div>
-    
+
             <div className="dark w-1/2 items-center">
                 <Controller
                     control={control}
                     name="appointmentTime"
                     render={({ field: { onChange, onBlur, value } }) => (
-                        <TimeInput 
+                        <TimeInput
                             minValue={new Time(7)}
                             hourCycle={24}
                             maxValue={new Time(17)}
                             isRequired
                             label="Hora"
                             classNames={{
-                                segment: "hover:bg-slate-600 active:bg-slate-600 focus:bg-slate-600"
+                                segment: "hover:bg-slate-600 active:bg-slate-600 focus:bg-slate-600",
+                                inputWrapper: "bg-[#1f2c47]"
                             }}
                             onChange={onChange}
                             onBlur={onBlur}
-                            defaultValue={value} 
-                            isInvalid={!!errors?.appointmentTime} 
-                            errorMessage={errors?.appointmentTime?.message} 
+                            defaultValue={value}
+                            isInvalid={!!errors?.appointmentTime}
+                            errorMessage={errors?.appointmentTime?.message}
                         />
                     )}
                 />

@@ -1,7 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '/config/databaseConnection';
-import Appointment from './appointment.model';
-import Employee from './employee.model';
+
 
 class CustomerSatisfaction extends Model {}
 
@@ -78,14 +77,14 @@ CustomerSatisfaction.init({
 });
 
 
-CustomerSatisfaction.belongsTo(Appointment, {
-    foreignKey: 'appointmentId',
-    as: 'appointment'
-});
+// CustomerSatisfaction.belongsTo(Appointment, {
+//     foreignKey: 'appointmentId',
+//     as: 'appointment'
+// });
 
-CustomerSatisfaction.belongsTo(Employee, {
-    foreignKey: 'idEmployeeResponsible',
-    as: 'employeeResponsible'
-});
+// CustomerSatisfaction.belongsTo(Employee, {
+//     foreignKey: 'idEmployeeResponsible',
+//     as: 'employeeResponsible'
+// });
 
 export default CustomerSatisfaction;

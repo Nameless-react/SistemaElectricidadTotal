@@ -1,37 +1,10 @@
 import { NextResponse } from "next/server";
-import sequelize from "/config/databaseConnection";
 import apiErrorWrapper from "/errors/apiErrorWrapper";
-import { ProjectsService } from "../Services"; 
-import ProjectModel from "../models/projects.model";
-import ProjectsRepository from "../repositories/project.repository";
-import StatusModel from "../models/status.model";
-import EmployeeModel from "../models/employees.model";
-import TaskModel from "../models/task.model"
 import { revalidatePath } from "next/cache";
-import TeamProjectEmployeeModel from "../models/team_project_employee.model";
-import TeamProjectModel from "../models/team_project.model";
-import UserModel from "../models/user.model";
-import TaskAssignmentsModel from "../models/taskAssignments.model";
-import ExpensesProjectsModel from "../models/expenses_project.model"
-import ProjectBudgetModel from "../models/project_budget.model"
+import IoCContainer from "/functions/others/IoCContainer"
 
 
-ProjectModel.hasMany(TaskModel, {
-    foreignKey: 'idProjects',
-    sourceKey: 'idProjects',
-});
-
-TeamProjectModel.hasMany(TeamProjectEmployeeModel, {
-    foreignKey: 'id_team_project',
-});
-
-TaskModel.hasMany(TaskAssignmentsModel, {
-    foreignKey: "id_task"
-})
-
-
-const projectsRepository = new ProjectsRepository(ProjectModel, StatusModel, EmployeeModel, TaskModel, TeamProjectModel, TeamProjectEmployeeModel, UserModel, TaskAssignmentsModel, ExpensesProjectsModel, ProjectBudgetModel, sequelize);
-const projectsService= new ProjectsService(projectsRepository);
+const projectsService = await IoCContainer.get('ProjectsService');
 
 
 class ProjectController {
@@ -40,13 +13,18 @@ class ProjectController {
     }
 
     getProject = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+        const { id } = await params.params;
         const project = await this.projectsService.getProjectById(parseInt(id));
         return NextResponse.json(project, { status: 200 })
     })
 
     getProjects = apiErrorWrapper(async (req, res) => {
         const projects = await this.projectsService.getProjects();
+        return NextResponse.json(projects, { status: 200 })
+    })
+    getMyProjects = apiErrorWrapper(async (req, params) => {
+        const { id } = await params.params;
+        const projects = await this.projectsService.getMyProjects(parseInt(id));
         return NextResponse.json(projects, { status: 200 })
     })
 
@@ -57,14 +35,14 @@ class ProjectController {
     })
 
     deleteProject = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+        const { id } = await params.params;
         await this.projectsService.deleteProject(parseInt(id));
         revalidatePath("/proyectos")
         return NextResponse.json({ message: "El proyecto ha sido eliminado de manera exitosa" }, { status: 200 });
     })
 
     updateProject = apiErrorWrapper(async (req, params) => {
-        const { id } = params.params;
+        const { id } = await params.params;
         const parseBody = await req.json();
 
         const updatedProject = await this.projectsService.updateProject({ 

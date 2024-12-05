@@ -97,3 +97,15 @@
     align-items: center;
     justify-content: flex-start;
 }
+
+.myProjectsHeader {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 1rem;
+    font-size: 2rem;
+}
