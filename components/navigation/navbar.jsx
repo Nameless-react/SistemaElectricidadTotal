@@ -82,6 +82,7 @@ export default function NavbarApp() {
                                 <DropdownMenu color="warning" style={{ backgroundColor: "#171717", borderRadius: "8px" }} aria-label="Static Actions">
                                     <DropdownItem className="transition duration-200 ease-in-out" href={"/proyectos"}  key="proyectos">Gestion de Proyectos</DropdownItem>
                                     <DropdownItem className="transition duration-200 ease-in-out" key="finanzas">Gestion Financiera</DropdownItem>
+                                    <DropdownItem className="transition duration-200 ease-in-out" key="empleadod" href={"/empleados"}>Gestion de Empleados</DropdownItem>
                                     <DropdownItem className="transition duration-200 ease-in-out" key="reportes">Reportes y Analisis</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
