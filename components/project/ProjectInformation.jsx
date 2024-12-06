@@ -19,7 +19,7 @@ export default function ProjectInformation() {
     return (
         project && (<div className={styles.projectContainer}>
             <div className={styles.optionsProjects}>
-                <Link href="/proyectos"><FontAwesomeIcon icon={faArrowLeft} /></Link>
+                <Link href="/proyectos"><FontAwesomeIcon icon={faArrowLeft} className="text-4xl"/></Link>
                 <h1>{project.name}</h1>
                 <Status size="s" status={project.status} />
             </div>
