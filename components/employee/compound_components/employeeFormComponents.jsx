@@ -20,8 +20,8 @@ export const EmployeeFormContainer = ({
         <div className={classNames.base}>
             <form className={classNames.form} 
             onSubmit={
-                id ? (e) => handleSubmit(e, id  , formData, setErrors, setServerErrors, "/api/employees", "",validateEmployeeForm, router)
-                : (e) => handleSubmit(e, id  , formData, setErrors, setServerErrors, "/api/employees", "",validateEmployeeForm, router)
+                id ? (e) => handleSubmit(e, id  , formData, setErrors, setServerErrors, "/api/employees", "/empleados",validateEmployeeForm, router)
+                : (e) => handleSubmit(e, id  , formData, setErrors, setServerErrors, "/api/employees", "/empleados",validateEmployeeForm, router)
             }
             >
                 {children}

@@ -80,8 +80,7 @@ export default function NavbarApp() {
                                     </Button>
                                 </DropdownTrigger>
                                 <DropdownMenu color="warning" style={{ backgroundColor: "#171717", borderRadius: "8px" }} aria-label="Static Actions">
-                                    <DropdownItem className="transition duration-200 ease-in-out" href="/proyectos" key="proyectos">Gestión de Proyectos</DropdownItem>
-                                    <DropdownItem className="transition duration-200 ease-in-out" key="finanzas">Gestión Financiera</DropdownItem>
+
                                     <DropdownItem className="transition duration-200 ease-in-out" key="reportes">Reportes y Analisis</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
